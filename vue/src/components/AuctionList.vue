@@ -4,66 +4,68 @@
     <div class="section">
       <h2>New Auctions!</h2>
       <div class="auction-grid">
-        <div
+        <router-link
           v-for="auction in mostRecentAuctions"
           :key="auction.auctionId"
-          class="auction-container"
+          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
+          class="auction-link"
         >
-          <div class="auction-details">
-            <h2>{{ auction.auctionName }}</h2>
+          <div class="auction-container">
+            <div class="auction-details">
+              <h2>{{ auction.auctionName }}</h2>
+            </div>
+            <div class="auction-items">
+              <h3>Items:</h3>
+              <ul>
+                <li v-for="item in auction.items" :key="item.itemId">
+                  <p id="item-name">{{ item.itemName }}</p>
+                  <p id="item-price">- Opening Price: ${{ item.currentPrice }}</p>
+                  <p id="item-price">- Current Bid: ${{ item.currentPrice + 100 }}</p>
+                  <p>Pretend there's an image here.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="auction-details-time">
+              <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
+            </div>
           </div>
-
-          <div class="auction-items">
-            <h3>Items:</h3>
-            <ul>
-              <li v-for="item in auction.items" :key="item.itemId">
-                <p id="item-name">{{ item.itemName }}</p>
-                <p id="item-price">- Opening Price: ${{ item.currentPrice }}</p>
-                <p id="item-price">
-                  - Current Bid: ${{ item.currentPrice + 100 }}
-                </p>
-                <p>Pretend there's an image here.</p>
-              </li>
-            </ul>
-          </div>
-          <div class="auction-details-time">
-            <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
-          </div>
-        </div>
+        </router-link>
       </div>
     </div>
-
+    
     <!-- Ongoing Auctions Section -->
     <div class="section">
       <h2>Ongoing Auctions</h2>
       <div class="auction-grid">
-        <div
+        <router-link
           v-for="auction in ongoingAuctions"
           :key="auction.auctionId"
-          class="auction-container"
+          :to="`/auction/${auction.auctionId}`"
+          class="auction-link"
         >
-          <div class="auction-details">
-            <h2>{{ auction.auctionName }}</h2>
+          <div class="auction-container">
+            <div class="auction-details">
+              <h2>{{ auction.auctionName }}</h2>
+            </div>
+            <div class="auction-items">
+              <h3>Items:</h3>
+              <ul>
+                <li v-for="item in auction.items" :key="item.itemId">
+                  <p id="item-name">{{ item.itemName }}</p>
+                  <p id="item-price">- Current Price: ${{ item.currentPrice }}</p>
+                  <p>Pretend there's an image here.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="auction-details-time">
+              <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
+              <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
+            </div>
           </div>
-
-          <div class="auction-items">
-            <h3>Items:</h3>
-            <ul>
-              <li v-for="item in auction.items" :key="item.itemId">
-                <p id="item-name">{{ item.itemName }}</p>
-                <p id="item-price">- Current Price: ${{ item.currentPrice }}</p>
-                <p>Pretend there's an image here.</p>
-              </li>
-            </ul>
-          </div>
-          <div class="auction-details-time">
-            <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
-            <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
-          </div>
-        </div>
+        </router-link>
       </div>
     </div>
-
+    
     <div class="bottom-row">
       <!-- Add content for the bottom row here -->
     </div>
@@ -114,12 +116,17 @@ export default {
   grid-gap: 20px;
 }
 
+.auction-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .auction-container {
   border: 1px solid rgb(158, 137, 137);
   padding: 20px;
   box-sizing: border-box;
-  background-color: #f8f8f8; /* background color */
-  color: #333; /*text color */
+  background-color: #f8f8f8;
+  color: #333;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -166,7 +173,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* bottom row  */
 }
 
 /* Section styling */
@@ -178,6 +184,6 @@ export default {
 .section h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #1c3463; /* section titles */
+  color: #1c3463;
 }
 </style>

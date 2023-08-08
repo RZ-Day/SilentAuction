@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin
+
 @RestController
 public class AuctionController {
 
@@ -20,10 +20,13 @@ public class AuctionController {
         this.auctionDao = auctionDao;
     }
 
-
+    @CrossOrigin
     @GetMapping("/auctions")
     public List<Auction> listAuctions() {
         return auctionDao.getAuctions();
     }
+
+
+
 }
 

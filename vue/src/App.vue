@@ -1,9 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
+    <section class="topNav">
+      <navbar />
+    </section>
     <router-view />
   </div>
 </template>
+
+<script>
+import Navbar from './components/Navbar.vue';
+
+  export default {
+    components: {
+      Navbar
+    }
+  }
+</script>
+
+<style scope>
+  .topNav {
+    min-height: 150px;
+  }
+</style>
