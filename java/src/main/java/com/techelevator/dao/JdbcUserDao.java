@@ -72,6 +72,18 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public void updateContactInformation(String username, String contactInformation) {
+        String sql = "UPDATE users SET contact_information = ? WHERE username =?";
+        jdbcTemplate.update(sql, contactInformation, username);
+    }
+
+    @Override
+    public void updateAllowAnonymous(String username, boolean allowAnonymous) {
+        String sql = "UPDATE users SET allow_anonymous = ? WHERE username = ?";
+        jdbcTemplate.update(sql, allowAnonymous, username);
+    }
+
+    @Override
     public User createUser(RegisterUserDto user) {
         User newUser = null;
         String insertUserSql = "INSERT INTO users (full_name, email, phone, address, username, password_hash, role)" +

@@ -15,7 +15,8 @@ public class User {
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
-
+   private String contactInformation;
+   private boolean allowAnonymous;
    public User() { }
 
    public User(int id, String username, String password, String authorities) {
@@ -72,6 +73,21 @@ public class User {
          String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
          this.authorities.add(new Authority(authority));
       }
+   }
+   public String getContactInformation() {
+      return contactInformation;
+   }
+
+   public void setContactInformation(String contactInformation) {
+      this.contactInformation = contactInformation;
+   }
+
+   public boolean isAllowAnonymous() {
+      return allowAnonymous;
+   }
+
+   public void setAllowAnonymous(boolean allowAnonymous) {
+      this.allowAnonymous = allowAnonymous;
    }
 
    @Override

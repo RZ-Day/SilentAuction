@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import AuctionListView from "@/views/AuctionListView.vue";
+import UserProfile from "@/views/UserProfile.vue";
 
 Vue.use(Router)
 
@@ -58,6 +59,14 @@ const router = new Router({
       path: "/auctions",
       name: "AuctionList",
       component: AuctionListView,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/profile',
+      name: 'UserProfile',
+      component: UserProfile,
       meta: {
         requiresAuth: false
       }
