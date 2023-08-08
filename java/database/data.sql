@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (full_name, email, phone, address, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 -- Sandbox data
 -- Insert fake auctions
