@@ -21,20 +21,18 @@ export default {
 
 <style scoped>
   .navbar {
-    display: flex;
-    justify-content: flex-end;
     background-color: grey;
     height: 50px;
     
     }
 
   .container {
-    
+    float: right;
   }
 
   nav ul {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
     background-color: cadetblue;
     list-style-type: none;
