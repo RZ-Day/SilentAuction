@@ -1,8 +1,15 @@
 BEGIN TRANSACTION;
 
+<<<<<<< HEAD
+INSERT INTO users (full_name, email, phone, address, username, password_hash, role)
+VALUES ('User User', 'User@gmail.com', 1234567890, '123 Test Lane', 'user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER');
+=======
 INSERT INTO users (full_name, email, phone, address, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (full_name, email, phone, address, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+>>>>>>> 26f5a489a9d4d3f03c721377d8f887eba80b57c3
 
+INSERT INTO users (full_name, email, phone, address, username, password_hash, role)
+VALUES ('Admin Admin', 'Admin@gmail.com', 0987654321, '456 Test Lane', 'admin', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
 -- Sandbox data
 -- Insert fake auctions
 INSERT INTO auction (auction_name, start_time, end_time)
