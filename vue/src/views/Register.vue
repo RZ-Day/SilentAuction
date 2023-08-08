@@ -5,17 +5,35 @@
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+      <div class="inputs">
+        <div class="form-input-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="user.name" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" v-model="user.email" required />
+        </div>
+        <div class="form-input-group">
+          <label for="phone">Phone Number</label>
+          <input type="number" id="phone" v-model="user.phone" required />
+        </div>
+        <div class="form-input-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" v-model="user.address" required />
+        </div>
+        <div class="form-input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" v-model="user.username" required/>
+        </div>
+        <div class="form-input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="user.password" required />
+        </div>
+        <div class="form-input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+        </div>
       </div>
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
@@ -31,6 +49,10 @@ export default {
   data() {
     return {
       user: {
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
         username: '',
         password: '',
         confirmPassword: '',
@@ -79,5 +101,21 @@ export default {
 }
 label {
   margin-right: 0.5rem;
+}
+
+#register {
+  max-width: 400px;
+}
+
+.inputs {
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 25px;
+  background-color: rgb(216, 216, 216);
+}
+
+.form-input-group {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

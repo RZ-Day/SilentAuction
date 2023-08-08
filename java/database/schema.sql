@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
-DROP TABLE IF EXISTS images;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -17,7 +16,6 @@ CREATE TABLE users (
   	role varchar(50) NOT NULL,
   	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
-
 
 -- Auction Table
 CREATE TABLE auction (
@@ -39,8 +37,6 @@ CREATE TABLE item (
     FOREIGN KEY (auction_id) REFERENCES Auction(auction_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
-
 
 -- Bid Table
 CREATE TABLE bid (
