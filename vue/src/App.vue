@@ -3,6 +3,7 @@
     <section class="topNav">
       <navbar />
     </section>
+    <div class="spacing" />
     <router-view />
   </div>
 </template>
@@ -19,6 +20,14 @@ import Navbar from './components/Navbar.vue';
 
 <style scope>
   .topNav {
-    min-height: 150px;
+    width: 100%;
+    margin: 0;
+    position: fixed;
+    min-height: 100px;
+    z-index: 3000;
+  }
+
+  .spacing {
+    min-height: 50px;
   }
 </style>

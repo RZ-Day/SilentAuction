@@ -6,12 +6,8 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import AuctionListView from "@/views/AuctionListView.vue";
-<<<<<<< HEAD
-import UserProfile from "@/views/UserProfile.vue";
-=======
 import AuctionView from "@/views/AuctionView.vue";
 
->>>>>>> 26f5a489a9d4d3f03c721377d8f887eba80b57c3
 
 Vue.use(Router)
 
@@ -69,15 +65,9 @@ const router = new Router({
       }
     },
     {
-<<<<<<< HEAD
-      path: '/profile',
-      name: 'UserProfile',
-      component: UserProfile,
-=======
       path: "/auctions/:currentAuctionID",
       name: "AuctionIndex",
       component: AuctionView,
->>>>>>> 26f5a489a9d4d3f03c721377d8f887eba80b57c3
       meta: {
         requiresAuth: false
       }

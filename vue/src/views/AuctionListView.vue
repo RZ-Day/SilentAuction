@@ -43,6 +43,7 @@ export default {
 .centered-header {
   text-align: center;
   font-size: 2rem;
+  margin-top: 80px;
   margin-bottom: 20px;
   color: #4d352c; /* Set a color for the header */
 }
