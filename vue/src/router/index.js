@@ -6,12 +6,11 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import AuctionListView from "@/views/AuctionListView.vue";
-<<<<<<< HEAD
 import UserProfile from "@/views/UserProfile.vue";
-=======
 import AuctionView from "@/views/AuctionView.vue";
+import ItemView from "@/views/ItemView.vue";
+import AddAuctionView from "@/views/AddAuctionView.vue";
 
->>>>>>> 26f5a489a9d4d3f03c721377d8f887eba80b57c3
 
 Vue.use(Router)
 
@@ -69,18 +68,30 @@ const router = new Router({
       }
     },
     {
-<<<<<<< HEAD
       path: '/profile',
       name: 'UserProfile',
       component: UserProfile,
-=======
+    },
+    {
       path: "/auctions/:currentAuctionID",
       name: "AuctionIndex",
       component: AuctionView,
->>>>>>> 26f5a489a9d4d3f03c721377d8f887eba80b57c3
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/auctions/:currentAuctionID/item/:currentItemID",
+      name: "ItemIndex",
+      component: ItemView,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/add-auction",
+      name: "AddAuction",
+      component: AddAuctionView
     }
   ]
 })

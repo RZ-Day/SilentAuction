@@ -7,12 +7,15 @@
     <h2>Items in this Auction:</h2>
     <ul>
       <li v-for="item in auction.items" :key="item.itemId">
+        <router-link :to="{name: 'ItemIndex', params: { currentItemID: item.itemId}}" class="item-link">
         <div class="item-container">
           <h3>{{ item.itemName }}</h3>
+           <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
           <p>{{ item.description }}</p>
           <p>Initial Price: ${{ item.initialPrice }}</p>
           <p>Current Price: ${{ item.currentPrice }}</p>
         </div>
+        </router-link>
       </li>
     </ul>
   </div>

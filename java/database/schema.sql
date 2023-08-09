@@ -51,4 +51,5 @@ CREATE TABLE bid (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+
 COMMIT TRANSACTION;
