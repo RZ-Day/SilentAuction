@@ -2,15 +2,17 @@
   <div class="page-container">
     <div class="header-container">
       <h1 class="centered-header">
-        Silent Auctions
-        <img src="@/Assets/shushLogo.jpg" alt="Auction Icon" class="header-icon" />
+     
+        
       </h1>
       <div class="add-auction-button">
         <router-link to="/add-auction" class="add-button">Add Auction</router-link>
       </div>
     </div>
     <div class="auction-list-container">
+
       <AuctionList :auctions="auctions" />
+
     </div>
   </div>
 </template>
