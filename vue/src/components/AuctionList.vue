@@ -1,8 +1,5 @@
 <template>
-
-
   <div class="centered-container">
-
     <!-- New Auctions Section -->
 
     <div class="section">
@@ -11,7 +8,10 @@
         <router-link
           v-for="auction in mostRecentAuctions"
           :key="auction.auctionId"
-          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
+          :to="{
+            name: 'AuctionIndex',
+            params: { currentAuctionID: auction.auctionId },
+          }"
           class="auction-link"
         >
           <div class="auction-container">
@@ -19,14 +19,26 @@
               <h2>{{ auction.auctionName }}</h2>
             </div>
             <div class="auction-items">
-              <h3>Items:</h3>
+             
               <ul>
                 <li v-for="item in auction.items" :key="item.itemId">
                   <p id="item-name">{{ item.itemName }}</p>
-                  <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
-                  <p id="item-price">- Opening Price: ${{ item.currentPrice }}</p>
-                  <p id="item-price">- Current Bid: ${{ item.currentPrice + 100 }}</p>
-                  
+                  <p>
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                  </p>
+                
+                  <p id="item-price">
+                    - Current Bid: ${{ item.currentPrice + 100 }}
+                  </p>
                 </li>
               </ul>
             </div>
@@ -37,7 +49,6 @@
         </router-link>
       </div>
     </div>
-    
 
     <!-- Ongoing Auctions Section -->
     <div class="section">
@@ -46,7 +57,10 @@
         <router-link
           v-for="auction in ongoingAuctions"
           :key="auction.auctionId"
-          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
+          :to="{
+            name: 'AuctionIndex',
+            params: { currentAuctionID: auction.auctionId },
+          }"
           class="auction-link"
         >
           <div class="auction-container">
@@ -54,12 +68,25 @@
               <h2>{{ auction.auctionName }}</h2>
             </div>
             <div class="auction-items">
-              <h3>Items:</h3>
+             
               <ul>
                 <li v-for="item in auction.items" :key="item.itemId">
                   <p id="item-name">{{ item.itemName }}</p>
-                  <p id="item-price">- Current Price: ${{ item.currentPrice }}</p>
-                   <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
+                  <p id="item-price">
+                    - Current Price: ${{ item.currentPrice }}
+                  </p>
+                  <p>
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                  </p>
                 </li>
               </ul>
             </div>
@@ -70,7 +97,7 @@
         </router-link>
       </div>
     </div>
-    
+
     <div class="bottom-row">
       <!-- Add content for the bottom row here -->
     </div>
@@ -135,6 +162,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
 }
 
 .auction-container:hover {

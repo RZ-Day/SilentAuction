@@ -25,7 +25,7 @@ public class AuctionController {
     }
 
     @CrossOrigin
-    @PostMapping("/create-auction")
+    @PostMapping("/create/auction")
     public Auction addAuction(@RequestBody Auction auction) {
         return auctionDao.createAuction(auction);
     }

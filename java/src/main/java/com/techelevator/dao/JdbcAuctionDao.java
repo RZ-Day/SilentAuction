@@ -175,4 +175,13 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setCurrentPrice(rowSet.getDouble("current_price"));
         return item;
     }
+
+    private Bid mapRowToBid(SqlRowSet rowSet) {
+        Bid bid = new Bid();
+        bid.setBidId(rowSet.getLong("bid_id"));
+        bid.setUserId(rowSet.getLong("bid_user_id"));
+        bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
+        bid.setBidTime(rowSet.getTimestamp("bid_time").toInstant());
+        return bid;
+    }
 }

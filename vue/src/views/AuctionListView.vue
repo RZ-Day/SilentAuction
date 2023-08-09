@@ -2,7 +2,6 @@
   <div class="page-container">
     <div class="header-container">
       <h1 class="centered-header">
-        
         Silent Auctions
         <img src="@/Assets/shushLogo.jpg" alt="Auction Icon" class="header-icon" />
       </h1>
@@ -10,7 +9,9 @@
         <router-link to="/add-auction" class="add-button">Add Auction</router-link>
       </div>
     </div>
-    <AuctionList :auctions="auctions" />
+    <div class="auction-list-container">
+      <AuctionList :auctions="auctions" />
+    </div>
   </div>
 </template>
 
@@ -45,17 +46,15 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 85vh;
-  background-color: rgb(210, 217, 219);
+  background-color: rgb(255, 255, 255);
 }
-
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 20px; 
+  padding: 0 20px;
   box-sizing: border-box;
   margin-top: 10px;
 }
@@ -74,7 +73,7 @@ export default {
 }
 
 .header-icon {
-  width: 60px; 
+  width: 60px;
   height: auto;
   margin-left: 25px;
 }
@@ -85,11 +84,11 @@ export default {
 }
 
 .add-button {
-  padding: 16px 24px; /*  button size */
+  padding: 16px 24px; /* button size */
   margin-top: 2px;
-  font-size: 24px; /*font size for button text */
+  font-size: 24px; /* font size for button text */
   background-color: #007bff; /* button background color */
-  color: white; /*  button text color */
+  color: white; /* button text color */
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -101,4 +100,9 @@ export default {
   background-color: #0056b3; /* button background color on hover */
 }
 
+.auction-list-container {
+  flex: 1; /* Expand and take remaining space */
+  width: 100%;
+  max-width: 1200px; /* Set a maximum width if needed */
+}
 </style>
