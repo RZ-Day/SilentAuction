@@ -1,5 +1,10 @@
 <template>
   <header class="navbar">
+    <div>
+      </div>
+    <div>
+      <img id="imgLogo" src="../Assets/logo.png"/>
+      </div>
     <div class="container">
       <nav>
         <ul>
@@ -71,7 +76,7 @@ export default {
 <style scoped>
   .navbar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     background-color: rgb(255, 255, 255);
     height: 50px;
@@ -88,6 +93,10 @@ export default {
     margin-right: 50px;
   }
 
+  #imgLogo {
+    width: 15em;
+  }
+
   nav {
     display: flex;
     padding: 0px;
@@ -102,6 +111,7 @@ export default {
     list-style-type: none;
     width: 100%;
     margin: 0;
+    padding: 0px;
   }
 
   li {
