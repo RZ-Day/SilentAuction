@@ -1,6 +1,7 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_contacts;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
@@ -14,9 +15,16 @@ CREATE TABLE users (
   	username varchar(50) NOT NULL UNIQUE,
   	password_hash varchar(200) NOT NULL,
   	role varchar(50) NOT NULL,
-  	contact_information TEXT,
   	allow_anonymous BOOLEAN DEFAULT false,
   	CONSTRAINT PK_user PRIMARY KEY (user_id)
+);
+
+CREATE TABLE user_contacts (
+    contact_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    contact_type VARCHAR(50) NOT NULL,
+    contact_information TEXT,
+    CONSTRAINT UC_user_contact UNIQUE (user_id, contact_type)
 );
 
 -- Auction Table

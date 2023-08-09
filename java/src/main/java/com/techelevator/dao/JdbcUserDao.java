@@ -72,7 +72,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateContactInformation(String username, String contactInformation) {
+    public void updateUserContactInformation(String username, String contactInformation) {
         String sql = "UPDATE users SET contact_information = ? WHERE username =?";
         jdbcTemplate.update(sql, contactInformation, username);
     }

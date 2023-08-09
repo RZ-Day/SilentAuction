@@ -45,6 +45,16 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_ITEM(state, itemID) {
       state.activeItemID = itemID;
+    },
+  },
+  actions: {
+    async fetchUserData ({ commit }) {
+      try {
+        const response = await axios.get('api/user/profile');
+        commit('SET_USER', response.data);
+      } catch {
+        console.error('Error fetching user data');
+      }
     }
-  }
+  },
 })
