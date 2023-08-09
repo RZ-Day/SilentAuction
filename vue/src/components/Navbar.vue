@@ -9,6 +9,11 @@
           <li v-if="currentRoute != 'AuctionList'">
             <router-link class="link" :to="{ name: 'AuctionList' }">Auctions</router-link>
           </li>
+          <li>
+            <a class="link" v-if="accountOptions[0].link !== '#' && accountOptions[0].link !== 'login'" :href="accountOptions[0].link">
+              {{accountOptions[0].label}}
+            </a>
+          </li>    
           <dropdown title="Account" :items="accountOptions"/>
         </ul>
       </nav>
@@ -26,7 +31,7 @@ export default {
       authorizedAccountOptions: [
         {
           label: "Profile",
-          link: "#"
+          link: "profile"
         },
         {
           label: "Logout",
