@@ -1,6 +1,10 @@
 <template>
+
+
   <div class="centered-container">
+
     <!-- New Auctions Section -->
+
     <div class="section">
       <h2>New Auctions!</h2>
       <div class="auction-grid">
@@ -19,9 +23,10 @@
               <ul>
                 <li v-for="item in auction.items" :key="item.itemId">
                   <p id="item-name">{{ item.itemName }}</p>
+                  <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
                   <p id="item-price">- Opening Price: ${{ item.currentPrice }}</p>
                   <p id="item-price">- Current Bid: ${{ item.currentPrice + 100 }}</p>
-                  <p>Pretend there's an image here.</p>
+                  
                 </li>
               </ul>
             </div>
@@ -33,6 +38,7 @@
       </div>
     </div>
     
+
     <!-- Ongoing Auctions Section -->
     <div class="section">
       <h2>Ongoing Auctions</h2>
@@ -40,7 +46,7 @@
         <router-link
           v-for="auction in ongoingAuctions"
           :key="auction.auctionId"
-          :to="`/auction/${auction.auctionId}`"
+          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
           class="auction-link"
         >
           <div class="auction-container">
@@ -53,12 +59,11 @@
                 <li v-for="item in auction.items" :key="item.itemId">
                   <p id="item-name">{{ item.itemName }}</p>
                   <p id="item-price">- Current Price: ${{ item.currentPrice }}</p>
-                  <p>Pretend there's an image here.</p>
+                   <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
                 </li>
               </ul>
             </div>
             <div class="auction-details-time">
-              <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
               <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
             </div>
           </div>

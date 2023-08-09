@@ -20,7 +20,8 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    activeAuctionID: 0
+    activeAuctionID: 0,
+    activeItemID: 0
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_AUCTION(state, auctionID) {
       state.activeAuctionID = auctionID;
+    },
+    SET_ACTIVE_ITEM(state, itemID) {
+      state.activeItemID = itemID;
     }
   }
 })
