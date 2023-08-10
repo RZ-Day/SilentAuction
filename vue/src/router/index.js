@@ -10,6 +10,7 @@ import UserProfile from "@/views/UserProfile.vue";
 import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
+import Messages from '../views/Messages.vue';
 
 
 Vue.use(Router)
@@ -92,6 +93,14 @@ const router = new Router({
       path: "/add-auction",
       name: "AddAuction",
       component: AddAuctionView
+    },
+    {
+      path: "/messages",
+      name: "Messages",
+      component: Messages,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 })

@@ -91,7 +91,6 @@ public class JdbcUserDao implements UserDao {
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
         try {
-            System.out.println("GOT TO USERDAO");
             int newUserId = jdbcTemplate.queryForObject(insertUserSql,
                                                         int.class,
                                                         user.getName(),

@@ -9,7 +9,7 @@ CREATE TABLE users (
 	user_id SERIAL,
 	full_name varchar(50),
 	email varchar(50) NOT NULL UNIQUE,
-	phone INT NOT NULL UNIQUE,
+	phone varchar(15) NOT NULL UNIQUE,
 	address varchar(50) NOT NULL,
   	username varchar(50) NOT NULL UNIQUE,
   	password_hash varchar(200) NOT NULL,
@@ -49,6 +49,17 @@ CREATE TABLE bid (
     bid_time TIMESTAMP NOT NULL,
     FOREIGN KEY (item_id) REFERENCES Item(item_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE mesages (
+    message_id SERIAL PRIMARY KEY,
+    from_id INT,
+    to_id INT,
+    time_sent TIMESTAMP,
+    message_body varchar(300),
+
+    FOREIGN KEY (from_id) REFERENCES users(user_id),
+    FOREIGN KEY (to_id) REFERENCES users(user_id)
 );
 
 
