@@ -9,8 +9,10 @@
 import AddAuction from '../components/AddAuction.vue'
 
 
+
+
 export default {
-  components: { AddAuction },
+  components: { AddAuction  },
 
 }
 </script>

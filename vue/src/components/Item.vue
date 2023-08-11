@@ -30,7 +30,6 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f3f5f7;
 }
 
 
@@ -42,7 +41,6 @@ export default {
 .item-details {
   text-align: center;
   padding: 20px;
-  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

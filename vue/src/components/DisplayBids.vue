@@ -76,10 +76,10 @@ export default {
 
 <style scoped>
 .bids-section {
-  /* Add your styling for the bids section here */
+  
 }
 
 .bid-list {
-  /* Add your styling for the bid list here */
+  
 }
 </style>

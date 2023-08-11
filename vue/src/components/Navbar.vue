@@ -1,25 +1,38 @@
 <template>
   <header class="navbar">
     <div>
-      </div>
-    <div>
-      <img id="imgLogo" src="../Assets/logo.png"/>
-      </div>
+      <a class="logo-link" href="/">
+        <!-- Replace '/' with your desired link -->
+        <img id="imgLogo" src="../Assets/logo.png" />
+      </a>
+    </div>
+
     <div class="container">
       <nav>
         <ul>
           <li>
-            <router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link>
+            <router-link class="link" v-bind:to="{ name: 'home' }"
+              >Home</router-link
+            >
           </li>
           <li v-if="currentRoute != 'AuctionList'">
-            <router-link class="link" :to="{ name: 'AuctionList' }">Auctions</router-link>
+            <router-link class="link" :to="{ name: 'AuctionList' }"
+              >Auctions</router-link
+            >
           </li>
           <li>
-            <a class="link" v-if="accountOptions[0].link !== '#' && accountOptions[0].link !== 'login'" :href="accountOptions[0].link">
-              {{accountOptions[0].label}}
+            <a
+              class="link"
+              v-if="
+                accountOptions[0].link !== '#' &&
+                accountOptions[0].link !== 'login'
+              "
+              :href="accountOptions[0].link"
+            >
+              {{ accountOptions[0].label }}
             </a>
-          </li>    
-          <dropdown title="Account" :items="accountOptions"/>
+          </li>
+          <dropdown title="Account" :items="accountOptions" />
         </ul>
       </nav>
     </div>
@@ -36,115 +49,98 @@ export default {
       authorizedAccountOptions: [
         {
           label: "Profile",
-          link: "profile"
+          link: "profile",
         },
         {
           label: "Logout",
-          link: "logout"
-        }
+          link: "logout",
+        },
       ],
       anonymousAccountOptions: [
         {
           label: "Login",
-          link: "login"
+          link: "login",
         },
         {
           label: "Register",
-          link: "register"
-        }
-      ]
-    }
+          link: "register",
+        },
+      ],
+    };
   },
   components: {
-    Dropdown
+    Dropdown,
   },
   computed: {
     currentRoute() {
       return this.$route.name;
     },
     accountOptions() {
-      if(this.$store.state.token == '') {
+      if (this.$store.state.token == "") {
         return this.anonymousAccountOptions;
       } else {
         return this.authorizedAccountOptions;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(255, 255, 255);
-    height: 50px;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: rgb(223, 223, 223);
-    
-  }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: rgb(200, 200, 200);
+}
 
-  .container {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-right: 50px;
-  }
+#imgLogo {
+  width: 15em;
+  transform: translateX(5%);
+}
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+nav ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
-  #imgLogo {
-    width: 15em;
-  }
+li {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  padding: 0 10px;
+  text-align: center;
+}
 
-  nav {
-    display: flex;
-    padding: 0px;
-    height: 100%;
-    width: auto;
-  }
+li.active,
+li:hover {
+  background-color: rgb(231, 231, 231);
+  transition: 0.2s ease;
+  color: rgb(201, 69, 69);
+}
 
-  nav ul {
-    display: flex;
-    justify-content: flex-end;
-    height: 100%;
-    list-style-type: none;
-    width: 100%;
-    margin: 0;
-    padding: 0px;
-  }
+li:hover .link {
+  transition: 0.2s ease;
+  color: rgb(73, 201, 69);
+}
 
-  li {
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    height: 100%;
-    background-color:rgb(255, 255, 255);
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: center;
-  }
-
-  li.active,
-  li:hover {
-    background-color: rgb(231, 231, 231);
-    transition: .2s ease;
-    color:rgb(73, 201, 69) ;
-  }
-
-  li:hover .link {
-    transition: .2s ease;
-    color:rgb(73, 201, 69) ;
-  }
-
-  .link {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    text-decoration-line: none;
-    color: black;
-  }
-
-  
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
 </style>

@@ -5,7 +5,8 @@
 
     
     
-    
+    <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
+    <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
 
     <h2>Items in this Auction:</h2>
     <ul class="item-list">
@@ -49,8 +50,6 @@ export default {
 .auction-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   background-color: #f3f5f7;
   padding: 20px;

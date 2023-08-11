@@ -55,7 +55,6 @@ export default {
 
 .bids-section {
   flex: 1; /* Take up 1 unit of space */
-  background-color: #f0f0f0; /* Set the background color for the bids section */
   padding: 10px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);

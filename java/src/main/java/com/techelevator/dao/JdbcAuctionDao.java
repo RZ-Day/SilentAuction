@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Auction;
-import com.techelevator.model.Item;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -11,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Array;
-import java.sql.Struct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.sql.Blob;
+import java.util.*;
 
 @Repository
 public class JdbcAuctionDao implements AuctionDao {
@@ -30,23 +29,33 @@ public class JdbcAuctionDao implements AuctionDao {
 
     @Override
     public List<Auction> getAuctions() {
-        Map<Long, Auction> auctionMap = new HashMap<>(); // Map to store auctions by ID
+        Map<Long, Auction> auctionMap = new HashMap<>();
         String sql = "SELECT\n" +
                 "    a.auction_id,\n" +
                 "    a.auction_name,\n" +
                 "    a.start_time,\n" +
                 "    a.end_time,\n" +
+                "    a.isPrivate,\n" +
+                "    a.privateKey,\n" +
                 "    i.item_id,\n" +
+                "    i.auction_id AS item_auction_id,\n" +
+                "    i.user_id AS item_user_id,\n" +
                 "    i.item_name,\n" +
                 "    i.description,\n" +
                 "    i.initial_price,\n" +
-                "    i.current_price\n" +
+                "    i.current_price,\n" +
+                "    b.bid_id,\n" +
+                "    b.user_id AS bid_user_id,\n" +
+                "    b.bid_amount,\n" +
+                "    b.bid_time\n" +
                 "FROM\n" +
                 "    auction a\n" +
                 "LEFT JOIN\n" +
                 "    item i ON a.auction_id = i.auction_id\n" +
+                "LEFT JOIN\n" +
+                "    bid b ON i.item_id = b.item_id\n" +
                 "ORDER BY\n" +
-                "    a.auction_id, i.item_id;\n";
+                "    a.auction_id, i.item_id, b.bid_time;\n";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
         while (results.next()) {
@@ -60,6 +69,11 @@ public class JdbcAuctionDao implements AuctionDao {
             long itemId = results.getLong("item_id");
             if (itemId != 0) {
                 Item item = mapRowToItem(results);
+                Bid bid = mapRowToBid(results);
+                if (bid != null) {
+                    item.setBids(new ArrayList<>());
+                    item.getBids().add(bid);
+                }
                 auction.getItems().add(item);
             }
         }
@@ -105,12 +119,16 @@ public class JdbcAuctionDao implements AuctionDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         } catch (NullPointerException e) {
-           throw new DaoException("NullPointer violation", e);
+            throw new DaoException("NullPointer violation", e);
 
         }
     }
 
 
+
+
+
+    @Override
     public Auction getAuctionById(int auctionId) {
         String auctionSql = "SELECT * FROM auction WHERE auction_id = ?;";
 
@@ -178,10 +196,17 @@ public class JdbcAuctionDao implements AuctionDao {
 
     private Bid mapRowToBid(SqlRowSet rowSet) {
         Bid bid = new Bid();
-        bid.setBidId(rowSet.getLong("bid_id"));
-        bid.setUserId(rowSet.getLong("bid_user_id"));
-        bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
-        bid.setBidTime(rowSet.getTimestamp("bid_time").toInstant());
-        return bid;
+        int bidId = rowSet.getInt("bid_id");
+        if (bidId != 0) {
+            bid.setBidId(bidId);
+            bid.setUserId(rowSet.getInt("bid_user_id"));
+            bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
+            bid.setBidTime(rowSet.getDate("bid_time"));
+            return bid;
+        } else {
+            return null;
+        }
     }
 }
+
+

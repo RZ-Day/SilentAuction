@@ -42,6 +42,15 @@
             <label for="currentPrice">Current Price:</label>
             <input type="number" v-model="item.currentPrice" required />
           </div>
+          <div class="form-group">
+            <label for="images">Images:</label>
+            <input type="file" multiple @change="handleImageUpload(index)" />
+            <div v-for="(image, imgIndex) in item.images" :key="imgIndex" class="image-preview">
+              <img :src="image.url" alt="Image Preview" />
+              <button type="button" @click="removeImage(index, imgIndex)">Remove</button>
+            </div>
+            <p>Image Count: {{ totalImages[index] }}</p>
+          </div>
         </div>
         <button type="button" @click="addItem">Add Item</button>
 
@@ -53,6 +62,7 @@
 
 <script>
 import auctionService from "@/services/AuctionsListService.js";
+
 export default {
   data() {
     return {
@@ -65,11 +75,17 @@ export default {
             itemName: "",
             description: "",
             initialPrice: 0,
-            currentPrice: 0
+            currentPrice: 0,
+            images: [],
           },
         ],
       },
     };
+  },
+  computed: {
+    totalImages() {
+      return this.newAuction.items.map(item => item.images.length);
+    }
   },
   methods: {
     addItem() {
@@ -78,16 +94,18 @@ export default {
         description: "",
         initialPrice: 0,
         currentPrice: 0,
+        images: [],
       });
     },
     createAuction() {
-      auctionService.addAuction(this.newAuction)
+      auctionService
+        .addAuction(this.newAuction)
         .then(() => {
           this.resetForm();
           this.$router.push({ name: "AuctionList" });
         })
-        .catch(error => {
-          console.error('Error creating auction:', error);
+        .catch((error) => {
+          console.error("Error creating auction:", error);
         });
     },
     resetForm() {
@@ -100,8 +118,22 @@ export default {
           description: "",
           initialPrice: 0,
           currentPrice: 0,
+          images: [],
         },
       ];
+    },
+    handleImageUpload(itemIndex) {
+      const input = event.target;
+      if (input.files && input.files.length > 0) {
+        for (let i = 0; i < input.files.length; i++) {
+          const file = input.files[i];
+          const imageUrl = URL.createObjectURL(file);
+          this.newAuction.items[itemIndex].images.push({ file, url: imageUrl });
+        }
+      }
+    },
+    removeImage(itemIndex, imgIndex) {
+      this.newAuction.items[itemIndex].images.splice(imgIndex, 1);
     },
   },
 };
@@ -127,4 +159,27 @@ export default {
   padding: 10px;
   margin-top: 10px;
 }
+
+.image-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.image-preview button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>
+
