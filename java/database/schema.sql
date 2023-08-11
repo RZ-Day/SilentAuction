@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
+DROP TABLE IF EXISTS messages;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -51,16 +52,16 @@ CREATE TABLE bid (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE mesages (
+CREATE TABLE messages (
     message_id SERIAL PRIMARY KEY,
     from_id INT,
     to_id INT,
-    time_sent TIMESTAMP,
+    item_id INT,
     message_body varchar(300),
 
     FOREIGN KEY (from_id) REFERENCES users(user_id),
-    FOREIGN KEY (to_id) REFERENCES users(user_id)
+    FOREIGN KEY (to_id) REFERENCES users(user_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id)
 );
-
 
 COMMIT TRANSACTION;

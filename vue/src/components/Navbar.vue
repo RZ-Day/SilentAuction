@@ -3,6 +3,11 @@
     <div class="container">
       <nav>
         <ul>
+          <li v-if="this.$store.state.token!=''">
+            <router-link class="link" v-bind:to="{name: 'Messages', params: {currentUserId: this.$store.state.user.id, recipientId: 2}}">
+                Inbox
+            </router-link>
+          </li>
           <li>
             <router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link>
           </li>

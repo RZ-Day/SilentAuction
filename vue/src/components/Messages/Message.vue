@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
       {{ content }}
   </div>
 </template>
@@ -13,11 +13,13 @@ export default {
 }
 </script>
 
-<style>
-    .sent {
+<style scoped>
+    .body {
+        display: flex;
         background-color: rgb(172, 173, 231);
-    }
-    .received {
-        background-color: rgb(201, 201, 201);
+        min-height: 60px;;
+        padding-left: 25px;
+        padding-right: 25px;
+        align-items: center;
     }
 </style>

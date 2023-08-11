@@ -8,29 +8,24 @@
 
 <script>
 import WriteMessage from "../components/Messages/WriteMessage.vue";
-import Conversation from "../components/Messages/Conversation.vue"
+import Conversation from "../components/Messages/Conversation.vue";
+import messageService from "../services/MessageService.js";
 
 export default {
     name: 'messages',
     data() {
         return {
-            messageList: [
-                {   
-                    id: 1,
-                    to_id: 1,
-                    from_id: 2,
-                    time_sent: "8/10/23 3:00",
-                    message_body: "Epstein didn't do it."
-                },
-                {
-                    id: 2,
-                    to_id: 2,
-                    from_id: 1,
-                    time_sent: "8/10/23 3:01",
-                    message_body: "OK." 
-                }
-            ]
+            messageList: []
         }
+    },
+    created() {
+        messageService.getMessagesByUserId(5).then((response) => {
+            if (response == 200) {
+                this.messageList = response.data;
+            } else {
+                console.log("Unable to retrieve message data");
+            }
+        })
     },
     components: {
         WriteMessage,

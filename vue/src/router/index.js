@@ -95,11 +95,11 @@ const router = new Router({
       component: AddAuctionView
     },
     {
-      path: "/messages",
+      path: "/messages/:currentUserId/:recipientId",
       name: "Messages",
       component: Messages,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     }
   ]
