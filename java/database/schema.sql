@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
 
+
 CREATE TABLE users (
 	user_id SERIAL,
 	full_name varchar(50),
@@ -46,19 +47,10 @@ CREATE TABLE item (
     description TEXT,
     initial_price DECIMAL(10, 2) NOT NULL,
     current_price DECIMAL(10, 2) NOT NULL,
-    image_id INT,
     FOREIGN KEY (auction_id) REFERENCES auction(auction_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (image_id) REFERENCES image(image_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
--- Image Table
-CREATE TABLE image (
-    image_id SERIAL PRIMARY KEY,
-    item_id INT,
-    image_data BYTEA NOT NULL,
-    FOREIGN KEY (item_id) REFERENCES item(item_id)
-);
 
 -- Bid Table
 CREATE TABLE bid (
