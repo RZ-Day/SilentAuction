@@ -3,7 +3,6 @@ package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,11 +16,10 @@ public class User {
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
    private boolean allowAnonymous;
-   private List<UserContact> contacts;
    private String address;
-
-
    private String phoneNumber;
+
+   private String email;
    public User() { }
 
    public User(int id, String username, String password, String authorities) {
@@ -94,15 +92,13 @@ public class User {
    public void setPhoneNumber(String phoneNumber) {
       this.phoneNumber = phoneNumber;
    }
-
-   public List<UserContact> getContacts() {
-      return contacts;
+   public String getEmail() {
+      return email;
    }
 
-   public void setContacts(List<UserContact> contacts) {
-      this.contacts = contacts;
+   public void setEmail(String email) {
+      this.email = email;
    }
-
    public boolean isAllowAnonymous() {
       return allowAnonymous;
    }
@@ -135,8 +131,6 @@ public class User {
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
-              ", address=" + address + '\'' +
-              ", phoneNumber=" + phoneNumber + '\'' +
               '}';
    }
 }
