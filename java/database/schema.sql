@@ -11,21 +11,13 @@ CREATE TABLE users (
 	user_id SERIAL,
 	full_name varchar(50),
 	email varchar(50) NOT NULL UNIQUE,
-	phone INT NOT NULL UNIQUE,
+	phone varchar(10) NOT NULL UNIQUE,
 	address varchar(50) NOT NULL,
   	username varchar(50) NOT NULL UNIQUE,
   	password_hash varchar(200) NOT NULL,
   	role varchar(50) NOT NULL,
   	allow_anonymous BOOLEAN DEFAULT false,
   	CONSTRAINT PK_user PRIMARY KEY (user_id)
-);
-
-CREATE TABLE user_contacts (
-    contact_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(user_id),
-    contact_type VARCHAR(50) NOT NULL,
-    contact_information TEXT,
-    CONSTRAINT UC_user_contact UNIQUE (user_id, contact_type)
 );
 
 -- Auction Table

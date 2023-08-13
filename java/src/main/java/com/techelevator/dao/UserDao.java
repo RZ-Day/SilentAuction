@@ -15,7 +15,9 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
-    void updateUserContactInformation(String username, String contactInformation);
+    void updateUserAddress(String username, String address);
+    void updateUserEmail(String username, String email);
+    void updateUserPhone(String username, String phone);
 
     void updateAllowAnonymous(String username, boolean allowAnonymous);
 }
