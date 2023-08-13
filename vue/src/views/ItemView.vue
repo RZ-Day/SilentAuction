@@ -1,16 +1,22 @@
 <template>
-  <div>
+  <div id="item-page">
       <Item :item="item" />
+
+      <div class="bids-section">
+      <DisplayBids />
+    </div>
   </div>
+
 </template>
 
 <script>
 import Item from "../components/Item.vue"; // Import the Item component
 import auctionService from "@/services/AuctionsListService.js";
+import DisplayBids from '../components/DisplayBids.vue';
 
 export default {
   components: {
-    Item
+    Item, DisplayBids
   },
   data() {
     return {
@@ -42,5 +48,16 @@ export default {
 
 
 <style>
+
+.item-page {
+  display: flex;
+}
+
+.bids-section {
+  flex: 1; /* Take up 1 unit of space */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
 
 </style>

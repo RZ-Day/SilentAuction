@@ -1,17 +1,17 @@
 <template>
-
-
   <div class="centered-container">
-
     <!-- New Auctions Section -->
 
     <div class="section">
-      <h2>New Auctions!</h2>
+      <h2></h2>
       <div class="auction-grid">
         <router-link
           v-for="auction in mostRecentAuctions"
           :key="auction.auctionId"
-          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
+          :to="{
+            name: 'AuctionIndex',
+            params: { currentAuctionID: auction.auctionId },
+          }"
           class="auction-link"
         >
           <div class="auction-container">
@@ -19,58 +19,36 @@
               <h2>{{ auction.auctionName }}</h2>
             </div>
             <div class="auction-items">
-              <h3>Items:</h3>
               <ul>
                 <li v-for="item in auction.items" :key="item.itemId">
                   <p id="item-name">{{ item.itemName }}</p>
-                  <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
-                  <p id="item-price">- Opening Price: ${{ item.currentPrice }}</p>
-                  <p id="item-price">- Current Bid: ${{ item.currentPrice + 100 }}</p>
-                  
-                </li>
-              </ul>
-            </div>
-            <div class="auction-details-time">
-              <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
-            </div>
-          </div>
-        </router-link>
-      </div>
-    </div>
-    
+                  <p>
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                    <img
+                      src="@/Assets/itemTemp.png"
+                      alt="Auction Icon"
+                      class="header-icon"
+                    />
+                  </p>
 
-    <!-- Ongoing Auctions Section -->
-    <div class="section">
-      <h2>Ongoing Auctions</h2>
-      <div class="auction-grid">
-        <router-link
-          v-for="auction in ongoingAuctions"
-          :key="auction.auctionId"
-          :to="{name: 'AuctionIndex', params: {currentAuctionID: auction.auctionId} }"
-          class="auction-link"
-        >
-          <div class="auction-container">
-            <div class="auction-details">
-              <h2>{{ auction.auctionName }}</h2>
-            </div>
-            <div class="auction-items">
-              <h3>Items:</h3>
-              <ul>
-                <li v-for="item in auction.items" :key="item.itemId">
-                  <p id="item-name">{{ item.itemName }}</p>
-                  <p id="item-price">- Current Price: ${{ item.currentPrice }}</p>
-                   <p><img src="@/Assets/itemTemp.png" alt="Auction Icon" class="header-icon" /></p>
+                  <p id="item-price">
+                    Current Bid: ${{ item.currentPrice + 100 }}
+                  </p>
                 </li>
               </ul>
             </div>
             <div class="auction-details-time">
-              <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
+              <p>Time Left: {{ calculateRemainingTime(auction.endTime) }}</p>
             </div>
           </div>
         </router-link>
       </div>
     </div>
-    
+
     <div class="bottom-row">
       <!-- Add content for the bottom row here -->
     </div>
@@ -84,10 +62,10 @@ export default {
   },
   computed: {
     mostRecentAuctions() {
-      return this.auctions.slice(0, 4); // Get the four most recent auctions
+      return this.auctions.slice(0);
     },
     ongoingAuctions() {
-      return this.auctions.slice(4); // Get the ongoing auctions
+      return this.auctions.slice(4);
     },
   },
   methods: {
@@ -103,15 +81,34 @@ export default {
       };
       return new Date(timestamp).toLocaleString(undefined, options);
     },
+    calculateRemainingTime(endTime) {
+      const currentDate = new Date();
+      const auctionEndTime = new Date(endTime);
+      const timeDifference = auctionEndTime - currentDate;
+
+      const millisecondsPerMinute = 60 * 1000; 
+      const millisecondsPerHour = 60 * millisecondsPerMinute; 
+      const millisecondsPerDay = 24 * millisecondsPerHour; 
+
+      if (timeDifference < millisecondsPerDay) {
+        const hours = Math.floor(timeDifference / millisecondsPerHour);
+        const minutes = Math.floor(
+          (timeDifference % millisecondsPerHour) / millisecondsPerMinute
+        );
+        return `${hours * -1} hours ${minutes * -1} minutes`;
+      } else {
+        const remainingDays = Math.ceil(timeDifference / millisecondsPerDay);
+        return `${remainingDays} days`;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
 .centered-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  place-items: center;
   height: 100vh;
 }
 
@@ -119,6 +116,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+  justify-content: center; /* Center the grid items horizontally */
 }
 
 .auction-link {
@@ -127,19 +125,21 @@ export default {
 }
 
 .auction-container {
-  border: 1px solid rgb(158, 137, 137);
-  padding: 20px;
+  border: 1px solid rgb(185, 177, 177);
+  padding: 24px;
   box-sizing: border-box;
-  background-color: #f8f8f8;
+  background-color: #fffdfdfd;
   color: #333;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the values as needed */
+  transition: transform 0.3s, box-shadow 0.75s;
+  height: 100%;
 }
 
+
 .auction-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
 }
 
 .auction-details h2 {
@@ -149,7 +149,7 @@ export default {
 }
 
 .auction-details-time {
-  color: #ff0000;
+  color: #000000;
 }
 
 .auction-items {
@@ -158,7 +158,7 @@ export default {
 
 .auction-items ul {
   list-style: none;
-  padding: 0;
+  justify-content: center;
 }
 
 .auction-items li {

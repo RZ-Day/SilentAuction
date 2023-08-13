@@ -5,7 +5,7 @@ export default {
         return axios.get('/auctions')
     },
 
-    addAuction() {
-        return axios.post('/create-auction', this.newAuction)
+    addAuction(newAuction) {
+        return axios.post('/create/auction', newAuction)
     }
 }

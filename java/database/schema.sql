@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
 
+
 CREATE TABLE users (
 	user_id SERIAL,
 	full_name varchar(50),
@@ -32,7 +33,9 @@ CREATE TABLE auction (
     auction_id SERIAL PRIMARY KEY,
     auction_name VARCHAR(255) NOT NULL,
     start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL
+    end_time TIMESTAMP NOT NULL,
+    isPrivate BOOLEAN NOT NULL,
+    privateKey INT
 );
 
 -- Item Table
@@ -44,9 +47,10 @@ CREATE TABLE item (
     description TEXT,
     initial_price DECIMAL(10, 2) NOT NULL,
     current_price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (auction_id) REFERENCES Auction(auction_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (auction_id) REFERENCES auction(auction_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
 
 -- Bid Table
 CREATE TABLE bid (

@@ -8,7 +8,10 @@ public class Auction {
     private String auctionName;
     private Date startTime;
     private Date endTime;
-    private List<Item> items; // Assuming you have an Item class
+    private boolean isPrivate;
+    private int privateKey;
+    private List<Item> items;
+
 
 
     public int getAuctionId() {
@@ -25,6 +28,22 @@ public class Auction {
 
     public Date getEndTime() {
         return endTime;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public int getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(int privateKey) {
+        this.privateKey = privateKey;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     public List<Item> getItems() {

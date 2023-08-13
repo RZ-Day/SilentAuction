@@ -5,11 +5,12 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import AuctionListView from "@/views/AuctionListView.vue";
+import DisplayAuctionListView from "@/views/DisplayAuctionListView.vue";
 import UserProfile from "@/views/UserProfile.vue";
 import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
+import PrivateAuctionView from "@/views/PrivateAuctionView.vue";
 
 
 Vue.use(Router)
@@ -32,7 +33,7 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -62,7 +63,7 @@ const router = new Router({
     {
       path: "/auctions",
       name: "AuctionList",
-      component: AuctionListView,
+      component: DisplayAuctionListView,
       meta: {
         requiresAuth: false
       }
@@ -89,9 +90,17 @@ const router = new Router({
       }
     },
     {
-      path: "/add-auction",
+      path: "/auction/create",
       name: "AddAuction",
-      component: AddAuctionView
+      component: AddAuctionView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/auctions/search/private",
+      name: "PrivateAuctionView",
+      component: PrivateAuctionView
     }
   ]
 })

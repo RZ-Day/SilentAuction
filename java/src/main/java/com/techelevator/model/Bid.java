@@ -1,52 +1,67 @@
 package com.techelevator.model;
 
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Bid {
-    private int bidId;
+    private long bidId;
+    private long userId;
+    private BigDecimal bidAmount;
     private Date bidTime;
-    private double bidAmount;
-    private Item bidItem;
-    private int userId;
 
-    public int getBidId() {
+
+
+    public Bid() {
+        // Default constructor
+    }
+
+    public Bid(long bidId, long userId, BigDecimal bidAmount, Date bidTime) {
+        this.bidId = bidId;
+        this.userId = userId;
+        this.bidAmount = bidAmount;
+        this.bidTime = bidTime;
+    }
+
+    public long getBidId() {
         return bidId;
     }
 
-    public Date getBidTimestamp() {
-        return bidTime;
-    }
-
-    public double getBidAmount() {
-        return bidAmount;
-    }
-
-    public Item getItem() {
-        return bidItem;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setBidId(int bidId) {
+    public void setBidId(long bidId) {
         this.bidId = bidId;
     }
 
-    public void setBidTimestamp(Date timestamp) {
-        this.bidTime = timestamp;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setBidAmount(double amount) {
-        this.bidAmount = amount;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public void setBidItem(Item item) {
-        this.bidItem = item;
+    public BigDecimal getBidAmount() {
+        return bidAmount;
     }
 
-    public void setUserId(int id) {
-        this.userId = id;
+    public void setBidAmount(BigDecimal bidAmount) {
+        this.bidAmount = bidAmount;
+    }
+
+    public Date getBidTime() {
+        return bidTime;
+    }
+
+    public void setBidTime(Date bidTime) {
+        this.bidTime = bidTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "bidId=" + bidId +
+                ", userId=" + userId +
+                ", bidAmount=" + bidAmount +
+                ", bidTime=" + bidTime +
+                '}';
     }
 }
