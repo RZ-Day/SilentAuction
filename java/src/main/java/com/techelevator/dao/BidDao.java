@@ -11,9 +11,13 @@ public interface BidDao {
     Bid getBidById(int bidId);
 
     List<Bid> getBidsOfItem(Item item);
+    List<Bid> getBidsOfItem(int itemId);
     List<Bid> getBidsOfUser(User user);
 
+    List<Bid> getBidsOfAuction(int auctionId);
+
     Bid getHighestBidOfItem(Item item);
+    Bid getHighestBidOfItem(int itemId);
 
     Bid createBid(Bid bid);
     Bid createBid(int itemId, long userId, BigDecimal bidAmount);

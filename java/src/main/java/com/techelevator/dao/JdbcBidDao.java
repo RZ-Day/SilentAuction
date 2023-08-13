@@ -52,7 +52,7 @@ public class JdbcBidDao implements BidDao {
         return getBidsOfItem(item.getItemId());
     }
 
-    private List<Bid> getBidsOfItem(int itemId) {
+    public List<Bid> getBidsOfItem(int itemId) {
         List<Bid> itemBids = new ArrayList<>();
         String sql = "SELECT bid_id, item_id, user_id, bid_amount, bid_time " +
                 "FROM bid WHERE item_id = ?;";
@@ -92,6 +92,47 @@ public class JdbcBidDao implements BidDao {
         return userBids;
     }
 
+    public List<Bid> getBidsOfAuction(int auctionId) {
+        /*
+        SELECT * FROM auction LEFT JOIN item i ON auction.auction_id = i.auction_id
+        LEFT JOIN bid b ON i.item_id = b.item_id WHERE auction.auction_id = 1;
+        */
+        String sql = "SELECT * FROM auction LEFT JOIN item i ON auction.auction_id = i.auction_id " +
+                     "LEFT JOIN bid b ON i.item_id = b.item_id WHERE auction.auction_id = ?;";
+        List <Bid> bids;
+        Map<Integer, Bid> highestBidMap = new HashMap<>();
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, auctionId);
+            while (results.next()) {
+                // bids.add(mapRowToBid(results)); // OLD don't use this pls thanks
+                Bid b = mapRowToBid(results);
+                if (!highestBidMap.containsKey(b.getBidItem().getItemId())) {
+                    highestBidMap.put(b.getBidItem().getItemId(), b);
+                } else {
+                    // Only update if price is higher :)
+                    // b.getBidAmount(); // this bid's price
+                    // highestBidMap.get(b.getBidId()).getBidAmount(); // stored bid's price
+                    if (b.getBidAmount().compareTo(highestBidMap.get(b.getBidItem().getItemId()).getBidAmount()) >= 0) {
+                        // this bid's price is higher so replace
+                        highestBidMap.put(b.getBidItem().getItemId(), b);
+                    }
+                }
+            }
+            /*
+            for (Map.Entry<Integer, Bid> x : highestBidMap.entrySet()) {
+                bids.add(x.getValue());
+            }
+            */
+            bids = new ArrayList<>(highestBidMap.values());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return bids;
+    }
+
     private Item getItemFromId(int id) {
         Item item = null;
 
@@ -119,7 +160,7 @@ public class JdbcBidDao implements BidDao {
         return getHighestBidOfItem(item.getItemId());
     }
 
-    private Bid getHighestBidOfItem(int itemId) {
+    public Bid getHighestBidOfItem(int itemId) {
         Bid bid = new Bid();
         String sql = "SELECT bid_id, item_id, user_id, bid_amount, bid_time FROM bid " +
                      "WHERE item_id = ? ORDER BY bid_amount DESC LIMIT 1;";
