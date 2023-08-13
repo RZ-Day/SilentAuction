@@ -9,7 +9,7 @@ public class Bid {
     private long userId;
     private BigDecimal bidAmount;
     private Date bidTime;
-
+    private Item bidItem;
 
 
     public Bid() {
@@ -43,6 +43,10 @@ public class Bid {
         return bidAmount;
     }
 
+    public Item getBidItem() {
+        return bidItem;
+    }
+
     public void setBidAmount(BigDecimal bidAmount) {
         this.bidAmount = bidAmount;
     }
@@ -53,6 +57,10 @@ public class Bid {
 
     public void setBidTime(Date bidTime) {
         this.bidTime = bidTime;
+    }
+
+    public void setBidItem(Item item) {
+        this.bidItem = item;
     }
 
     @Override

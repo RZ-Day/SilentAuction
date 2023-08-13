@@ -5,6 +5,7 @@ import com.techelevator.model.Item;
 import com.techelevator.model.Auction;
 import com.techelevator.model.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 public interface BidDao {
     Bid getBidById(int bidId);
@@ -15,5 +16,5 @@ public interface BidDao {
     Bid getHighestBidOfItem(Item item);
 
     Bid createBid(Bid bid);
-    Bid createBid(int itemId, int userId, double bidAmount);
+    Bid createBid(int itemId, long userId, BigDecimal bidAmount);
 }

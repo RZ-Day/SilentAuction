@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,14 +138,13 @@ public class JdbcBidDao implements BidDao {
     }
 
     public Bid createBid(Bid bid) {
-        return createBid(bid.getItem().getItemId(), bid.getUserId(), bid.getBidAmount());
+        return createBid(bid.getBidItem().getItemId(), bid.getUserId(), bid.getBidAmount());
     }
 
-    public Bid createBid(int itemId, int userId, double bidAmount) {
+    public Bid createBid(int itemId, long userId, BigDecimal bidAmount) {
         Bid bid = null;
         String sql = "INSERT INTO bid (item_id, user_id, bid_amount, bid_time) " +
                      "VALUES (?, ?, ?, now()) RETURNING bid_id;";
-
         try {
             int resultId = jdbcTemplate.queryForObject(sql, int.class, itemId, userId, bidAmount);
             bid = getBidById(resultId);
@@ -162,9 +162,10 @@ public class JdbcBidDao implements BidDao {
         Bid bid = new Bid();
         bid.setBidId(rowSet.getInt("bid_id"));
         bid.setBidItem(getItemFromId(rowSet.getInt("item_id")));
-        bid.setBidTimestamp(rowSet.getTimestamp("bid_time"));
-        bid.setBidAmount(rowSet.getDouble("bid_amount"));
+        bid.setBidTime(rowSet.getDate("bid_time"));
+        bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
         bid.setUserId(rowSet.getInt("user_id"));
+
         return bid;
     }
 }
