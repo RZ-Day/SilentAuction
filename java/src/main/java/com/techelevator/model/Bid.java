@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 public class Bid {
     private long bidId;
     private long userId;
+    private String username = "";
     private BigDecimal bidAmount;
     private Date bidTime;
     private Item bidItem;
@@ -39,6 +40,14 @@ public class Bid {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public BigDecimal getBidAmount() {
         return bidAmount;
     }
@@ -63,6 +72,7 @@ public class Bid {
         this.bidItem = item;
     }
 
+    /*
     @Override
     public String toString() {
         return "Bid{" +
@@ -72,4 +82,6 @@ public class Bid {
                 ", bidTime=" + bidTime +
                 '}';
     }
+
+     */
 }

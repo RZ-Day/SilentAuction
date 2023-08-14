@@ -54,8 +54,11 @@ public class JdbcBidDao implements BidDao {
 
     public List<Bid> getBidsOfItem(int itemId) {
         List<Bid> itemBids = new ArrayList<>();
-        String sql = "SELECT bid_id, item_id, user_id, bid_amount, bid_time " +
-                "FROM bid WHERE item_id = ?;";
+        //String sql = "SELECT bid_id, item_id, user_id, bid_amount, bid_time " +
+        //        "FROM bid WHERE item_id = ? ORDER BY bid_amount DESC LIMIT 50;";
+        String sql = "SELECT b.bid_id, b.item_id, b.user_id, b.bid_amount, b.bid_time, u.username " +
+                     "FROM bid b LEFT JOIN users u ON b.user_id = u.user_id " +
+                     "WHERE b.item_id = ? ORDER BY bid_amount DESC LIMIT 50;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, itemId);
             while (results.next()) {
@@ -206,6 +209,9 @@ public class JdbcBidDao implements BidDao {
         bid.setBidTime(rowSet.getDate("bid_time"));
         bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
         bid.setUserId(rowSet.getInt("user_id"));
+        if (rowSet.getString("username") != null && !rowSet.getString("username").trim().isEmpty()) {
+            bid.setUsername(rowSet.getString("username"));
+        }
 
         return bid;
     }
