@@ -1,10 +1,6 @@
 <template>
   <div class="auction-page">
     
-
-
-    
-    
     <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
     <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
 

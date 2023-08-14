@@ -35,8 +35,9 @@ CREATE TABLE auction (
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     isPrivate BOOLEAN NOT NULL,
-    privateKey INT
+    privateKey varchar(32) default 'noPrivateKeySet'
 );
+
 
 -- Item Table
 CREATE TABLE item (

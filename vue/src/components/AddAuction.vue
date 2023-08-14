@@ -19,6 +19,22 @@
           <label for="endTime">End Time:</label>
           <input type="datetime-local" v-model="newAuction.endTime" required />
         </div>
+        <div class="form-group">
+          <label for="isPrivate">Invite Only:</label>
+          <input type="checkbox" v-model="newAuction.isPrivate" />
+        </div>
+        <div v-if="newAuction.isPrivate" class="form-group">
+          <label for="privateKey">Private Auction Password:</label>
+          <input
+            type="text"
+            v-model="newAuction.privateKey"
+            minlength="4"
+            maxlength="16"
+            required
+            placeholder="length 4-16 characters"
+          />
+          <p class="save-me">Save this password! Your guests will need it to locate the auction. </p>
+        </div>
 
         <h3>Add Items</h3>
         <div
@@ -26,35 +42,51 @@
           :key="index"
           class="item-form"
         >
-          <div class="form-group">
-            <label for="itemName">Item Name:</label>
-            <input v-model="item.itemName" required />
+          <div class="item-button-container">
+            <button @click="toggleItem(index)" class="item-button">
+              {{ isActive(index) ? "Hide Item" : "Edit Item" }}
+            </button>
           </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea v-model="item.description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="initialPrice">Initial Price:</label>
-            <input type="number" v-model="item.initialPrice" required />
-          </div>
-          <div class="form-group">
-            <label for="currentPrice">Current Price:</label>
-            <input type="number" v-model="item.currentPrice" required />
-          </div>
-          <div class="form-group">
-            <label for="images">Images:</label>
-            <input type="file" multiple @change="handleImageUpload(index)" />
-            <div v-for="(image, imgIndex) in item.images" :key="imgIndex" class="image-preview">
-              <img :src="image.url" alt="Image Preview" />
-              <button type="button" @click="removeImage(index, imgIndex)">Remove</button>
+          <div v-if="isActive(index)">
+            <div class="form-group">
+              <label for="itemName">Item Name:</label>
+              <input v-model="item.itemName" required />
             </div>
-            <p>Image Count: {{ totalImages[index] }}</p>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea v-model="item.description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="initialPrice">Initial Price:</label>
+              <input type="number" v-model="item.initialPrice" required />
+            </div>
+            <div class="form-group">
+              <label for="currentPrice">Current Price:</label>
+              <input type="number" v-model="item.currentPrice" required />
+            </div>
+            <div class="form-group">
+              <label for="images">Images:</label>
+              <input type="file" multiple @change="handleImageUpload(index)" />
+              <div
+                v-for="(image, imgIndex) in item.images"
+                :key="imgIndex"
+                class="image-preview"
+              >
+                <img :src="image.url" alt="Image Preview" />
+                <button type="button" @click="removeImage(index, imgIndex)">
+                  Remove
+                </button>
+              </div>
+              <p>Image Count: {{ totalImages[index] }}</p>
+            </div>
           </div>
         </div>
-        <button type="button" @click="addItem">Add Item</button>
 
-        <input type="submit" value="Create Auction">
+        <div class="bottom-buttons">
+          <button type="button" @click="addItem">Add Item</button>
+
+          <input type="submit" value="Create Auction" />
+        </div>
       </form>
     </div>
   </div>
@@ -70,6 +102,8 @@ export default {
         auctionName: "",
         startTime: "",
         endTime: "",
+        isPrivate: false,
+        privateKey: "",
         items: [
           {
             itemName: "",
@@ -80,14 +114,28 @@ export default {
           },
         ],
       },
+      activeIndex: -1,
     };
   },
   computed: {
     totalImages() {
-      return this.newAuction.items.map(item => item.images.length);
-    }
+      return this.newAuction.items.map((item) => item.images.length);
+    },
   },
   methods: {
+    toggleItem(index) {
+      if (this.activeIndex === index) {
+        this.activeIndex = -1;
+      } else {
+        this.activeIndex = index;
+      }
+    },
+    showItemButton(index) {
+      return !this.isActive(index) && !this.newAuction.items[index].itemName;
+    },
+    isActive(index) {
+      return this.activeIndex === index;
+    },
     addItem() {
       this.newAuction.items.push({
         itemName: "",
@@ -96,8 +144,13 @@ export default {
         currentPrice: 0,
         images: [],
       });
+      this.activeIndex = this.newAuction.items.length - 1;
     },
     createAuction() {
+      this.newAuction.items.forEach(item => {
+    delete item.images;
+  });
+      
       auctionService
         .addAuction(this.newAuction)
         .then(() => {
@@ -112,6 +165,8 @@ export default {
       this.newAuction.auctionName = "";
       this.newAuction.startTime = "";
       this.newAuction.endTime = "";
+      this.newAuction.privateKey = "";
+      this.newAuction.isPrivate = false;
       this.newAuction.items = [
         {
           itemName: "",
@@ -121,6 +176,7 @@ export default {
           images: [],
         },
       ];
+      this.activeIndex = -1;
     },
     handleImageUpload(itemIndex) {
       const input = event.target;
@@ -135,11 +191,12 @@ export default {
     removeImage(itemIndex, imgIndex) {
       this.newAuction.items[itemIndex].images.splice(imgIndex, 1);
     },
+    onUpload() {},
   },
 };
 </script>
 
-<style>
+<style scoped>
 .form-container {
   max-width: 600px;
   margin: 0 auto;
@@ -157,7 +214,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px;
 }
 
 .image-preview {
@@ -181,5 +238,19 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
-</style>
 
+.item-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.bottom-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.save-me {
+  color: #ff1100;
+}
+</style>

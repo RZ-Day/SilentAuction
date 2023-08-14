@@ -9,7 +9,7 @@
     </div>
 
     <div class="auction-list-container">
-      <AuctionList :auctions="auctions" />
+      <AuctionList :auctions="publicAuctions" />
     </div>
     
     <div class="find-private-auction-container">
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import AuctionList from "@/components/DisplayAuctionList"; // Import the AuctionList component
+import AuctionList from "@/components/DisplayAuctionList"; 
 import auctionService from "@/services/AuctionsListService.js";
 
 
@@ -31,13 +31,19 @@ export default {
   },
   data() {
     return {
-      auctions: [], // Replace with your actual array of auction objects
+      auctions: [], 
     };
+  },
+  computed: {
+    publicAuctions() {
+      return this.auctions.filter(auction => !auction.isPrivate);
+    },
   },
   created() {
     auctionService.getAuctions().then((response) => {
       if (response.status === 200) {
         this.auctions = response.data;
+        console.log(this.auctions); // Debug statement
       } else {
         console.log("If you're seeing this message then your code SUCKS");
       }
@@ -83,25 +89,25 @@ export default {
 
 
 .auction-list-container {
-  flex: 1; /* Expand and take remaining space */
+  flex: 1; 
   width: 100%;
-  max-width: 1200px; /* Set a maximum width if needed */
+  max-width: 1200px; 
 }
 
 .find-private-auction-container {
   position: absolute;
-  top: -250px; /* Adjust the top position as needed */
-  right: 100px; /* Adjust the right position as needed */
+  top: -250px; 
+  right: 100px; 
 }
 
 .background-image {
-  background-image: url('@/Assets/back4.jpg'); /* Path to your image */
+  background-image: url('@/Assets/back4.jpg'); 
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
   position: fixed;
   width: 100%;
-  height: 100%; /* Adjust the height as needed */
+  height: 100%; 
   bottom: 0; /* Anchors the image to the bottom of the screen */
   z-index: -1; /* Place the image behind other content */
 }
