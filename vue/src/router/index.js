@@ -11,6 +11,7 @@ import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
 import PrivateAuctionView from "@/views/PrivateAuctionView.vue";
+import UsersWatchListView from "@/views/UsersWatchListView.vue";
 
 
 Vue.use(Router)
@@ -101,7 +102,15 @@ const router = new Router({
       path: "/auctions/search/private",
       name: "PrivateAuctionView",
       component: PrivateAuctionView
-    }
+    },
+    {
+      path: "/profile/userswatchlist",
+      name: "UsersWatchListView",
+      component: UsersWatchListView,
+      meta: {
+        requiresAuth: true
+      }
+    },
   ]
 })
 

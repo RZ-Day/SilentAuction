@@ -21,7 +21,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     activeAuctionID: 0,
-    activeItemID: 0
+    activeItemID: 0,
+    auctionUsersWatchlList: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -45,6 +46,14 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_ITEM(state, itemID) {
       state.activeItemID = itemID;
+    },
+    SAVE_USERSWATCHLIST(state, auction){
+      state.auctionUsersWatchlList.push(auction);
+    },
+    DELETE_USERSWATCHLIST(state,userswatchlistToDelete){
+      state.userswatchlist = state.userswatchlist.filter((userswatchlist) => {
+        return userswatchlist !== userswatchlistToDelete;
+      })
     },
   },
   actions: {

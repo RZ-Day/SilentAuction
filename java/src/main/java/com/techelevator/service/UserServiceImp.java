@@ -15,6 +15,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public void updateUserContactInformation (String username, String contactInformation) {
+        userDao.updateUserContactInformation(username, contactInformation);
+    }
+
+    @Override
     public void updateAllowAnonymous(String username, boolean allowAnonymous) {
         userDao.updateAllowAnonymous(username, allowAnonymous);
     }
@@ -22,20 +27,5 @@ public class UserServiceImp implements UserService {
     @Override
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
-    }
-
-    @Override
-    public void updateUserAddress(String username, String address) {
-        userDao.updateUserAddress(username, address);
-    }
-
-    @Override
-    public void updateUserEmail(String username, String email) {
-        userDao.updateUserEmail(username, email);
-    }
-
-    @Override
-    public void updateUserPhone(String username, String phone) {
-        userDao.updateUserPhone(username, phone);
     }
 }

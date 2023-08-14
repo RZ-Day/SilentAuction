@@ -1,12 +1,11 @@
 <template>
   <div class="bids-section">
     <h2>List of Bids</h2>
-    <ul class="bid-list" v-show="this.bids.length > 0">
+    <ul class="bid-list">
       <li v-for="bid in sortedBids" :key="bid.bidId">
-        {{ bid.username }}: ${{ bid.bidAmount }} at {{ bid.bidTime }}
+        {{ bid.bidderName }}: ${{ bid.amount }}
       </li>
     </ul>
-    <p v-show="this.bids.length == 0">No bids have been made on this item yet. Maybe you can be the first?</p>
     
     <button @click="showBidForm">Place Bid</button>
     
@@ -23,7 +22,6 @@
 </template>
 
 <script>
-import bidService from "@/services/BidService.js";
 export default {
   data() {
     return {
@@ -39,12 +37,6 @@ export default {
         amount: null
       }
     };
-  },
-  created() {
-    bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
-      this.bids = response.data;
-      console.log(this.bids);
-    });
   },
   computed: {
     sortedBids() {

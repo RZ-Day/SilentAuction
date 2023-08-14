@@ -1,6 +1,12 @@
 <template>
   <div class="item-page">
     <div class="item-details">
+      <div class="watch-list-label">
+        <input type="checkbox" v-model="isChecked" />
+        <span class="checkmark">Add To WatchList</span>
+      </div>
+      <br />
+
       <h2>{{ item.itemName }}</h2>
       <p>Description: {{ item.description }}</p>
 
@@ -19,6 +25,12 @@ export default {
   name: "ItemPage",
   props: {
     item: Object,
+  },
+  data(){
+    return {
+      showWatchListMessage: false,
+      isChecked: false
+    };
   },
 };
 </script>
@@ -58,6 +70,14 @@ export default {
 .item-icon {
   width: 400px;
   height: auto;
+}
+
+.watch-list-checkbox{
+  margin-right: 10px;
+}
+
+.checkmark{
+  font-weight: bold;
 }
 
 </style>

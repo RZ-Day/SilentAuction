@@ -5,6 +5,11 @@
 
     
     
+    <div class="watch-list-label">
+      <input type="checkbox" v-model="isChecked" />
+      <span class="checkmark">Add To WatchList</span>
+      </div>
+    
     <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
     <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
 
@@ -29,6 +34,12 @@ export default {
   props: {
     auction: Object,
   },
+  data(){
+    return {
+      showWatchListMessage: false,
+      isChecked: false
+    };
+  },
   methods: {
     formatDateTime(timestamp) {
       const options = {
@@ -42,6 +53,18 @@ export default {
       };
       return new Date(timestamp).toLocaleString(undefined, options);
     },
+    watchListChange(){
+      this.showWatchListMessage = false;
+    },
+    addToWatchList(auction){
+      this.addToWatchList= !this.addToWatchList;
+      this.showWatchListMessage = true;
+      this.usersWatchList(auction);
+      window.alert("Your watch list is added " + auction.auctionName);
+    },
+    usersWatchList(auction){
+      this.$store.commit("SAVE_USERSWATCHLIST", auction);
+    }
   },
 };
 </script>
@@ -83,6 +106,14 @@ export default {
 .item-list {
   list-style: none; /* Remove bullet points */
   padding: 0;
+}
+
+.watch-list-checkbox{
+  margin-right: 10px;
+}
+
+.checkmark{
+  font-weight: bold;
 }
 </style>
 

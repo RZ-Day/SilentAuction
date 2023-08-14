@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export default {
 
   login(user) {
@@ -8,6 +9,12 @@ export default {
 
   register(user) {
     return axios.post('/register', user)
+  },
+
+  userswatchlist(userswatchlist){
+    return axios.post('/profile/userswatchlist', userswatchlist)
   }
+
+  
 
 }

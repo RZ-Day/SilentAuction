@@ -52,6 +52,10 @@ export default {
           link: "profile",
         },
         {
+          label: "Watch List",
+          link: "profile/userswatchlist"
+        },
+        {
           label: "Logout",
           link: "logout",
         },
