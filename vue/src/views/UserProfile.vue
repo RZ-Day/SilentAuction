@@ -30,10 +30,7 @@
 
     <!-- Display User Profile Data -->
     <div class="user-info">
-      <h2>{{ user.username }}'s Profile</h2>
-      <p>Email: {{ user.email }}</p>
-      <p>Address: {{ user.address }}</p>
-      <p>Phone Number: {{ user.phone }}</p>
+      <h2>{{ this.$store.state.user.username }}'s Profile</h2>
       <!-- Add more fields as needed -->
     </div>
   </div>
@@ -118,7 +115,7 @@ export default {
     async fetchUserProfile() {
       try {
         if (this.$store.state.user.username) {
-        const response = await this.$axios.get('/profile/profile', {
+        const response = await this.$axios.get('/api/profile/update', {
           params: { username: this.$store.state.user.username },
         });
         this.user = response.data;

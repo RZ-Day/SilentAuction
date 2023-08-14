@@ -16,7 +16,7 @@ public class UserProfileController {
         this.userService = userService;
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<String> updateUserProfile(@RequestParam String username,
                                                     @RequestParam(required = false) String phone,
                                                     @RequestParam(required = false) String email,
