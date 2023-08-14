@@ -1,18 +1,16 @@
 <template>
   <div class="bids-section">
     <h2>List of Bids</h2>
-    <ul class="bid-list">
+    <ul class="bid-list" v-show="this.bids.length > 0">
       <li v-for="bid in sortedBids" :key="bid.bidId">
-        {{ bid.bidderName }}: ${{ bid.amount }}
+        {{ bid.username }}: ${{ bid.bidAmount }} at {{ bid.bidTime }}
       </li>
     </ul>
+    <p v-show="this.bids.length == 0">No bids have been made on this item yet. Maybe you can be the first?</p>
     
     <button @click="showBidForm">Place Bid</button>
     
     <form v-if="showForm" @submit.prevent="submitBid">
-      <label for="bidderName">Bidder Name:</label>
-      <input type="text" v-model="newBid.bidderName" required>
-      
       <label for="bidAmount">Bid Amount:</label>
       <input type="number" v-model="newBid.amount" required>
       
@@ -22,6 +20,7 @@
 </template>
 
 <script>
+import bidService from "@/services/BidService.js";
 export default {
   data() {
     return {
@@ -31,6 +30,7 @@ export default {
         { bidId: 3, bidderName: 'UserC', amount: 200 },
         { bidId: 4, bidderName: 'UserD', amount: 220 },
       ],
+      currentHighestBid: 0,
       showForm: false,
       newBid: {
         bidderName: '',
@@ -38,12 +38,21 @@ export default {
       }
     };
   },
+  created() {
+    bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
+      this.bids = response.data;
+      // console.log(this.bids);
+
+      // Update highest bid
+      this.currentHighestBid = this.bids[0].bidAmount;
+    });
+  },
   computed: {
     sortedBids() {
       return this.bids.slice().sort((a, b) => b.amount - a.amount);
     },
     highestBid() {
-      return this.sortedBids.length > 0 ? this.sortedBids[0].amount : 0;
+      return this.bids[0].bidAmount;
     }
   },
   methods: {
@@ -51,18 +60,16 @@ export default {
       this.showForm = true;
     },
     submitBid() {
-      if (
-        this.newBid.bidderName &&
-        this.newBid.amount &&
-        this.newBid.amount > this.highestBid
-      ) {
-        const newBidId = this.bids.length + 1;
-        this.bids.push({
-          bidId: newBidId,
-          bidderName: this.newBid.bidderName,
-          amount: this.newBid.amount
-        });
+      if (this.newBid.amount > this.highestBid) {
+        // this.$store.state.user.username
+        // this.$route.params.currentItemID
+
+        let dto = { username: this.$store.state.user.username, itemId: this.$route.params.currentItemID, bidAmount: this.newBid.amount };
         
+        bidService.addBid(dto).then(response => {
+          console.log(response);
+        });
+
         this.newBid.bidderName = '';
         this.newBid.amount = null;
         this.showForm = false;

@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, full_name, email, phone, address, username, password_hash, role FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -72,9 +72,27 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateUserContactInformation(String username, String contactInformation) {
-        String sql = "UPDATE users SET contact_information = ? WHERE username =?";
-        jdbcTemplate.update(sql, contactInformation, username);
+    public void updateUserEmail(String username, String email) {
+        String sql = "UPDATE users SET email = ? WHERE username =?";
+        jdbcTemplate.update(sql, email, username);
+    }
+
+    @Override
+    public void updateUserAddress(String username, String address) {
+        String sql = "UPDATE users SET address = ? WHERE username =?";
+        jdbcTemplate.update(sql, address, username);
+    }
+
+    @Override
+    public void updateUserPhone(String username, String phone) {
+        int phoneNumber = 0;
+        try {
+            phoneNumber = Integer.parseInt(phone);
+        } catch (NumberFormatException e) {
+            // ya dun goofed kid
+        }
+        String sql = "UPDATE users SET phone = ? WHERE username =?";
+        jdbcTemplate.update(sql, phoneNumber, username);
     }
 
     @Override

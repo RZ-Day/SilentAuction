@@ -8,6 +8,7 @@
       <select v-model="selectedType">
         <option value="email">Email</option>
         <option value="phone">Phone</option>
+        <option value="address">Address</option>
       </select>
     </div>
     
@@ -15,7 +16,7 @@
     <div class="form-group">
       <label>New Contact Information:</label>
       <input v-model="newContactInfo" />
-      <button @click="updateContactInformation">Update Contact Info</button>
+      <button @click="updateContactInfo">Update Contact Info</button>
     </div>
     
     <!-- Allow Anonymous Setting -->
@@ -29,77 +30,117 @@
 
     <!-- Display User Profile Data -->
     <div class="user-info">
-      <h2>{{ user.username }}'s Profile</h2>
-      <p>Email: {{ user.email }}</p>
-      <p>Address: {{ user.address }}</p>
-      <p>Phone Number: {{ user.phoneNumber }}</p>
+      <h2>{{ this.$store.state.user.username }}'s Profile</h2>
       <!-- Add more fields as needed -->
     </div>
   </div>
 </template>
 
 <script>
+import userProfileService from "@/services/UserProfileService.js";
 export default {
   data() {
     return {
-      selectedType: 'email', // Default selected type
+      selectedType: 'email',
       newContactInfo: '',
       allowAnonymous: false,
       isLoading: false,
       errorMessage: '',
       successMessage: '',
-      user: {}, // Initialize an empty user object
+      user: {},
+      phone: '',
+      email: '',
+      address: '',
     };
   },
   methods: {
-    async updateContactInformation() {
-            try {
-        this.isLoading = true;
-        this.errorMessage = '';
-        this.successMessage = '';
-
+    async updateContactInfo() {
+      await this.updateDetail(this.selectedType);
+    },
+    async updateDetail(infoType) {
+      let data = { username: this.$store.state.user.username };
+      switch (infoType) {
+        case 'phone':
+          data.phone = this.newContactInfo;
+          break;
+        case 'email':
+          data.email = this.newContactInfo;
+          break;
+        case 'address':
+          data.address = this.newContactInfo;
+          break;
+        default:
+          break;
+      }
+      userProfileService.updateProfile(data).then(response => console.log(response));
+    },
+    async updateUserPhone() {
+      try {
         const data = {
           username: this.$store.state.user.username,
-          contactType: this.selectedType,
-          contactInformation: this.newContactInfo,
+          phone: this.phone,
         };
-
-        await this.$axios.put('/api/profile/contact', data);
-
-        this.successMessage = `Contact ${this.selectedType} updated successfully!`;
-        this.newContactInfo = ''; // Clear the input field
+        await this.$axios.put('/profile/editphone', data);
+        this.successMessage = 'Phone Number updated successfully!';
+        this.fetchUserProfile();
       } catch (error) {
         this.errorMessage = 'An error occurred. Please try again later.';
-      } finally {
-        this.isLoading = false;
+      }
+    },
+    async updateUserEmail() {
+      try {
+        const data = {
+          username: this.$store.state.user.username,
+          email: this.email,
+        };
+        await this.$axios.put('/profile/editemail', data);
+        this.successMessage = 'Email Address updated successfully!';
+        this.fetchUserProfile();
+      } catch (error) {
+        this.errorMessage = 'An error occurred. Please try again later.';
+      }
+    },
+    async updateUserAddress() {
+      try {
+        const data = {
+          username: this.$store.state.user.username,
+          address: this.address,
+        };
+        await this.$axios.put('/profile/editaddress', data);
+        this.successMessage = 'Address updated successfully!';
+        this.fetchUserProfile();
+      } catch (error) {
+        this.errorMessage = 'An error occurred. Please try again later.';
       }
     },
     async updateAllowAnonymous() {
       try {
-        await this.$axios.put('/api/profile/anonymous', {
+        await this.$axios.put('/profile/editanonymous', {
           username: this.$store.state.user.username,
           allowAnonymous: this.allowAnonymous,
         });
-        // Handle success: update UI or show a success message
+        this.successMessage = 'Anonymous Setting updated successfully!';
       } catch (error) {
-        // Handle error: show an error message
+        this.errorMessage = 'An error occurred. Please try again later.';
       }
     },
     async fetchUserProfile() {
       try {
-        const response = await this.$axios.get('/api/profile/user', {
-          params: { username: this.$store.state.user.username }, // Modify as needed
+        if (this.$store.state.user.username) {
+        const response = await this.$axios.get('/api/profile/update', {
+          params: { username: this.$store.state.user.username },
         });
-        this.user = response.data; // Set the fetched user profile data
+        this.user = response.data;
+      }
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
     },
-  mounted() {
-    this.fetchUserProfile(); // Fetch user profile data when the component is mounted
   },
-},
-}
+  mounted() {
+    this.fetchUserProfile();
+  },
+};
 </script>
 
 <style scoped>
@@ -116,4 +157,3 @@ export default {
   margin-top: 20px;
 }
 </style>
-
