@@ -36,7 +36,7 @@ public class BidController {
     }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
-    @PutMapping("/bids/create")
+    @PostMapping("/bids/create")
     public Bid createBid(@RequestBody NewBidDto bid) {
         return bidDao.createBid(bid.getItemId(), bidDao.getUserId(bid.getUsername()), bid.getBidAmount());
     }
