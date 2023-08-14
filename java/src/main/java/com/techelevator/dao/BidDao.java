@@ -19,6 +19,9 @@ public interface BidDao {
     Bid getHighestBidOfItem(Item item);
     Bid getHighestBidOfItem(int itemId);
 
+    int getUserId(String username);
+    Item getItemFromId(int itemId);
+
     Bid createBid(Bid bid);
     Bid createBid(int itemId, long userId, BigDecimal bidAmount);
 }

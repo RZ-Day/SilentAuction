@@ -137,7 +137,25 @@ public class JdbcBidDao implements BidDao {
         return bids;
     }
 
-    private Item getItemFromId(int id) {
+    public int getUserId(String username) {
+        int id = 0;
+        String sql = "SELECT user_id FROM users WHERE username = ?;";
+
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, username);
+            if (result.next()) {
+                return result.getInt("user_id");
+            }
+        } catch (EmptyResultDataAccessException e) {
+            return -1;
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return 0;
+    }
+
+    public Item getItemFromId(int id) {
         Item item = null;
 
         // SELECT item_id, item_name, description, initial_price, current_price from item WHERE item_id = ?;
@@ -187,6 +205,7 @@ public class JdbcBidDao implements BidDao {
     }
 
     public Bid createBid(int itemId, long userId, BigDecimal bidAmount) {
+        // TODO: Add validation cause I'm too lazy rn
         Bid bid = null;
         String sql = "INSERT INTO bid (item_id, user_id, bid_amount, bid_time) " +
                      "VALUES (?, ?, ?, now()) RETURNING bid_id;";

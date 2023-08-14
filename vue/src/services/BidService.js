@@ -11,5 +11,11 @@ export default {
 
     addAuction(newAuction) {
         return axios.post('/create/auction', newAuction)
+    },
+
+    addBid(dto) {
+        return axios.post('/bids/create', dto, function (req, res) {
+            res.header("Access-Control-Allow-Origin", "*");
+        });
     }
 }

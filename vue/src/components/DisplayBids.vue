@@ -11,9 +11,6 @@
     <button @click="showBidForm">Place Bid</button>
     
     <form v-if="showForm" @submit.prevent="submitBid">
-      <label for="bidderName">Bidder Name:</label>
-      <input type="text" v-model="newBid.bidderName" required>
-      
       <label for="bidAmount">Bid Amount:</label>
       <input type="number" v-model="newBid.amount" required>
       
@@ -33,6 +30,7 @@ export default {
         { bidId: 3, bidderName: 'UserC', amount: 200 },
         { bidId: 4, bidderName: 'UserD', amount: 220 },
       ],
+      currentHighestBid: 0,
       showForm: false,
       newBid: {
         bidderName: '',
@@ -41,11 +39,12 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.state.user.username);
-    console.log(this.$store.state);
     bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
       this.bids = response.data;
-      console.log(this.bids);
+      // console.log(this.bids);
+
+      // Update highest bid
+      this.currentHighestBid = this.bids[0].bidAmount;
     });
   },
   computed: {
@@ -53,7 +52,7 @@ export default {
       return this.bids.slice().sort((a, b) => b.amount - a.amount);
     },
     highestBid() {
-      return this.sortedBids.length > 0 ? this.sortedBids[0].amount : 0;
+      return this.bids[0].bidAmount;
     }
   },
   methods: {
@@ -61,18 +60,16 @@ export default {
       this.showForm = true;
     },
     submitBid() {
-      if (
-        this.newBid.bidderName &&
-        this.newBid.amount &&
-        this.newBid.amount > this.highestBid
-      ) {
-        const newBidId = this.bids.length + 1;
-        this.bids.push({
-          bidId: newBidId,
-          bidderName: this.newBid.bidderName,
-          amount: this.newBid.amount
+      if (this.newBid.amount > this.highestBid) {
+        // this.$store.state.user.username
+        // this.$route.params.currentItemID
+
+        let dto = { username: this.$store.state.user.username, itemId: this.$route.params.currentItemID, bidAmount: this.newBid.amount };
+
+        bidService.addBid(dto).then(response => {
+          console.log(response);
         });
-        
+
         this.newBid.bidderName = '';
         this.newBid.amount = null;
         this.showForm = false;
