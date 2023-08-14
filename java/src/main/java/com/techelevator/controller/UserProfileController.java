@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.model.User;
+import com.techelevator.model.UserProfileDto;
 import com.techelevator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +18,20 @@ public class UserProfileController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateUserProfile(@RequestParam String username,
-                                                    @RequestParam(required = false) String phone,
-                                                    @RequestParam(required = false) String email,
-                                                    @RequestParam(required = false) String address,
-                                                    @RequestParam(required = false) Boolean allowAnonymous) {
-        if (phone != null) {
-            userService.updateUserPhone(username, phone);
+    public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDto userProfile) {
+        String username = userProfile.getUsername();
+        if (userProfile.getPhone() != null) {
+            userService.updateUserPhone(username, userProfile.getPhone());
             return ResponseEntity.ok("Phone Number updated.");
-        } else if (email != null) {
-            userService.updateUserEmail(username, email);
+        } else if (userProfile.getEmail() != null) {
+            userService.updateUserEmail(username, userProfile.getEmail());
             return ResponseEntity.ok("Email Address updated.");
-        } else if (address != null) {
-            userService.updateUserAddress(username, address);
+        } else if (userProfile.getAddress() != null) {
+            userService.updateUserAddress(username, userProfile.getAddress());
             return ResponseEntity.ok("Address updated.");
-        } else if (allowAnonymous != null) {
-            userService.updateAllowAnonymous(username, allowAnonymous);
+        } else if (userProfile.isAllowAnonymous()) {
+            // TODO: allow this change later
+            userService.updateAllowAnonymous(username, userProfile.isAllowAnonymous());
             return ResponseEntity.ok("Anonymous Setting updated.");
         } else {
             return ResponseEntity.badRequest().body("No valid parameters provided.");

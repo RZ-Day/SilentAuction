@@ -41,6 +41,8 @@ export default {
     };
   },
   created() {
+    console.log(this.$store.state.user.username);
+    console.log(this.$store.state);
     bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
       this.bids = response.data;
       console.log(this.bids);

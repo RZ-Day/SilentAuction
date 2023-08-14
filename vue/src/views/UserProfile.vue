@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import userProfileService from "@/services/UserProfileService.js";
 export default {
   data() {
     return {
@@ -54,13 +55,24 @@ export default {
   },
   methods: {
     async updateContactInfo() {
-      if (this.selectedType === 'phone') {
-        await this.updateUserPhone();
-      } else if (this.selectedType === 'email') {
-        await this.updateUserEmail();
-      } else if (this.selectedType === 'address') {
-        await this.updateUserAddress();
+      await this.updateDetail(this.selectedType);
+    },
+    async updateDetail(infoType) {
+      let data = { username: this.$store.state.user.username };
+      switch (infoType) {
+        case 'phone':
+          data.phone = this.newContactInfo;
+          break;
+        case 'email':
+          data.email = this.newContactInfo;
+          break;
+        case 'address':
+          data.address = this.newContactInfo;
+          break;
+        default:
+          break;
       }
+      userProfileService.updateProfile(data).then(response => console.log(response));
     },
     async updateUserPhone() {
       try {

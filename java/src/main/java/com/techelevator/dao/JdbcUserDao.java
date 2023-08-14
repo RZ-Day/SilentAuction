@@ -85,8 +85,14 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void updateUserPhone(String username, String phone) {
+        int phoneNumber = 0;
+        try {
+            phoneNumber = Integer.parseInt(phone);
+        } catch (NumberFormatException e) {
+            // ya dun goofed kid
+        }
         String sql = "UPDATE users SET phone = ? WHERE username =?";
-        jdbcTemplate.update(sql, phone, username);
+        jdbcTemplate.update(sql, phoneNumber, username);
     }
 
     @Override
