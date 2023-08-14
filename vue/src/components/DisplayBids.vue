@@ -65,7 +65,7 @@ export default {
         // this.$route.params.currentItemID
 
         let dto = { username: this.$store.state.user.username, itemId: this.$route.params.currentItemID, bidAmount: this.newBid.amount };
-
+        
         bidService.addBid(dto).then(response => {
           console.log(response);
         });

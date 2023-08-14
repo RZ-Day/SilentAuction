@@ -11,7 +11,7 @@ import com.techelevator.model.Bid;
 import java.util.List;
 
 @RestController
-@CrossOrigin (origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 public class BidController {
     private final BidDao bidDao;
 

@@ -14,8 +14,6 @@ export default {
     },
 
     addBid(dto) {
-        return axios.post('/bids/create', dto, function (req, res) {
-            res.header("Access-Control-Allow-Origin", "*");
-        });
+        return axios.post('/bids/create', dto);
     }
 }
