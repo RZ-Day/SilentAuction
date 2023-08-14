@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.model.User;
+import com.techelevator.model.UserProfileDto;
 import com.techelevator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class UserProfileController {
         this.userService = userService;
     }
 
+
     @PutMapping("/contact")
     public ResponseEntity<String> updateContactInformation(@RequestBody Map<String, String> request) {
         String username = request.get("username");
@@ -33,6 +35,27 @@ public class UserProfileController {
         boolean allowAnonymous = (boolean) request.get("allowAnonymous");
         userService.updateAllowAnonymous(username, allowAnonymous);
         return ResponseEntity.ok("Anonymous Setting updated.");
+
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDto userProfile) {
+        String username = userProfile.getUsername();
+        if (userProfile.getPhone() != null) {
+            userService.updateUserPhone(username, userProfile.getPhone());
+            return ResponseEntity.ok("Phone Number updated.");
+        } else if (userProfile.getEmail() != null) {
+            userService.updateUserEmail(username, userProfile.getEmail());
+            return ResponseEntity.ok("Email Address updated.");
+        } else if (userProfile.getAddress() != null) {
+            userService.updateUserAddress(username, userProfile.getAddress());
+            return ResponseEntity.ok("Address updated.");
+        } else if (userProfile.isAllowAnonymous()) {
+            // TODO: allow this change later
+            userService.updateAllowAnonymous(username, userProfile.isAllowAnonymous());
+            return ResponseEntity.ok("Anonymous Setting updated.");
+        } else {
+            return ResponseEntity.badRequest().body("No valid parameters provided.");
+        }
 
     }
 

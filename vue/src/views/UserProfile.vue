@@ -33,12 +33,14 @@
       <p>Email: {{ user.email }}</p>
       <p>Address: {{ user.address }}</p>
       <p>Phone Number: {{ user.phoneNumber }}</p>
+      <h2>{{ this.$store.state.user.username }}'s Profile</h2>
       <!-- Add more fields as needed -->
     </div>
   </div>
 </template>
 
 <script>
+import userProfileService from "@/services/UserProfileService.js";
 export default {
   data() {
     return {
@@ -58,6 +60,54 @@ export default {
         this.errorMessage = '';
         this.successMessage = '';
 
+    async updateContactInfo() {
+      await this.updateDetail(this.selectedType);
+    },
+    async updateDetail(infoType) {
+      let data = { username: this.$store.state.user.username };
+      switch (infoType) {
+        case 'phone':
+          data.phone = this.newContactInfo;
+          break;
+        case 'email':
+          data.email = this.newContactInfo;
+          break;
+        case 'address':
+          data.address = this.newContactInfo;
+          break;
+        default:
+          break;
+      }
+      userProfileService.updateProfile(data).then(response => console.log(response));
+    },
+    async updateUserPhone() {
+      try {
+        const data = {
+          username: this.$store.state.user.username,
+          phone: this.phone,
+        };
+        await this.$axios.put('/profile/editphone', data);
+        this.successMessage = 'Phone Number updated successfully!';
+        this.fetchUserProfile();
+      } catch (error) {
+        this.errorMessage = 'An error occurred. Please try again later.';
+      }
+    },
+    async updateUserEmail() {
+      try {
+        const data = {
+          username: this.$store.state.user.username,
+          email: this.email,
+        };
+        await this.$axios.put('/profile/editemail', data);
+        this.successMessage = 'Email Address updated successfully!';
+        this.fetchUserProfile();
+      } catch (error) {
+        this.errorMessage = 'An error occurred. Please try again later.';
+      }
+    },
+    async updateUserAddress() {
+      try {
         const data = {
           username: this.$store.state.user.username,
           contactType: this.selectedType,
@@ -89,6 +139,9 @@ export default {
       try {
         const response = await this.$axios.get('/api/profile/user', {
           params: { username: this.$store.state.user.username }, // Modify as needed
+        if (this.$store.state.user.username) {
+        const response = await this.$axios.get('/api/profile/update', {
+          params: { username: this.$store.state.user.username },
         });
         this.user = response.data; // Set the fetched user profile data
       } catch (error) {
