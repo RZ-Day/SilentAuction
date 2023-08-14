@@ -34,7 +34,9 @@ public class JdbcBidDao implements BidDao {
     public Bid getBidById(int bidId) {
         Bid bid = null;
         // SELECT bid_id, item_id, user_id, bid_amount, bid_time FROM bid WHERE bid_id = ?;
-        String sql = "SELECT bid_id, item_id, user_id, bid_amount, bid_time FROM bid WHERE bid_id = ?;";
+        String sql = "SELECT bid.bid_id, bid.item_id, bid.user_id, bid.bid_amount, bid.bid_time, users.username " +
+                     "FROM bid LEFT JOIN users ON bid.user_id = users.user_id " +
+                     "WHERE bid_id = ?;";
         try {
             SqlRowSet result = jdbcTemplate.queryForRowSet(sql, bidId);
             if (result.next()) {
