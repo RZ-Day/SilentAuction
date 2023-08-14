@@ -101,7 +101,8 @@ public class JdbcBidDao implements BidDao {
         LEFT JOIN bid b ON i.item_id = b.item_id WHERE auction.auction_id = 1;
         */
         String sql = "SELECT * FROM auction LEFT JOIN item i ON auction.auction_id = i.auction_id " +
-                     "LEFT JOIN bid b ON i.item_id = b.item_id WHERE auction.auction_id = ?;";
+                     "LEFT JOIN bid b ON i.item_id = b.item_id LEFT JOIN users u ON b.user_id = u.user_id " +
+                     "WHERE auction.auction_id = ?;";
         List <Bid> bids;
         Map<Integer, Bid> highestBidMap = new HashMap<>();
         try {

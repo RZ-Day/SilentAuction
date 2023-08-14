@@ -10,7 +10,7 @@
     </div>
 
     <div class="bids-section">
-      <DisplayBids />
+      <DisplayAuctionBids />
     </div>
   </div>
 </template>
@@ -18,10 +18,10 @@
 <script>
 import Auction from "../components/Auction.vue";
 import auctionService from "@/services/AuctionsListService.js";
-import DisplayBids from '../components/DisplayBids.vue';
+import DisplayAuctionBids from '../components/DisplayAuctionBids.vue';
 
 export default {
-  components: { Auction, DisplayBids },
+  components: { Auction, DisplayAuctionBids },
   data() {
     return {
       auction: null 
