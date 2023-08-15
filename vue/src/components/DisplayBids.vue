@@ -32,8 +32,8 @@
       <br>
       <button @click="bidButton" id="increaseBid1" type="submit">Bid $1 More</button>&nbsp;
       <button @click="bidButton" id="increaseBid5" type="submit">Bid $5 More</button>&nbsp;
-      <button @click="bidButton" id="increaseBid10" type="submit">Bid +$10 More</button>&nbsp;
-      <button @click="bidButton" id="increaseBid20" type="submit">Bid +$20 More</button>
+      <button @click="bidButton" id="increaseBid10" type="submit">Bid $10 More</button>&nbsp;
+      <button @click="bidButton" id="increaseBid20" type="submit">Bid $20 More</button>
       <br>
       <br>
       <label for="bidAmount">Custom Bid Amount:</label>
