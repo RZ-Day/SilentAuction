@@ -76,9 +76,16 @@ export default {
         console.error('Error updating Anonymous Setting:', error);
       }
     },
+    fetchUserProfile() {
+      userProfileService.getProfile(this.$store.state.user.username).then(response => {
+        // console.log(response);
+        this.user = response.data;
+      });
+    },
+    /*
     async fetchUserProfile() {
     try {
-    const response = await this.$axios.get(`/api/profile`, {
+    const response = await this.$axios.get(`/api/profile/`, {
       params: { username: this.$store.state.user.username },
     });
     this.user = response.data;
@@ -98,6 +105,7 @@ export default {
     console.error('Error fetching user profile:', error);
   }
 },
+*/
 
     toggleEdit(field) {
       this[field + 'Mode'] = !this[field + 'Mode'];
