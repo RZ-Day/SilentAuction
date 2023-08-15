@@ -25,8 +25,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUserAddress(String username, String address) {
-        userDao.updateUserAddress(username, address);
+    public void updateUserBillingAddress(String username, String billingAddress) {
+        userDao.updateUserBillingAddress(username, billingAddress);
+    }
+
+    @Override
+    public void updateUserShippingAddress(String username, String shippingAddress) {
+        userDao.updateUserShippingAddress(username, shippingAddress);
     }
 
     @Override

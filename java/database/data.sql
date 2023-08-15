@@ -1,9 +1,9 @@
 BEGIN TRANSACTION;
 
 
-INSERT INTO users (full_name, email, phone, address, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (full_name, email, phone, address, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
-INSERT INTO users (full_name, email, phone, address, username,password_hash,role) VALUES ('User 3', 'user3@example.com', '5555555555', 'Address 3', 'user3', 'hash3', 'ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'testAddress1', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('User 3', 'user3@example.com', '5555555555', 'Address 3', 'Address 3', 'user3', 'hash3', 'ROLE_USER');
 -- Sandbox data
 
 -- Insert fake auctions

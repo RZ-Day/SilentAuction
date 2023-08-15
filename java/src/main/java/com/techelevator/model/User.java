@@ -16,7 +16,8 @@ public class User {
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
    private boolean allowAnonymous;
-   private String address;
+   private String billingAddress;
+   private String shippingAddress;
    private String phoneNumber;
 
    private String email;
@@ -77,12 +78,20 @@ public class User {
          this.authorities.add(new Authority(authority));
       }
    }
-   public String getAddress() {
-      return address;
+   public String getBillingAddress() {
+      return billingAddress;
    }
 
-   public void setAddress(String address) {
-      this.address = address;
+   public void setBillingAddress(String billingAddress) {
+      this.billingAddress = billingAddress;
+   }
+
+   public String getShippingAddress() {
+      return shippingAddress;
+   }
+
+   public void setShippingAddress(String shippingAddress) {
+      this.shippingAddress = shippingAddress;
    }
 
    public String getPhoneNumber() {
