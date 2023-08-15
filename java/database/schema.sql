@@ -1,10 +1,12 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS conversations;
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
-DROP TABLE IF EXISTS messages;
+
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -52,16 +54,31 @@ CREATE TABLE bid (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE conversations (
+    conversation_id SERIAL PRIMARY KEY,
+    seller_id INT,
+    buyer_id INT,
+    item_id INT,
+	item_name VARCHAR(255) NOT NULL,
+
+    FOREIGN KEY (seller_id) REFERENCES users(user_id),
+    FOREIGN KEY (buyer_id) REFERENCES users(user_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id),
+
+    CONSTRAINT no_self_messaging CHECK (seller_id <> buyer_id),
+    CONSTRAINT unique_combination UNIQUE (buyer_id, seller_id, item_id)
+);
+
 CREATE TABLE messages (
     message_id SERIAL PRIMARY KEY,
     from_id INT,
     to_id INT,
-    item_id INT,
+    conversation_id INT,
     message_body varchar(300),
 
     FOREIGN KEY (from_id) REFERENCES users(user_id),
     FOREIGN KEY (to_id) REFERENCES users(user_id),
-    FOREIGN KEY (item_id) REFERENCES item(item_id)
+    FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id)
 );
 
 COMMIT TRANSACTION;

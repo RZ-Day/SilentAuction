@@ -8,6 +8,8 @@ public class Item {
     private double initialPrice;
     private double currentPrice;
 
+    private int userId = 5;
+
 
 
     public int getItemId() {
@@ -50,4 +52,11 @@ public class Item {
         this.currentPrice = currentPrice;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

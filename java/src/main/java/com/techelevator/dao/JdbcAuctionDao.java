@@ -40,7 +40,8 @@ public class JdbcAuctionDao implements AuctionDao {
                 "    i.item_name,\n" +
                 "    i.description,\n" +
                 "    i.initial_price,\n" +
-                "    i.current_price\n" +
+                "    i.current_price,\n" +
+                "    i.user_id\n" +
                 "FROM\n" +
                 "    auction a\n" +
                 "LEFT JOIN\n" +
@@ -137,6 +138,7 @@ public class JdbcAuctionDao implements AuctionDao {
                         item.setItemName(rs.getString("item_name"));
                         item.setDescription(rs.getString("description"));
                         item.setInitialPrice(rs.getDouble("initial_price"));
+                        item.setUserId(rs.getInt("user_id"));
                         item.setCurrentPrice(rs.getDouble("current_price"));
 
                         return item;
@@ -173,6 +175,7 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setDescription(rowSet.getString("description"));
         item.setInitialPrice(rowSet.getDouble("initial_price"));
         item.setCurrentPrice(rowSet.getDouble("current_price"));
+        item.setUserId(rowSet.getInt("user_id"));
         return item;
     }
 }

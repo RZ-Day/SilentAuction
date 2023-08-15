@@ -4,7 +4,7 @@
       <nav>
         <ul>
           <li v-if="this.$store.state.token!=''">
-            <router-link class="link" v-bind:to="{name: 'Messages', params: {currentUserId: this.$store.state.user.id, recipientId: 2}}">
+            <router-link class="link" v-bind:to="{name: 'Messages', params: {currentUserId: this.$store.state.user.id}}">
                 Inbox
             </router-link>
           </li>
@@ -119,12 +119,12 @@ export default {
   li:hover {
     background-color: rgb(231, 231, 231);
     transition: .2s ease;
-    color:rgb(73, 201, 69) ;
+    color:rgb(255, 255, 255) ;
   }
 
   li:hover .link {
     transition: .2s ease;
-    color:rgb(73, 201, 69) ;
+    color:rgb(255, 255, 255) ;
   }
 
   .link {

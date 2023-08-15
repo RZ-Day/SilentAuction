@@ -7,10 +7,7 @@ public class Message {
     private int messageId;
     private int fromId;
     private int toId;
-    private int itemId;
-
-    @NotNull
-    private String timeSent;
+    private int conversationId;
     @NotNull
     private String messageBody;
 
@@ -38,20 +35,12 @@ public class Message {
         this.toId = toId;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getConversationId() {
+        return conversationId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public String getTimeSent() {
-        return timeSent;
-    }
-
-    public void setTimeSent(String timeSent) {
-        this.timeSent = timeSent;
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
     }
 
     public String getMessageBody() {

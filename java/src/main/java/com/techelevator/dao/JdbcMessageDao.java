@@ -31,8 +31,8 @@ public class JdbcMessageDao implements MessageDao{
     public List<Message> getMessagesByUserId(int userId) {
         List<Message> messages = new ArrayList<Message>();
 
-        String sql = "SELECT * FROM messages WHERE from_id = ? OR to_id = ?";
-        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+        String sql = "SELECT * FROM messages WHERE from_id = ? OR to_id = ? ORDER BY message_id";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId, userId);
 
         while(result.next()) {
             messages.add(mapRowToMessage(result));
@@ -44,7 +44,7 @@ public class JdbcMessageDao implements MessageDao{
     @Override
     public Message createMessage(Message message) {
 
-        String sql = "INSERT INTO messages (from_id, to_id, item_id, message_body) " +
+        String sql = "INSERT INTO messages (from_id, to_id, conversation_id, message_body) " +
                         "VALUES (?, ?, ?, ?) RETURNING message_id;";
 
         try {
@@ -53,7 +53,7 @@ public class JdbcMessageDao implements MessageDao{
                     Integer.class,
                     message.getFromId(),
                     message.getToId(),
-                    message.getItemId(),
+                    message.getConversationId(),
                     message.getMessageBody()
             );
 
@@ -76,7 +76,7 @@ public class JdbcMessageDao implements MessageDao{
         Message message = new Message();
         message.setFromId(result.getInt("from_id"));
         message.setToId(result.getInt("to_id"));
-        message.setItemId(result.getInt("item_id"));
+        message.setConversationId(result.getInt("conversation_id"));
         message.setMessageBody(result.getString("message_body"));
 
         return message;

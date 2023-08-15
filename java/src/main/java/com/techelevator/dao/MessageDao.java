@@ -5,7 +5,11 @@ import com.techelevator.model.Message;
 import java.util.List;
 
 public interface MessageDao {
-    List<Message> getMessagesByUserId(int userId);
+    List<Message> getMessagesByUserId(int convoId);
 
     Message createMessage(Message message);
+
+//    List<Conversation> getConversationsByUserId(int userId);
+//
+//    Conversation createConversation(Conversation conversation);
 }
