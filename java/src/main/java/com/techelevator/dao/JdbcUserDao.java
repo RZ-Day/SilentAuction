@@ -78,9 +78,14 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateUserAddress(String username, String address) {
-        String sql = "UPDATE users SET address = ? WHERE username =?";
-        jdbcTemplate.update(sql, address, username);
+    public void updateUserBillingAddress(String username, String billingAddress) {
+        String sql = "UPDATE users SET address_billing = ? WHERE username =?";
+        jdbcTemplate.update(sql, billingAddress, username);
+    }
+    @Override
+    public void updateUserShippingAddress(String username, String shippingAddress) {
+        String sql = "UPDATE users SET address_shipping = ? WHERE username =?";
+        jdbcTemplate.update(sql, shippingAddress, username);
     }
 
     @Override
