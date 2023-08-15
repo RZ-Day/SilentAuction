@@ -3,6 +3,10 @@ package com.techelevator.model;
 import javax.validation.constraints.NotEmpty;
 
 public class UserProfileDto {
+    private int userId;
+
+    private String fullName;
+
     @NotEmpty
     private String username;
 
@@ -15,12 +19,27 @@ public class UserProfileDto {
 
     private boolean allowAnonymous;
 
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(int id) {
+        this.userId = id;
+    }
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFullName() {
+        return this.fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {

@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Auction;
 import com.techelevator.model.Item;
 import com.techelevator.model.Bid;
 import com.techelevator.model.User;
@@ -14,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +73,7 @@ public class JdbcBidDao implements BidDao {
     }
 
     public List<Bid> getBidsOfUser(User user) {
-        return getBidsOfUserId(user.getId());
+        return getBidsOfUserId(user.getUserId());
     }
 
     private List<Bid> getBidsOfUserId(int userId) {

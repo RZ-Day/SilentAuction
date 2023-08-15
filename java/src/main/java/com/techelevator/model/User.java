@@ -8,7 +8,9 @@ import java.util.Set;
 
 public class User {
 
-   private int id;
+   // full_name, email, phone, address_billing, address_shipping, role, allow_anonymous
+
+   private int userId;
    private String username;
    @JsonIgnore
    private String password;
@@ -18,25 +20,27 @@ public class User {
    private boolean allowAnonymous;
    private String billingAddress;
    private String shippingAddress;
-   private String phoneNumber;
+
+   private String phone;
+   private String fullName;
 
    private String email;
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
-      this.id = id;
+   public User(int userId, String username, String password, String authorities) {
+      this.userId = userId;
       this.username = username;
       this.password = password;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
    }
 
-   public int getId() {
-      return id;
+   public int getUserId() {
+      return userId;
    }
 
-   public void setId(int id) {
-      this.id = id;
+   public void setUserId(int userId) {
+      this.userId = userId;
    }
 
    public String getUsername() {
@@ -53,6 +57,22 @@ public class User {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public String getFullName() {
+      return this.fullName;
+   }
+
+   public String getPhone() {
+      return phone;
+   }
+
+   public void setPhone(String phone) {
+      this.phone = phone;
+   }
+
+   public void setFullName(String fullName) {
+      this.fullName = fullName;
    }
 
    public boolean isActivated() {
@@ -94,13 +114,6 @@ public class User {
       this.shippingAddress = shippingAddress;
    }
 
-   public String getPhoneNumber() {
-      return phoneNumber;
-   }
-
-   public void setPhoneNumber(String phoneNumber) {
-      this.phoneNumber = phoneNumber;
-   }
    public String getEmail() {
       return email;
    }
@@ -121,7 +134,7 @@ public class User {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       User user = (User) o;
-      return id == user.id &&
+      return userId == user.userId &&
               activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
@@ -130,13 +143,13 @@ public class User {
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(userId, username, password, activated, authorities);
    }
 
    @Override
    public String toString() {
       return "User{" +
-              "id=" + id +
+              "id=" + userId +
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.RegisterUserDto;
+import com.techelevator.model.UserProfileDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,7 +60,8 @@ public class JdbcUserDao implements UserDao {
     public User getUserByUsername(String username) {
         if (username == null) throw new IllegalArgumentException("Username cannot be null");
         User user = null;
-        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE username = ?;";
+        String sql = "SELECT user_id, username, full_name, email, phone, address_billing, address_shipping, role, allow_anonymous " +
+                     "FROM users WHERE username = ?;";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
             if (rowSet.next()) {
@@ -134,12 +136,17 @@ public class JdbcUserDao implements UserDao {
     }
 
     private User mapRowToUser(SqlRowSet rs) {
+        // full_name, email, phone, address_billing, address_shipping, role, allow_anonymous
         User user = new User();
-        user.setId(rs.getInt("user_id"));
+        user.setUserId(rs.getInt("user_id"));
         user.setUsername(rs.getString("username"));
-        user.setPassword(rs.getString("password_hash"));
-        user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
-        user.setActivated(true);
+        user.setEmail(rs.getString("email"));
+        user.setPhone(rs.getString("phone"));
+        user.setBillingAddress(rs.getString("address_billing"));
+        user.setShippingAddress(rs.getString("address_shipping"));
+        user.setFullName(rs.getString("full_name"));
+        user.setAllowAnonymous(rs.getBoolean("allow_anonymous"));
+
         return user;
     }
 }

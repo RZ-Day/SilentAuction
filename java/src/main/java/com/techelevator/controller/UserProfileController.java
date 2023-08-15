@@ -46,9 +46,11 @@ public class UserProfileController {
         User user = userService.getUserByUsername(username);
         if (user != null) {
             UserProfileDto userProfileDto = new UserProfileDto();
+            userProfileDto.setUserId(user.getUserId());
+            userProfileDto.setFullName(user.getFullName());
+            userProfileDto.setPhone(user.getPhone());
             userProfileDto.setUsername(user.getUsername());
             userProfileDto.setEmail(user.getEmail());
-            userProfileDto.setPhone(user.getPhoneNumber());
             userProfileDto.setBillingAddress(user.getBillingAddress());
             userProfileDto.setShippingAddress(user.getShippingAddress());
             userProfileDto.setAllowAnonymous(user.isAllowAnonymous());
