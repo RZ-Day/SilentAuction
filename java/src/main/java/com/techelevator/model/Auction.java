@@ -9,8 +9,10 @@ public class Auction {
     private Date startTime;
     private Date endTime;
     private boolean isPrivate;
-    private int privateKey;
+    private String privateKey;
     private List<Item> items;
+
+
 
 
 
@@ -34,16 +36,19 @@ public class Auction {
         return isPrivate;
     }
 
-    public int getPrivateKey() {
+    public String getPrivateKey() {
         return privateKey;
     }
 
-    public void setPrivateKey(int privateKey) {
+    public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+    public boolean getIsPrivate() {
+        return isPrivate;
     }
 
     public List<Item> getItems() {

@@ -1,6 +1,5 @@
 <template>
   <div>
-      Where We add an auction
       <add-auction />
   </div>
 </template>

@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS user_contacts;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
+DROP TABLE IF EXISTS watchlist;
 
 
 CREATE TABLE users (
@@ -28,8 +29,9 @@ CREATE TABLE auction (
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     isPrivate BOOLEAN NOT NULL,
-    privateKey INT
+    privateKey varchar(32) default 'noPrivateKeySet'
 );
+
 
 -- Item Table
 CREATE TABLE item (
@@ -52,8 +54,17 @@ CREATE TABLE bid (
     user_id INT,
     bid_amount DECIMAL(10, 2) NOT NULL,
     bid_time TIMESTAMP NOT NULL,
-    FOREIGN KEY (item_id) REFERENCES Item(item_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Watchlist table
+CREATE TABLE watchlist (
+    watchlist_id SERIAL PRIMARY KEY,
+    user_id INT,
+    item_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id)
 );
 
 
