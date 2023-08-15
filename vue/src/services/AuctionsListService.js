@@ -12,4 +12,6 @@ export default {
     getPrivateAuction(auctionPassword) {
         return axios.post(`/auctions/search/private/${auctionPassword}`);
       }
+
+    
 }

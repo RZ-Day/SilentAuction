@@ -4,8 +4,12 @@
       <h2>Create a New Auction</h2>
       <form v-on:submit.prevent="createAuction">
         <div class="form-group">
-          <label for="auctionName">Auction Name:</label>
-          <input v-model="newAuction.auctionName" required />
+          <label for="auctionName"></label>
+          <input
+            v-model="newAuction.auctionName"
+            required
+            placeholder="Enter Auction Name"
+          />
         </div>
         <div class="form-group">
           <label for="startTime">Start Time:</label>
@@ -13,27 +17,26 @@
             type="datetime-local"
             v-model="newAuction.startTime"
             required
+            placeholder="Select Start Time"
           />
         </div>
         <div class="form-group">
           <label for="endTime">End Time:</label>
           <input type="datetime-local" v-model="newAuction.endTime" required />
         </div>
+
         <div class="form-group">
-          <label for="isPrivate">Invite Only:</label>
-          <input type="checkbox" v-model="newAuction.isPrivate" />
-        </div>
-        <div v-if="newAuction.isPrivate" class="form-group">
-          <label for="privateKey">Private Auction Password:</label>
+          <label for="privateAuction">Private Auction:</label>
           <input
-            type="text"
-            v-model="newAuction.privateKey"
-            minlength="4"
-            maxlength="16"
-            required
-            placeholder="length 4-16 characters"
+            type="checkbox"
+            v-model="newAuction.privateAuction"
+            @change="togglePrivatePassword"
           />
-          <p class="save-me">Save this password! Your guests will need it to locate the auction. </p>
+        </div>
+
+        <div v-if="newAuction.privateAuction" class="form-group">
+          <label for="privatePassword">Private Auction Password:</label>
+          <input type="password" placeHolder="Length 1-32" v-model="newAuction.privatePassword" />
         </div>
 
         <h3>Add Items</h3>
@@ -42,51 +45,41 @@
           :key="index"
           class="item-form"
         >
-          <div class="item-button-container">
-            <button @click="toggleItem(index)" class="item-button">
-              {{ isActive(index) ? "Hide Item" : "Edit Item" }}
-            </button>
+          <div class="form-group">
+            <label for="itemName">Item Name:</label>
+            <input v-model="item.itemName" required />
           </div>
-          <div v-if="isActive(index)">
-            <div class="form-group">
-              <label for="itemName">Item Name:</label>
-              <input v-model="item.itemName" required />
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea v-model="item.description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="initialPrice">Initial Price:</label>
+            <input type="number" v-model="item.initialPrice" required />
+          </div>
+          <div class="form-group">
+            <label for="currentPrice">Current Price:</label>
+            <input type="number" v-model="item.currentPrice" required />
+          </div>
+          <div class="form-group">
+            <label for="images">Images:</label>
+            <input type="file" multiple @change="handleImageUpload(index)" />
+            <div
+              v-for="(image, imgIndex) in item.images"
+              :key="imgIndex"
+              class="image-preview"
+            >
+              <img :src="image.url" alt="Image Preview" />
+              <button type="button" @click="removeImage(index, imgIndex)">
+                Remove
+              </button>
             </div>
-            <div class="form-group">
-              <label for="description">Description:</label>
-              <textarea v-model="item.description"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="initialPrice">Initial Price:</label>
-              <input type="number" v-model="item.initialPrice" required />
-            </div>
-            <div class="form-group">
-              <label for="currentPrice">Current Price:</label>
-              <input type="number" v-model="item.currentPrice" required />
-            </div>
-            <div class="form-group">
-              <label for="images">Images:</label>
-              <input type="file" multiple @change="handleImageUpload(index)" />
-              <div
-                v-for="(image, imgIndex) in item.images"
-                :key="imgIndex"
-                class="image-preview"
-              >
-                <img :src="image.url" alt="Image Preview" />
-                <button type="button" @click="removeImage(index, imgIndex)">
-                  Remove
-                </button>
-              </div>
-              <p>Image Count: {{ totalImages[index] }}</p>
-            </div>
+            <p>Image Count: {{ totalImages[index] }}</p>
           </div>
         </div>
+        <button type="button" @click="addItem">Add Item</button>
 
-        <div class="bottom-buttons">
-          <button type="button" @click="addItem">Add Item</button>
-
-          <input type="submit" value="Create Auction" />
-        </div>
+        <input type="submit" value="Create Auction" />
       </form>
     </div>
   </div>
@@ -102,8 +95,8 @@ export default {
         auctionName: "",
         startTime: "",
         endTime: "",
-        isPrivate: false,
-        privateKey: "",
+        privateAuction: false,
+        privatePassword: "",
         items: [
           {
             itemName: "",
@@ -114,7 +107,7 @@ export default {
           },
         ],
       },
-      activeIndex: -1,
+      editedItemIndex: -1,
     };
   },
   computed: {
@@ -123,19 +116,6 @@ export default {
     },
   },
   methods: {
-    toggleItem(index) {
-      if (this.activeIndex === index) {
-        this.activeIndex = -1;
-      } else {
-        this.activeIndex = index;
-      }
-    },
-    showItemButton(index) {
-      return !this.isActive(index) && !this.newAuction.items[index].itemName;
-    },
-    isActive(index) {
-      return this.activeIndex === index;
-    },
     addItem() {
       this.newAuction.items.push({
         itemName: "",
@@ -144,13 +124,15 @@ export default {
         currentPrice: 0,
         images: [],
       });
-      this.activeIndex = this.newAuction.items.length - 1;
+    },
+    toggleItem(index) {
+      this.newAuction.items[index].open = !this.newAuction.items[index].open;
+    },
+    editItem(index) {
+      this.editedItemIndex = index;
+      this.newAuction.items[index].open = true;
     },
     createAuction() {
-      this.newAuction.items.forEach(item => {
-    delete item.images;
-  });
-      
       auctionService
         .addAuction(this.newAuction)
         .then(() => {
@@ -165,8 +147,6 @@ export default {
       this.newAuction.auctionName = "";
       this.newAuction.startTime = "";
       this.newAuction.endTime = "";
-      this.newAuction.privateKey = "";
-      this.newAuction.isPrivate = false;
       this.newAuction.items = [
         {
           itemName: "",
@@ -176,7 +156,6 @@ export default {
           images: [],
         },
       ];
-      this.activeIndex = -1;
     },
     handleImageUpload(itemIndex) {
       const input = event.target;
@@ -191,19 +170,40 @@ export default {
     removeImage(itemIndex, imgIndex) {
       this.newAuction.items[itemIndex].images.splice(imgIndex, 1);
     },
-    onUpload() {},
   },
 };
 </script>
 
+
 <style scoped>
 .form-container {
-  max-width: 600px;
-  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.911);
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Set a minimum height to cover the entire viewport */
+  background-image: url("@/Assets/chessFocus.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.form-container p {
+  text-align: center;
 }
 
 .form-group {
@@ -211,8 +211,6 @@ export default {
 }
 
 .item-form {
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
   margin: 10px;
 }
@@ -243,6 +241,25 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 5px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.item-details {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 5px;
 }
 
 .bottom-buttons {

@@ -53,5 +53,10 @@ VALUES
     (3, 2, 110.00, '2023-09-12 16:10:00');
 
 
+-- Insert fake watchlist
+INSERT INTO watchlist (user_id, item_id)
+VALUES
+    (1,3),
+    (1,5);
 
 COMMIT TRANSACTION;

@@ -53,7 +53,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75%;
+  height: 50%;
 }
 
 .form-container {

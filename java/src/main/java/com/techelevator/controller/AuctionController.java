@@ -35,6 +35,6 @@ public class AuctionController {
     @PostMapping("/auctions/search/private/{privateKey}")
     public Auction getAuctionByPrivateKey(@PathVariable String privateKey) {
         return auctionDao.getAuctionByPrivateKey(privateKey);
-
     }
+
 }

@@ -10,9 +10,7 @@ public class User {
 
    private int id;
    private String username;
-   @JsonIgnore
    private String password;
-   @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
    private boolean allowAnonymous;
