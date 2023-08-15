@@ -78,7 +78,72 @@ public class JdbcAuctionDao implements AuctionDao {
             }
         }
 
-        return new ArrayList<>(auctionMap.values());
+        /*
+        HashMap<Long, Auction> distinctAuctionMap = new HashMap<>();
+        for (Map.Entry<Long, Auction> auctionEntry : auctionMap.entrySet()) {
+            if (!distinctAuctionMap.containsKey(auctionEntry.getKey())) {
+                Auction curActionObject = auctionEntry.getValue();
+                List<Item> auctionItems = curActionObject.getItems();
+                HashMap<Integer, Item> itemMap = new HashMap<>();
+                for (Item i : auctionItems) {
+                    if (!itemMap.containsKey(i.getItemId())) {
+                        itemMap.put(i.getItemId(), i);
+                    } else {
+                        Item curItem = itemMap.get(i.getItemId());
+                        List<Bid> curItemBids = curItem.getBids();
+                        curItemBids.addAll(i.getBids());
+                        curItemBids.sort(Comparator.comparing(Bid::getBidId).reversed());
+                        curItem.setBids(curItemBids);
+                        itemMap.put(i.getItemId(), curItem);
+                    }
+                }
+
+                distinctAuctionMap.put(auctionEntry.getKey(), auctionEntry.getValue());
+            }
+        }
+        */
+        // Iterate through each auction
+        // In each auction, create a HashMap<Integer, List<Bids>>. (Integer for item ID)
+        // Then, iterate through each item in the Auction
+        // In each auction->Item, check
+
+        HashMap<Long, Auction> distinctAuctionMap = new HashMap<>();
+        for (Map.Entry<Long, Auction> auctionEntry : auctionMap.entrySet()) {
+            // This current auction
+            Auction thisAuction = auctionEntry.getValue();
+            HashMap<Integer, Map.Entry<Item, List<Bid>>> itemBids = new HashMap<>();
+            List<Item> thisAuctionItems = thisAuction.getItems();
+            // Iterate through each item in the auction to consolidate all bids their respective item
+            for (Item i : thisAuctionItems) {
+                // Check if this item is already in the itemBids hashmap
+                if (!itemBids.containsKey(i.getItemId())) {
+                    // Not in it, insert it into itemBids
+                    Map.Entry<Item, List<Bid>> entry = new AbstractMap.SimpleEntry<>(i, i.getBids());
+                    itemBids.put(i.getItemId(), entry);
+                } else {
+                    // Already in, consolidate the bids of the given object
+                    Map.Entry<Item, List<Bid>> itemBidEntry = itemBids.get(i.getItemId());
+                    List<Bid> previousBids = itemBidEntry.getValue();
+                    previousBids.addAll(i.getBids());
+                    previousBids.sort(Comparator.comparing(Bid::getBidId).reversed());
+                    itemBidEntry.setValue(previousBids);
+                    itemBids.put(i.getItemId(), itemBidEntry);
+                }
+            }
+
+            List<Item> newAuctionItems = new ArrayList<>();
+            for (Map.Entry<Integer, Map.Entry<Item, List<Bid>>> item : itemBids.entrySet()) {
+                Item newItem = item.getValue().getKey();
+                newItem.setBids(item.getValue().getValue());
+                newAuctionItems.add(newItem);
+            }
+
+            thisAuction.setItems(newAuctionItems);
+
+            distinctAuctionMap.put(auctionEntry.getKey(), thisAuction);
+        }
+
+        return new ArrayList<>(distinctAuctionMap.values());
     }
 
     @Override
