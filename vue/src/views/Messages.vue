@@ -27,7 +27,6 @@ export default {
 
             if (response.status == 200) {
                 this.$store.commit("SET_STORE_MESSAGES", response.data);
-                console.log("successfully retrieved msgs");
             } else {
                 console.log("Unable to retrieve message data");
             }
@@ -39,7 +38,6 @@ export default {
         messageService.getConversationsByUserId(this.$store.state.user.id).then((response) => {
             if(response.status == 200) {
                 this.conversationList = response.data;
-                console.log("Successfully retrieved conversations");
             } else {
                 console.log("Unable to retrieve message data");
             }
@@ -114,8 +112,5 @@ export default {
         align-items: center;
         background-color: rgb(0, 0, 0);
         padding-left: 10px;
-        border-top: solid;
-        border-width: 1px;
-        border-color: white;
     }
 </style>

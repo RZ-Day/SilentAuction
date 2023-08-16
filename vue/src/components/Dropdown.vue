@@ -42,16 +42,10 @@ export default {
     text-decoration: none;
   }
 
-  .title.active,
   .title:hover,
-  .sub-item:hover {
-    background-color: rgb(231, 231, 231);
+  .sub-link:hover {
     transition: .2s ease;
-    color:rgb(255, 255, 255) ;
-  }
-
-  .sub-item:hover .sub-link {
-    color:rgb(255, 255, 255) ;
+    color: #253b6e;
   }
 
   .sub-menu {

@@ -58,7 +58,7 @@ export default {
 
     .convo-item:hover {
         background-color: rgb(231, 231, 231);
-        color: rgb(255, 255, 255);
+        color: #253b6e;
         transition: .2s ease;
     }
 </style>

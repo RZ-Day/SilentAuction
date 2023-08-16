@@ -25,7 +25,7 @@ export default {
     item: Object,
   },
   methods: {
-    addToWatchlist() {
+    addToWatchList() {
       watchListService.add(this.$store.state.user.id, this.$store.state.activeItemId).then(() => {
         alert("item added");
       })

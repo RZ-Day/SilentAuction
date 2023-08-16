@@ -25,18 +25,6 @@
               >Auctions</router-link
             >
           </li>
-          <li>
-            <a
-              class="link"
-              v-if="
-                accountOptions[0].link !== '#' &&
-                accountOptions[0].link !== 'login'
-              "
-              :href="accountOptions[0].link"
-            >
-              {{ accountOptions[0].label }}
-            </a>
-          </li>
           <dropdown title="Account" :items="accountOptions" />
         </ul>
       </nav>
@@ -54,21 +42,21 @@ export default {
       authorizedAccountOptions: [
         {
           label: "Profile",
-          link: "profile",
+          link: "/profile",
         },
         {
           label: "Logout",
-          link: "logout",
+          link: "/logout",
         },
       ],
       anonymousAccountOptions: [
         {
           label: "Login",
-          link: "login",
+          link: "/login",
         },
         {
           label: "Register",
-          link: "register",
+          link: "/register",
         },
       ],
     };
@@ -103,20 +91,30 @@ export default {
   border-color: rgb(200, 200, 200);
 }
 
+.container {
+  display: flex;
+  height: 100%;
+  margin-right: 15px;
+}
+
 #imgLogo {
   width: 15em;
   transform: translateX(5%);
 }
+
 .logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
   color: black;
 }
+
 nav ul {
   display: flex;
   justify-content: flex-end;
   list-style-type: none;
+  background-color: white;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -125,21 +123,14 @@ li {
   display: flex;
   align-items: center;
   cursor: pointer;
-  background-color: rgb(255, 255, 255);
   padding: 0 10px;
+  height: 100%;
   text-align: center;
-}
-
-li.active,
-li:hover {
-  background-color: rgb(231, 231, 231);
-  transition: 0.2s ease;
-  color: rgb(201, 69, 69);
 }
 
 li:hover .link {
   transition: 0.2s ease;
-  color: rgb(73, 201, 69);
+  color: #253b6e;
 }
 
 .link {
@@ -147,5 +138,6 @@ li:hover .link {
   align-items: center;
   text-decoration: none;
   color: black;
+  height: 100%;
 }
 </style>

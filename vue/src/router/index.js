@@ -72,7 +72,7 @@ const router = new Router({
     },
     {
       path: '/profile',
-      name: 'UserProfile',
+      name: 'profile',
       component: UserProfile,
     },
     {

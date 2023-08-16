@@ -42,6 +42,7 @@ export default {
           this.item = this.auction.items.find(
             (item) => item.itemId === activeItemID
           );
+          console.log(this.item);
         }
       }
     });
@@ -64,7 +65,7 @@ export default {
           console.log("New convo id: " + newConvoId);
 
           this.$store.commit("SET_ACTIVE_CONVERSATION", newConvoId);
-          console.log("Active ID committed")
+          console.log("Active ID committed");
 
           //REDIRECT TO ACTIVE CONVERSATION IN INBOX
           this.$router.push({name:"Messages", params:{currentUserId: this.$store.state.user.id}});
@@ -76,7 +77,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .item-page {
   display: flex;
 }
