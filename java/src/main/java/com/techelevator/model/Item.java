@@ -1,16 +1,27 @@
 package com.techelevator.model;
 
 
+import java.util.List;
+
+import java.util.List;
+
 public class Item {
     private int itemId;
     private String itemName;
     private String description;
     private double initialPrice;
     private double currentPrice;
+    private List<Bid> bids;
+    private List<Image> images;
+    private int userId;
 
-    private int userId = 5;
+    public List<Bid> getBids() {
+        return bids;
+    }
 
-
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
 
     public int getItemId() {
         return itemId;
@@ -30,6 +41,14 @@ public class Item {
 
     public double getCurrentPrice() {
         return currentPrice;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public void setItemId(int itemId) {
@@ -60,3 +79,4 @@ public class Item {
         this.userId = userId;
     }
 }
+

@@ -5,12 +5,14 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import AuctionListView from "@/views/AuctionListView.vue";
+import DisplayAuctionListView from "@/views/DisplayAuctionListView.vue";
 import UserProfile from "@/views/UserProfile.vue";
 import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
 import Messages from '../views/Messages.vue';
+import PrivateAuctionView from "@/views/PrivateAuctionView.vue";
+import WatchlistView from "@/views/WatchlistView.vue";
 
 
 Vue.use(Router)
@@ -33,7 +35,7 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -63,7 +65,7 @@ const router = new Router({
     {
       path: "/auctions",
       name: "AuctionList",
-      component: AuctionListView,
+      component: DisplayAuctionListView,
       meta: {
         requiresAuth: false
       }
@@ -90,9 +92,12 @@ const router = new Router({
       }
     },
     {
-      path: "/add-auction",
+      path: "/auction/create",
       name: "AddAuction",
-      component: AddAuctionView
+      component: AddAuctionView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/messages/user/:currentUserId",
@@ -101,9 +106,23 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    {
+      path: "/auctions/search/private",
+      name: "PrivateAuctionView",
+      component: PrivateAuctionView
+    },
+    {
+      path: "/profile/watchlist",
+      name: "UsersWatchListView",
+      component: WatchlistView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication

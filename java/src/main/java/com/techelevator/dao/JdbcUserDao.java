@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, full_name, email, phone, address, username, password_hash, role FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -72,9 +72,32 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateContactInformation(String username, String contactInformation) {
-        String sql = "UPDATE users SET contact_information = ? WHERE username =?";
-        jdbcTemplate.update(sql, contactInformation, username);
+    public void updateUserEmail(String username, String email) {
+        String sql = "UPDATE users SET email = ? WHERE username =?";
+        jdbcTemplate.update(sql, email, username);
+    }
+
+    @Override
+    public void updateUserBillingAddress(String username, String billingAddress) {
+        String sql = "UPDATE users SET address_billing = ? WHERE username =?";
+        jdbcTemplate.update(sql, billingAddress, username);
+    }
+    @Override
+    public void updateUserShippingAddress(String username, String shippingAddress) {
+        String sql = "UPDATE users SET address_shipping = ? WHERE username =?";
+        jdbcTemplate.update(sql, shippingAddress, username);
+    }
+
+    @Override
+    public void updateUserPhone(String username, String phone) {
+        int phoneNumber = 0;
+        try {
+            phoneNumber = Integer.parseInt(phone);
+        } catch (NumberFormatException e) {
+            // ya dun goofed kid
+        }
+        String sql = "UPDATE users SET phone = ? WHERE username =?";
+        jdbcTemplate.update(sql, phoneNumber, username);
     }
 
     @Override

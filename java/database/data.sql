@@ -1,24 +1,26 @@
 BEGIN TRANSACTION;
 
 
-INSERT INTO users (full_name, email, phone, address, username, password_hash, role) VALUES ('User User', 'User@gmail.com', 1234567890, '123 Test Lane', 'user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER');
-INSERT INTO users (full_name, email, phone, address, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (full_name, email, phone, address, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
-INSERT INTO users (full_name, email, phone, address, username, password_hash, role) VALUES ('Admin Admin', 'Admin@gmail.com', 0987654321, '456 Test Lane', 'admin2', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash, role) VALUES ('TestUser1', 'test1@test.com', 666, 'testAddress1', 'testAddress1', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('TestUser2', 'test2@test.com', 555,'testAddress2', 'testAddress2', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('User 3', 'user3@example.com', '5555555555', 'Address 3', 'Address 3', 'user3', 'hash3', 'ROLE_USER');
 -- Sandbox data
+
 -- Insert fake auctions
-INSERT INTO auction (auction_name, start_time, end_time)
+
+INSERT INTO auction (auction_name, start_time, end_time, isPrivate, privateKey)
 VALUES
-    ('Summer Auction', '2023-08-15 09:00:00', '2023-08-20 18:00:00'),
-    ('Vintage Collectibles', '2023-09-10 12:00:00', '2023-09-15 22:00:00'),
-    ('Art Gala', '2023-09-25 10:00:00', '2023-09-30 20:00:00'),
-    ('Tech Showcase', '2023-10-05 09:30:00', '2023-10-10 17:30:00'),
-    ('Jewelry Auction', '2023-10-20 11:00:00', '2023-10-25 21:00:00'),
-    ('Book Lovers', '2023-11-01 08:00:00', '2023-11-05 16:00:00'),
-    ('Sports Memorabilia', '2023-11-15 14:00:00', '2023-11-20 23:00:00'),
-    ('Holiday Gifts', '2023-12-01 10:00:00', '2023-12-10 19:00:00'),
-    ('Fashion Extravaganza', '2023-12-15 12:00:00', '2023-12-20 22:00:00'),
-    ('Home Decor', '2023-12-25 09:00:00', '2023-12-31 18:00:00');
+    ('Summer Auction', '2023-08-15 09:00:00', '2023-08-20 18:00:00',false,'noPrivateKeySet'),
+    ('Vintage Collectibles', '2023-09-10 12:00:00', '2023-09-15 22:00:00',false,'noPrivateKeySet'),
+    ('Art Gala', '2023-09-25 10:00:00', '2023-09-30 20:00:00',false,'noPrivateKeySet'),
+    ('Tech Showcase', '2023-10-05 09:30:00', '2023-10-10 17:30:00',false,'noPrivateKeySet'),
+    ('Jewelry Auction', '2023-10-20 11:00:00', '2023-10-25 21:00:00',false,'noPrivateKeySet'),
+    ('Book Lovers', '2023-11-01 08:00:00', '2023-11-05 16:00:00',false,'noPrivateKeySet'),
+    ('Sports Memorabilia', '2023-11-15 14:00:00', '2023-11-20 23:00:00',false,'noPrivateKeySet'),
+    ('Holiday Gifts', '2023-12-01 10:00:00', '2023-12-10 19:00:00',false,'noPrivateKeySet'),
+    ('Fashion Extravaganza', '2023-12-15 12:00:00', '2023-12-20 22:00:00',false,'noPrivateKeySet'),
+    ('Home Decor', '2023-12-25 09:00:00', '2023-12-31 18:00:00',false,'noPrivateKeySet'),
+    ('Luxury Watches', '2023-08-11 09:00:00', '2023-08-14 12:00:00', true, 'privateWatches ' );
 
 -- Insert fake items
 INSERT INTO item (auction_id, user_id, item_name, description, initial_price, current_price)
@@ -45,8 +47,16 @@ VALUES
 INSERT INTO bid (item_id, user_id, bid_amount, bid_time)
 VALUES
     (1, 2, 160.00, '2023-08-18 15:30:00'),
+    (1, 3, 165.00, '2023-08-18 15:35:00'),
     (1, 1, 175.00, '2023-08-19 10:45:00'),
     (2, 1, 85.00, '2023-08-16 14:20:00'),
     (3, 2, 110.00, '2023-09-12 16:10:00');
+
+
+-- Insert fake watchlist
+INSERT INTO watchlist (user_id, item_id)
+VALUES
+    (1,3),
+    (1,5);
 
 COMMIT TRANSACTION;

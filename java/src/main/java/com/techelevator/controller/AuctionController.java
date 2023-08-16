@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.model.Auction;
 import com.techelevator.dao.AuctionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +26,15 @@ public class AuctionController {
     }
 
     @CrossOrigin
-    @PostMapping("/create-auction")
+    @PostMapping("/create/auction")
     public Auction addAuction(@RequestBody Auction auction) {
         return auctionDao.createAuction(auction);
     }
 
-}
+    @CrossOrigin
+    @PostMapping("/auctions/search/private/{privateKey}")
+    public Auction getAuctionByPrivateKey(@PathVariable String privateKey) {
+        return auctionDao.getAuctionByPrivateKey(privateKey);
+    }
 
+}

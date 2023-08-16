@@ -3,10 +3,12 @@
     <section class="topNav">
       <navbar />
     </section>
-    <div class="spacing" />
+    <div class="spacing"></div>
+    <div class="background-image"></div>
     <router-view />
   </div>
 </template>
+
 
 <script>
 import Navbar from './components/Navbar.vue';
@@ -26,8 +28,15 @@ import Navbar from './components/Navbar.vue';
     min-height: 50px;
     z-index: 3000;
   }
+  .router-view {
+  position: relative;
+  z-index: 1; /* Adjust as needed to ensure content is above the background */
+}
 
   .spacing {
     min-height: 50px;
   }
+
+
+
 </style>

@@ -3,9 +3,12 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS conversations;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_contacts;
 DROP TABLE IF EXISTS auction;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS bid;
+DROP TABLE IF EXISTS watchlist;
+
 
 
 CREATE TABLE users (
@@ -13,11 +16,11 @@ CREATE TABLE users (
 	full_name varchar(50),
 	email varchar(50) NOT NULL UNIQUE,
 	phone varchar(15) NOT NULL UNIQUE,
-	address varchar(50) NOT NULL,
+	address_billing varchar(50) NOT NULL,
+	address_shipping varchar(50) NOT NULL,
   	username varchar(50) NOT NULL UNIQUE,
   	password_hash varchar(200) NOT NULL,
   	role varchar(50) NOT NULL,
-  	contact_information TEXT,
   	allow_anonymous BOOLEAN DEFAULT false,
   	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
@@ -27,8 +30,11 @@ CREATE TABLE auction (
     auction_id SERIAL PRIMARY KEY,
     auction_name VARCHAR(255) NOT NULL,
     start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL
+    end_time TIMESTAMP NOT NULL,
+    isPrivate BOOLEAN NOT NULL,
+    privateKey varchar(32) default 'noPrivateKeySet'
 );
+
 
 -- Item Table
 CREATE TABLE item (
@@ -39,9 +45,10 @@ CREATE TABLE item (
     description TEXT,
     initial_price DECIMAL(10, 2) NOT NULL,
     current_price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (auction_id) REFERENCES Auction(auction_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (auction_id) REFERENCES auction(auction_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
 
 -- Bid Table
 CREATE TABLE bid (
@@ -50,7 +57,7 @@ CREATE TABLE bid (
     user_id INT,
     bid_amount DECIMAL(10, 2) NOT NULL,
     bid_time TIMESTAMP NOT NULL,
-    FOREIGN KEY (item_id) REFERENCES Item(item_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -80,5 +87,14 @@ CREATE TABLE messages (
     FOREIGN KEY (to_id) REFERENCES users(user_id),
     FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id)
 );
+-- Watchlist table
+CREATE TABLE watchlist (
+    watchlist_id SERIAL PRIMARY KEY,
+    user_id INT,
+    item_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id)
+);
+
 
 COMMIT TRANSACTION;

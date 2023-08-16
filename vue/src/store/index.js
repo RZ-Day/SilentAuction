@@ -57,5 +57,15 @@ export default new Vuex.Store({
     ADD_MESSAGE(state, message) {
       state.storeMessages.push(message);
     }
+  },
+  actions: {
+    async fetchUserData ({ commit }) {
+      try {
+        const response = await axios.get('api/user/profile');
+        commit('SET_USER', response.data);
+      } catch {
+        console.error('Error fetching user data');
+      }
+    }
   }
 })

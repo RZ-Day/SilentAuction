@@ -12,4 +12,6 @@ public interface AuctionDao {
 
     Auction getAuctionById(int auctionId);
 
+    Auction getAuctionByPrivateKey(String privateKey);
+
 }
