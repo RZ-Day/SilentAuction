@@ -36,7 +36,7 @@
                   </p>
 
                   <p id="item-price">
-                    Current Bid: ${{ item.currentPrice + 100 }}
+                    Current Bid: {{ getCurrentBid(item) }}
                   </p>
                 </li>
               </ul>
@@ -69,6 +69,17 @@ export default {
     },
   },
   methods: {
+    getCurrentBid(item) {
+      if (item == null) return 0;
+      try {
+        if (item.bids == null || item.bids.length < 1) {
+          return "None yet!";
+        }
+        return "$" + item.bids[0].bidAmount;
+      } catch {
+        return 0;
+      }
+    },
     formatDateTime(timestamp) {
       const options = {
         year: "numeric",
