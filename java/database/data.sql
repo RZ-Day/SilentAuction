@@ -1,9 +1,18 @@
 BEGIN TRANSACTION;
 
 
-INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash, role) VALUES ('Barack Obama', 'obama@whitehouse.gov', 5554206969, '1600 Pennsylvania Avenue NW, Washington, DC 20500', '1600 Pennsylvania Avenue NW, Washington, DC 20500', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('Emily Anderson', 'emily.anderson@whitehouse.gov', 5555551234, '123 Maple Street, Springfield, CA 12345', '123 Maple Street, Springfield, CA 12345', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
-INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username,password_hash,role) VALUES ('Marcus Williams', 'marcus.williams@whitehouse.gov', '5555555678', '456 Oak Avenue, Riverside, TX 67890', '456 Oak Avenue, Riverside, TX 67890', 'user3', 'hash3', 'ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Barack Obama', 'obama@whitehouse.gov', 5554206969, '1600 Pennsylvania Avenue NW, Washington, DC 20500', '1600 Pennsylvania Avenue NW, Washington, DC 20500', 'user1','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Emily Anderson', 'emily.anderson@whitehouse.gov', 5555551234, '123 Maple Street, Springfield, CA 12345', '123 Maple Street, Springfield, CA 12345', 'admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Marcus Williams', 'marcus.williams@whitehouse.gov', 5555555678, '456 Oak Avenue, Riverside, TX 67890', '456 Oak Avenue, Riverside, TX 67890', 'user3', 'hash3', 'ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Betty White', 'bettywhite@whitehouse.gov', 5555554321, '1234 Elm Street, Willowville, CA 98765', '1234 Elm Street, Willowville, CA 98765', 'user4', 'hash4', 'ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Snoop Dogg', 'snoopdogg@whitehouse.gov', 6666665678, '9876 Maple Avenue, Pineville, NY 12345', '9876 Maple Avenue, Pineville, NY 12345', 'user5', 'hash5', 'ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Ken Imjust', 'imjustken@whitehouse.gov', 6666661234, '555 Sunflower Lane, Meadowville, TX 67890', '555 Sunflower Lane, Meadowville, TX 67890', 'user6', 'hash6', 'ROLE_USER');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Jack Black', 'jackblack@whitehouse.gov', 7777771234, '2468 Oak Drive, Brookstown, FL 54321', '2468 Oak Drive, Brookstown, FL 54321', 'user7', 'hash7', 'ROLE_ADMIN');
+INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role) VALUES ('Karlach theBarbarian', 'karlachthebarbarian@whitehouse.gov', 7777776789, '789 Birch Street, Riverdale, AZ 23456', '789 Birch Street, Riverdale, AZ 23456', 'user8', 'hash8','ROLE_USER');
+
+
+
+
 -- Sandbox data
 
 -- Insert fake auctions
