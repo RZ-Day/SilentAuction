@@ -25,7 +25,7 @@ import Navbar from './components/Navbar.vue';
     width: 100%;
     margin: 0;
     position: fixed;
-    min-height: 100px;
+    min-height: 50px;
     z-index: 3000;
   }
   .router-view {

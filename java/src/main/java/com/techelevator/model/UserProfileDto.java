@@ -10,7 +10,8 @@ public class UserProfileDto {
 
     private String phone;
 
-    private String address;
+    private String billingAddress;
+    private String shippingAddress;
 
     private boolean allowAnonymous;
 
@@ -38,12 +39,20 @@ public class UserProfileDto {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public boolean isAllowAnonymous() {

@@ -10,6 +10,7 @@ import UserProfile from "@/views/UserProfile.vue";
 import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
+import Messages from '../views/Messages.vue';
 import PrivateAuctionView from "@/views/PrivateAuctionView.vue";
 import WatchlistView from "@/views/WatchlistView.vue";
 
@@ -99,6 +100,14 @@ const router = new Router({
       }
     },
     {
+      path: "/messages/user/:currentUserId",
+      name: "Messages",
+      component: Messages,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/auctions/search/private",
       name: "PrivateAuctionView",
       component: PrivateAuctionView
@@ -113,7 +122,7 @@ const router = new Router({
     },
 
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication

@@ -16,7 +16,7 @@
         </div>
         <div class="form-input-group">
           <label for="phone">Phone Number</label>
-          <input type="number" id="phone" v-model="user.phone" required />
+          <input type="text" id="phone" v-model="user.phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-555-5555" required />
         </div>
         <div class="form-input-group">
           <label for="address">Address</label>

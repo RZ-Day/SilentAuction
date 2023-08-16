@@ -8,6 +8,4 @@ public interface ItemDao {
     Item getItemById(int itemId);
 
     List<Item> getItemsByIdsFromWatchlist(List<Watchlist> watchlistEntries);
-
-
 }

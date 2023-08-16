@@ -127,6 +127,4 @@ public class JdbcItemDao implements ItemDao{
         RowMapper<Item> rowMapper = (resultSet, rowNum) -> createItemFromResultSet(resultSet);
         return namedParameterJdbcTemplate.query(sql, namedParameters, rowMapper);
     }
-
-
 }

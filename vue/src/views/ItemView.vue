@@ -2,6 +2,7 @@
   <div id="item-page">
     <div id="item-details">
       <Item :item="item" />
+      <button @click="startConversation">Message Vendor</button>
     </div>
     <div class="bids-section">
       <DisplayBids />
@@ -12,6 +13,7 @@
 <script>
 import Item from "../components/Item.vue"; // Import the Item component
 import auctionService from "@/services/AuctionsListService.js";
+import messageService from "@/services/MessageService.js";
 import DisplayBids from "../components/DisplayBids.vue";
 
 export default {
@@ -44,6 +46,28 @@ export default {
       }
     });
   },
+  methods: {
+    startConversation() {
+      //CREATE NEW CONVERSATION IN BACK-END
+      console.log(this.item);
+
+      messageService.startConversation({
+        sellerId: this.item.userId,
+        buyerId: this.$store.state.user.id,
+        itemId: this.item.itemId,
+        itemName: this.item.itemName
+      }).then((response) => {
+        if (response.status == 200) {
+          //SET ACTIVE CONVERSATION ID TO NEWLY CREATED CONVERSATION, OR TO EXISTING CONVERSATION ID
+          const newConvoId = response.data.conversationId;
+          this.$store.commit("SET_ACTIVE_CONVERSATION", newConvoId);
+
+          //REDIRECT TO ACTIVE CONVERSATION IN INBOX
+          this.$router.push({name:"Messages", params:{currentUserId: this.$store.state.user.id}});
+        }
+      });
+    }
+  }
 };
 </script>
 

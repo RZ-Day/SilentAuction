@@ -8,7 +8,8 @@ public interface UserService {
     User getUserByUsername(String username);
 
     void updateUserPhone(String username, String phone);
-    void updateUserAddress(String username, String address);
+    void updateUserBillingAddress(String username, String billingAddress);
+    void updateUserShippingAddress(String username, String shippingAddress);
     void updateUserEmail(String username, String email);
 
 }

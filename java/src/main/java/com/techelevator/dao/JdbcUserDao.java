@@ -78,9 +78,14 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateUserAddress(String username, String address) {
-        String sql = "UPDATE users SET address = ? WHERE username =?";
-        jdbcTemplate.update(sql, address, username);
+    public void updateUserBillingAddress(String username, String billingAddress) {
+        String sql = "UPDATE users SET address_billing = ? WHERE username =?";
+        jdbcTemplate.update(sql, billingAddress, username);
+    }
+    @Override
+    public void updateUserShippingAddress(String username, String shippingAddress) {
+        String sql = "UPDATE users SET address_shipping = ? WHERE username =?";
+        jdbcTemplate.update(sql, shippingAddress, username);
     }
 
     @Override
@@ -109,7 +114,6 @@ public class JdbcUserDao implements UserDao {
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
         try {
-            System.out.println("GOT TO USERDAO");
             int newUserId = jdbcTemplate.queryForObject(insertUserSql,
                                                         int.class,
                                                         user.getName(),
