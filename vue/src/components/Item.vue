@@ -2,7 +2,7 @@
   <div class="item-page">
     <div>
     <button type="button" class="custom-button" @click="addToWatchList">Add to my Watchlist</button>
-    
+
     </div>
     <div class="item-details">
       <h2>{{ item.itemName }}</h2>
@@ -16,9 +16,7 @@
 </template>
 
 <script>
-
 import watchListService from '@/services/WatchlistService.js';
-
 export default {
   name: "ItemPage",
   props: {
@@ -42,7 +40,6 @@ export default {
   align-items: center;
   min-height: 100vh;
 }
-
 
 .item-details,
 .item-image {

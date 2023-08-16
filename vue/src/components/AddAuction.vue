@@ -3,6 +3,7 @@
     <div class="form-container">
       <h2>Create a New Auction</h2>
       <form v-on:submit.prevent="createAuction">
+        
         <div class="form-group">
           <label for="auctionName"></label>
           <input
@@ -11,6 +12,7 @@
             placeholder="Enter Auction Name"
           />
         </div>
+
         <div class="form-group">
           <label for="startTime">Start Time:</label>
           <input
@@ -20,6 +22,7 @@
             placeholder="Select Start Time"
           />
         </div>
+
         <div class="form-group">
           <label for="endTime">End Time:</label>
           <input type="datetime-local" v-model="newAuction.endTime" required />
@@ -36,7 +39,7 @@
 
         <div v-if="newAuction.privateAuction" class="form-group">
           <label for="privatePassword">Private Auction Password:</label>
-          <input type="password" placeHolder="Length 1-32" v-model="newAuction.privatePassword" />
+          <input type="text" placeHolder="Length 1-32" v-model="newAuction.privatePassword" />
         </div>
 
         <h3>Add Items</h3>

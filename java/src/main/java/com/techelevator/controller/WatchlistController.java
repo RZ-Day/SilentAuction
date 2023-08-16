@@ -30,4 +30,5 @@ public class WatchlistController {
     public int addToWatchlist(@PathVariable int userId, int itemId) {
         return watchlistDao.addToWatchlist(userId, itemId);
     }
+
 }
