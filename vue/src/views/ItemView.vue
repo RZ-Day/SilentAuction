@@ -50,6 +50,7 @@ export default {
     startConversation() {
       //CREATE NEW CONVERSATION IN BACK-END
       console.log(this.item);
+      console.log(this.item.userId);
 
       messageService.startConversation({
         sellerId: this.item.userId,
@@ -60,7 +61,10 @@ export default {
         if (response.status == 200) {
           //SET ACTIVE CONVERSATION ID TO NEWLY CREATED CONVERSATION, OR TO EXISTING CONVERSATION ID
           const newConvoId = response.data.conversationId;
+          console.log("New convo id: " + newConvoId);
+
           this.$store.commit("SET_ACTIVE_CONVERSATION", newConvoId);
+          console.log("Active ID committed")
 
           //REDIRECT TO ACTIVE CONVERSATION IN INBOX
           this.$router.push({name:"Messages", params:{currentUserId: this.$store.state.user.id}});
