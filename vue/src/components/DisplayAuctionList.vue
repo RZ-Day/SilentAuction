@@ -6,7 +6,7 @@
       <h2></h2>
       <div class="auction-grid">
         <router-link
-          v-for="auction in mostRecentAuctions"
+          v-for="auction in publicAuctions"
           :key="auction.auctionId"
           :to="{
             name: 'AuctionIndex',
@@ -61,12 +61,16 @@ export default {
     auctions: Array,
   },
   computed: {
+    publicAuctions() {
+      return this.auctions.filter(auction => auction.isPrivate === false);
+    },
     mostRecentAuctions() {
       return this.auctions.slice(0);
     },
     ongoingAuctions() {
       return this.auctions.slice(4);
     },
+    
   },
   methods: {
     formatDateTime(timestamp) {

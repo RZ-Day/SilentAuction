@@ -47,11 +47,11 @@ export default {
   .sub-item:hover {
     background-color: rgb(231, 231, 231);
     transition: .2s ease;
-    color:rgb(73, 201, 69) ;
+    color:rgb(255, 255, 255) ;
   }
 
   .sub-item:hover .sub-link {
-    color:rgb(73, 201, 69) ;
+    color:rgb(255, 255, 255) ;
   }
 
   .sub-menu {

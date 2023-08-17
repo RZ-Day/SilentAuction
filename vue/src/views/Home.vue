@@ -53,6 +53,16 @@ export default {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   opacity: 0; /* Start with 0 opacity */
   animation: fadeIn 3s forwards;
+  background-image: url('@/Assets/back4.jpg'); 
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  position: fixed;
+  width: 100%;
+  height: 100%; 
+  bottom: 0; /* Anchors the image to the bottom of the screen */
+  z-index: -1; /* Place the image behind other content */
+  
 }
 @keyframes fadeIn {
   from {
@@ -88,6 +98,8 @@ export default {
 
   transition: transform 0.3s ease-in-out;
 }
+
+
 
 #button-left {
   animation: bounceAndEnlarge 1s ease-in-out 3s, shake 2.5s ease-in-out 16s;

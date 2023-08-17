@@ -83,8 +83,8 @@ public class JdbcAuctionDao implements AuctionDao {
 
     @Override
     public Auction createAuction(Auction auction) {
-        String auctionSql = "INSERT INTO auction (auction_name, start_time, end_time) " +
-                "VALUES (?, ?, ?) RETURNING auction_id;";
+        String auctionSql = "INSERT INTO auction (auction_name, start_time, end_time, isPrivate, privateKey) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING auction_id;";
 
         try {
             Integer newAuctionId = jdbcTemplate.queryForObject(
@@ -92,7 +92,10 @@ public class JdbcAuctionDao implements AuctionDao {
                     int.class,
                     auction.getAuctionName(),
                     auction.getStartTime(),
-                    auction.getEndTime()
+                    auction.getEndTime(),
+                    auction.isPrivate(),
+                    auction.getPrivateKey()
+
             );
             if (newAuctionId != null) {
                 // insert  items
@@ -115,8 +118,10 @@ public class JdbcAuctionDao implements AuctionDao {
 
             return getAuctionById(newAuctionId);
         } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("FUCK!" + e.getMessage());
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
+            System.out.println("Fuck2" + e.getMessage());
             throw new DaoException("Data integrity violation", e);
         } catch (NullPointerException e) {
             throw new DaoException("NullPointer violation", e);
@@ -173,6 +178,48 @@ public class JdbcAuctionDao implements AuctionDao {
         }
     }
 
+    @Override
+    public Auction getAuctionByPrivateKey(String privateKey) {
+        String sql = "SELECT * FROM auction WHERE privatekey LIKE ?";
+        String searchTerm = "%" + privateKey + "%";
+
+        Auction auction = jdbcTemplate.queryForObject(
+                sql,
+                (rs, rowNum) -> {
+                    Auction a = new Auction();
+                    a.setAuctionId(rs.getInt("auction_id"));
+                    a.setAuctionName(rs.getString("auction_name"));
+                    a.setStartTime(rs.getTimestamp("start_time"));
+                    a.setEndTime(rs.getTimestamp("end_time"));
+                    a.setPrivate(rs.getBoolean("isprivate"));
+                    a.setPrivateKey(rs.getString("privatekey"));
+                    return a;
+                },
+                searchTerm
+        );
+
+        String itemsSql = "SELECT * FROM item WHERE auction_id = ?;";
+        List<Item> items = jdbcTemplate.query(
+                itemsSql,
+                (rs, rowNum) -> {
+                    Item item = new Item();
+                    item.setItemId(rs.getInt("item_id"));
+                    item.setItemName(rs.getString("item_name"));
+                    item.setDescription(rs.getString("description"));
+                    item.setInitialPrice(rs.getDouble("initial_price"));
+                    item.setCurrentPrice(rs.getDouble("current_price"));
+
+                    return item;
+                },
+                auction.getAuctionId()
+        );
+
+        assert auction != null;
+        auction.setItems(items);
+
+        return auction;
+
+    }
 
 
     private Auction mapRowToAuction(SqlRowSet rowSet) {
@@ -181,6 +228,8 @@ public class JdbcAuctionDao implements AuctionDao {
         auction.setAuctionName(rowSet.getString("auction_name"));
         auction.setStartTime(rowSet.getTimestamp("start_time"));
         auction.setEndTime(rowSet.getTimestamp("end_time"));
+        auction.setPrivate(rowSet.getBoolean("isprivate"));
+        auction.setPrivateKey(rowSet.getString("privatekey"));
         return auction;
     }
 
@@ -191,6 +240,7 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setDescription(rowSet.getString("description"));
         item.setInitialPrice(rowSet.getDouble("initial_price"));
         item.setCurrentPrice(rowSet.getDouble("current_price"));
+        item.setUserId(rowSet.getInt("item_user_id"));
         return item;
     }
 

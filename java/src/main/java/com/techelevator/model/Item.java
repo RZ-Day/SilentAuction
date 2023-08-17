@@ -13,6 +13,7 @@ public class Item {
     private double currentPrice;
     private List<Bid> bids;
     private List<Image> images;
+    private int userId;
 
     public List<Bid> getBids() {
         return bids;
@@ -68,6 +69,14 @@ public class Item {
 
     public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
 

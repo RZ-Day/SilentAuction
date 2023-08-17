@@ -20,8 +20,10 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
+    storeMessages: [],
     activeAuctionID: 0,
-    activeItemID: 0
+    activeItemID: 0,
+    activeConversationID: 0
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -46,6 +48,15 @@ export default new Vuex.Store({
     SET_ACTIVE_ITEM(state, itemID) {
       state.activeItemID = itemID;
     },
+    SET_ACTIVE_CONVERSATION(state, conversationID) {
+      state.activeConversationID = conversationID;
+    },
+    SET_STORE_MESSAGES(state, messageList) {
+      state.storeMessages = messageList;
+    },
+    ADD_MESSAGE(state, message) {
+      state.storeMessages.push(message);
+    }
   },
   actions: {
     async fetchUserData ({ commit }) {
@@ -56,5 +67,5 @@ export default new Vuex.Store({
         console.error('Error fetching user data');
       }
     }
-  },
+  }
 })

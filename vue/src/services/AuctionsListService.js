@@ -7,5 +7,11 @@ export default {
 
     addAuction(newAuction) {
         return axios.post('/create/auction', newAuction)
-    }
+    },
+
+    getPrivateAuction(auctionPassword) {
+        return axios.post(`/auctions/search/private/${auctionPassword}`);
+      }
+
+    
 }

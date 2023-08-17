@@ -4,8 +4,12 @@
       <h2>Create a New Auction</h2>
       <form v-on:submit.prevent="createAuction">
         <div class="form-group">
-          <label for="auctionName">Auction Name:</label>
-          <input v-model="newAuction.auctionName" required />
+          <label for="auctionName"></label>
+          <input
+            v-model="newAuction.auctionName"
+            required
+            placeholder="Enter Auction Name"
+          />
         </div>
         <div class="form-group">
           <label for="startTime">Start Time:</label>
@@ -13,11 +17,26 @@
             type="datetime-local"
             v-model="newAuction.startTime"
             required
+            placeholder="Select Start Time"
           />
         </div>
         <div class="form-group">
           <label for="endTime">End Time:</label>
           <input type="datetime-local" v-model="newAuction.endTime" required />
+        </div>
+
+        <div class="form-group">
+          <label for="privateAuction">Private Auction:</label>
+          <input
+            type="checkbox"
+            v-model="newAuction.privateAuction"
+            @change="togglePrivatePassword"
+          />
+        </div>
+
+        <div v-if="newAuction.privateAuction" class="form-group">
+          <label for="privatePassword">Private Auction Password:</label>
+          <input type="password" placeHolder="Length 1-32" v-model="newAuction.privatePassword" />
         </div>
 
         <h3>Add Items</h3>
@@ -45,16 +64,22 @@
           <div class="form-group">
             <label for="images">Images:</label>
             <input type="file" multiple @change="handleImageUpload(index)" />
-            <div v-for="(image, imgIndex) in item.images" :key="imgIndex" class="image-preview">
+            <div
+              v-for="(image, imgIndex) in item.images"
+              :key="imgIndex"
+              class="image-preview"
+            >
               <img :src="image.url" alt="Image Preview" />
-              <button type="button" @click="removeImage(index, imgIndex)">Remove</button>
+              <button type="button" @click="removeImage(index, imgIndex)">
+                Remove
+              </button>
             </div>
             <p>Image Count: {{ totalImages[index] }}</p>
           </div>
         </div>
         <button type="button" @click="addItem">Add Item</button>
 
-        <input type="submit" value="Create Auction">
+        <input type="submit" value="Create Auction" />
       </form>
     </div>
   </div>
@@ -70,6 +95,8 @@ export default {
         auctionName: "",
         startTime: "",
         endTime: "",
+        privateAuction: false,
+        privatePassword: "",
         items: [
           {
             itemName: "",
@@ -80,12 +107,13 @@ export default {
           },
         ],
       },
+      editedItemIndex: -1,
     };
   },
   computed: {
     totalImages() {
-      return this.newAuction.items.map(item => item.images.length);
-    }
+      return this.newAuction.items.map((item) => item.images.length);
+    },
   },
   methods: {
     addItem() {
@@ -96,6 +124,13 @@ export default {
         currentPrice: 0,
         images: [],
       });
+    },
+    toggleItem(index) {
+      this.newAuction.items[index].open = !this.newAuction.items[index].open;
+    },
+    editItem(index) {
+      this.editedItemIndex = index;
+      this.newAuction.items[index].open = true;
     },
     createAuction() {
       auctionService
@@ -139,14 +174,36 @@ export default {
 };
 </script>
 
-<style>
+
+<style scoped>
 .form-container {
-  max-width: 600px;
-  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.911);
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Set a minimum height to cover the entire viewport */
+  background-image: url("@/Assets/chessFocus.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.form-container p {
+  text-align: center;
 }
 
 .form-group {
@@ -154,10 +211,8 @@ export default {
 }
 
 .item-form {
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px;
 }
 
 .image-preview {
@@ -181,5 +236,38 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
-</style>
 
+.item-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 5px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.item-details {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 5px;
+}
+
+.bottom-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.save-me {
+  color: #ff1100;
+}
+</style>

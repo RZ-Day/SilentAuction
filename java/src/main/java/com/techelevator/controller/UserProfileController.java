@@ -26,9 +26,12 @@ public class UserProfileController {
         } else if (userProfile.getEmail() != null) {
             userService.updateUserEmail(username, userProfile.getEmail());
             return ResponseEntity.ok("Email Address updated.");
-        } else if (userProfile.getAddress() != null) {
-            userService.updateUserAddress(username, userProfile.getAddress());
-            return ResponseEntity.ok("Address updated.");
+        } else if (userProfile.getBillingAddress() != null) {
+            userService.updateUserBillingAddress(username, userProfile.getBillingAddress());
+            return ResponseEntity.ok("Billing Address updated.");
+        } else if (userProfile.getShippingAddress() != null) {
+            userService.updateUserBillingAddress(username, userProfile.getShippingAddress());
+            return ResponseEntity.ok("Shipping Address updated.");
         } else if (userProfile.isAllowAnonymous()) {
             // TODO: allow this change later
             userService.updateAllowAnonymous(username, userProfile.isAllowAnonymous());
@@ -38,11 +41,18 @@ public class UserProfileController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<User> getUserProfile(@RequestParam String username) {
+    @GetMapping("/")
+    public ResponseEntity<UserProfileDto> getUserProfile(@RequestParam String username) {
         User user = userService.getUserByUsername(username);
         if (user != null) {
-            return ResponseEntity.ok(user);
+            UserProfileDto userProfileDto = new UserProfileDto();
+            userProfileDto.setUsername(user.getUsername());
+            userProfileDto.setEmail(user.getEmail());
+            userProfileDto.setPhone(user.getPhoneNumber());
+            userProfileDto.setBillingAddress(user.getBillingAddress());
+            userProfileDto.setShippingAddress(user.getShippingAddress());
+            userProfileDto.setAllowAnonymous(user.isAllowAnonymous());
+            return ResponseEntity.ok(userProfileDto);
         } else {
             return ResponseEntity.notFound().build();
         }
