@@ -58,7 +58,6 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public void register(@Valid @RequestBody RegisterUserDto newUser) {
-        System.out.println("Start");
         try {
             User user = userDao.createUser(newUser);
             if (user == null) {
