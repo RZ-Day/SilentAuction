@@ -10,15 +10,12 @@ public class User {
 
    private int id;
    private String username;
+   @JsonIgnore
    private String password;
+   @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
-   private boolean allowAnonymous;
-   private String billingAddress;
-   private String shippingAddress;
-   private String phoneNumber;
 
-   private String email;
    public User() { }
 
    public User(int id, String username, String password, String authorities) {
@@ -75,43 +72,6 @@ public class User {
          String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
          this.authorities.add(new Authority(authority));
       }
-   }
-   public String getBillingAddress() {
-      return billingAddress;
-   }
-
-   public void setBillingAddress(String billingAddress) {
-      this.billingAddress = billingAddress;
-   }
-
-   public String getShippingAddress() {
-      return shippingAddress;
-   }
-
-   public void setShippingAddress(String shippingAddress) {
-      this.shippingAddress = shippingAddress;
-   }
-
-   public String getPhoneNumber() {
-      return phoneNumber;
-   }
-
-   public void setPhoneNumber(String phoneNumber) {
-      this.phoneNumber = phoneNumber;
-   }
-   public String getEmail() {
-      return email;
-   }
-
-   public void setEmail(String email) {
-      this.email = email;
-   }
-   public boolean isAllowAnonymous() {
-      return allowAnonymous;
-   }
-
-   public void setAllowAnonymous(boolean allowAnonymous) {
-      this.allowAnonymous = allowAnonymous;
    }
 
    @Override

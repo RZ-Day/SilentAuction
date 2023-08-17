@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, full_name, email, phone, address, username, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -72,57 +72,13 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void updateUserEmail(String username, String email) {
-        String sql = "UPDATE users SET email = ? WHERE username =?";
-        jdbcTemplate.update(sql, email, username);
-    }
-
-    @Override
-    public void updateUserBillingAddress(String username, String billingAddress) {
-        String sql = "UPDATE users SET address_billing = ? WHERE username =?";
-        jdbcTemplate.update(sql, billingAddress, username);
-    }
-    @Override
-    public void updateUserShippingAddress(String username, String shippingAddress) {
-        String sql = "UPDATE users SET address_shipping = ? WHERE username =?";
-        jdbcTemplate.update(sql, shippingAddress, username);
-    }
-
-    @Override
-    public void updateUserPhone(String username, String phone) {
-        int phoneNumber = 0;
-        try {
-            phoneNumber = Integer.parseInt(phone);
-        } catch (NumberFormatException e) {
-            // ya dun goofed kid
-        }
-        String sql = "UPDATE users SET phone = ? WHERE username =?";
-        jdbcTemplate.update(sql, phoneNumber, username);
-    }
-
-    @Override
-    public void updateAllowAnonymous(String username, boolean allowAnonymous) {
-        String sql = "UPDATE users SET allow_anonymous = ? WHERE username = ?";
-        jdbcTemplate.update(sql, allowAnonymous, username);
-    }
-
-    @Override
     public User createUser(RegisterUserDto user) {
         User newUser = null;
-        String insertUserSql = "INSERT INTO users (full_name, email, phone, address, username, password_hash, role)" +
-                                " values (?, ?, ?, ?, ?, ?, ?) RETURNING user_id";
+        String insertUserSql = "INSERT INTO users (username, password_hash, role) values (?, ?, ?) RETURNING user_id";
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
         try {
-            int newUserId = jdbcTemplate.queryForObject(insertUserSql,
-                                                        int.class,
-                                                        user.getName(),
-                                                        user.getEmail(),
-                                                        user.getPhone(),
-                                                        user.getAddress(),
-                                                        user.getUsername(),
-                                                        password_hash,
-                                                        ssRole);
+            int newUserId = jdbcTemplate.queryForObject(insertUserSql, int.class, user.getUsername(), password_hash, ssRole);
             newUser = getUserById(newUserId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
