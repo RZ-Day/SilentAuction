@@ -16,6 +16,7 @@ public class UserProfileController {
         this.userProfileDao = userProfileDao;
     }
 
+    @CrossOrigin
     @PutMapping("/update")
     public ResponseEntity<String> updateUserProfile(@RequestBody UserProfile userProfile) {
         String username = userProfile.getUsername();
@@ -27,6 +28,7 @@ public class UserProfileController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<UserProfile> getUserProfile(@RequestParam String username) {
         UserProfile user = userProfileDao.getUserProfileByUsername(username);
