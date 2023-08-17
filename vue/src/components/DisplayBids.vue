@@ -60,15 +60,14 @@ export default {
       newBid: {
         bidderName: '',
         amount: null
-      }
+      },
+      timer: '',
+      lastBidId: 1,
     };
   },
   created() {
-    bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
-      this.bids = response.data;
-
-      // console.log(this.bids);
-    });
+    this.fetchBids();
+    this.timer = setInterval(this.fetchBids, 5000);
   },
   computed: {
     sortedBids() {
@@ -85,6 +84,16 @@ export default {
     },
   },
   methods: {
+    fetchBids() {
+      bidService.getBidsOfItem(this.$route.params.currentItemID).then((response) => { 
+        this.bids = response.data;
+
+        // console.log(this.bids);
+      });
+    },
+    cancelInterval() {
+      clearInterval(this.timer);
+    },
     showBidForm() {
       this.showForm = true;
     },
@@ -135,10 +144,14 @@ export default {
         this.newBid.bidderName = '';
         this.newBid.amount = null;
         this.showForm = false;
+        this.fetchBids();
       } else {
           alert('Your bid must be greater than the current highest bid!');
       }
     }
+  },
+  beforeUnmount() {
+    this.cancelInterval();
   }
 }
 </script>
