@@ -1,4 +1,5 @@
 <template>
+<div class="background-image">
   <div id="login">
     <form @submit.prevent="login">
       <h1 >Please Sign In</h1>
@@ -21,6 +22,7 @@
       <router-link :to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -70,4 +72,72 @@ export default {
 label {
   margin-right: 0.5rem;
 }
+#login{
+  border-radius: 25px;
+  width: 200px;
+  margin: 25px auto;
+  padding: 80px;
+  box-shadow: 0 4px 6px rgb(60, 60, 60), inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#login h1{
+  font-size: 35px;
+  text-align: center;
+}
+
+.form-input-group{
+  font-size: 20px;
+  height: 50px;
+}
+
+#username{
+  width: 100%;
+  height: 50%;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 10px;
+
+}
+
+#password{
+  width: 100%;
+  height: 50%;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+button{
+  width: 55%;
+  outline: none;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px auto;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 10px;
+
+}
+  
+p{
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+}
+
+.background-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgb(0, 0, 0), rgb(255, 255, 255));
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+
+}
+
 </style>

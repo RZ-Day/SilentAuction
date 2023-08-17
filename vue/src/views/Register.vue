@@ -1,4 +1,5 @@
 <template>
+<div class="background-image">
   <div id="register" class="text-center">
     <form @submit.prevent="register">
       <h1>Create Account</h1>
@@ -39,6 +40,7 @@
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -108,14 +110,106 @@ label {
 }
 
 .inputs {
+  display: flex;
+  flex-direction: column;
   padding: 25px;
-  margin-bottom: 25px;
-  border-radius: 25px;
+  margin-bottom: 30px;
+  border-radius: 30px;
   background-color: rgb(216, 216, 216);
+  box-shadow: 0 4px 6px rgb(60, 60, 60), inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .form-input-group {
   display: flex;
   justify-content: space-between;
+  font-size: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.background-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgb(0, 0, 0), rgb(255, 255, 255));
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#register h1 {
+  text-align: center;
+  font-weight: bold;
+}
+
+#name {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#email {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#phone {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#address {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#username {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#password {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+#confirmPassword {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 100%;  
+}
+
+button{
+  width: 55%;
+  outline: none;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 80px;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 10px;
+
+}
+
+p{
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
 }
 </style>
