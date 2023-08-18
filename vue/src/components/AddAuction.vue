@@ -11,6 +11,7 @@
             placeholder="Enter Auction Name"
           />
         </div>
+
         <div class="form-group">
           <label for="startTime">Start Time:</label>
           <input
@@ -20,6 +21,7 @@
             placeholder="Select Start Time"
           />
         </div>
+
         <div class="form-group">
           <label for="endTime">End Time:</label>
           <input type="datetime-local" v-model="newAuction.endTime" required />
@@ -36,7 +38,11 @@
 
         <div v-if="newAuction.privateAuction" class="form-group">
           <label for="privatePassword">Private Auction Password:</label>
-          <input type="password" placeHolder="Length 1-32" v-model="newAuction.privatePassword" />
+          <input
+            type="text"
+            placeHolder="Length 1-32"
+            v-model="newAuction.privatePassword"
+          />
         </div>
 
         <h3>Add Items</h3>
@@ -104,6 +110,7 @@ export default {
             initialPrice: 0,
             currentPrice: 0,
             userId: this.$store.state.user.id,
+            numOfImages: 0,
             images: [],
           },
         ],
@@ -113,7 +120,11 @@ export default {
   },
   computed: {
     totalImages() {
-      return this.newAuction.items.map((item) => item.images.length);
+      return this.newAuction.items.map((item) => {
+        const numImages = item.images.length;
+        item.numOfImages = numImages;
+        return numImages;
+      });
     },
   },
   methods: {
@@ -124,6 +135,7 @@ export default {
         initialPrice: 0,
         currentPrice: 0,
         userId: this.$store.state.user.id,
+        numOfImages: 0,
         images: [],
       });
     },
@@ -134,17 +146,66 @@ export default {
       this.editedItemIndex = index;
       this.newAuction.items[index].open = true;
     },
-    createAuction() {
-      auctionService
-        .addAuction(this.newAuction)
-        .then(() => {
-          this.resetForm();
-          this.$router.push({ name: "AuctionList" });
-        })
-        .catch((error) => {
-          console.error("Error creating auction:", error);
-        });
+    async uploadImagesAsync() {
+      try {
+        for (const [itemIndex, item] of this.newAuction.items.entries()) {
+          const itemNameWithoutSpaces = item.itemName.replace(/\s/g, "");
+          console.log("index of item: ", itemIndex);
+
+          for (const [imgIndex, image] of item.images.entries()) {
+            const fileExtension = image.file.type.split("/")[1];
+            const customFilename = `${itemNameWithoutSpaces}${imgIndex}`;
+            const filenameWithExtension = `${customFilename}.${fileExtension}`;
+
+            const proxyBaseUrl = "http://localhost:8081/api/proxy"; // Adjust the port if needed
+            const imageUrl = `${proxyBaseUrl}/${filenameWithExtension}`;
+
+
+            
+            const requestOptions = {
+              method: "PUT",
+              headers: {
+                "Content-Type": image.file.type, // Set content type based on the file type
+              },
+              body: image.file, // Assuming image.file holds the binary data of the image
+              redirect: "follow",
+            };
+
+            console.log("The image file type is:" + image.file.type);
+            console.log(image.file);
+
+            try {
+              const response = await fetch(imageUrl, requestOptions);
+              if (response.ok) {
+                const result = await response.text();
+                console.log("Image uploaded successfully:", result);
+              } else {
+                console.log("Image upload failed. Status:", response.status);
+              }
+            } catch (error) {
+              console.log("Error uploading image:", error);
+            }
+          }
+        }
+        console.log("All images uploaded successfully.");
+      } catch (error) {
+        console.error("Error uploading images:", error);
+      }
+
     },
+
+    async createAuction() {
+      try {
+        await this.uploadImagesAsync();
+
+        await auctionService.addAuction(this.newAuction);
+        this.resetForm();
+        this.$router.push({ name: "AuctionList" });
+      } catch (error) {
+        console.error("Error creating auction:", error);
+      }
+    },
+
     resetForm() {
       this.newAuction.auctionName = "";
       this.newAuction.startTime = "";
@@ -159,6 +220,7 @@ export default {
         },
       ];
     },
+
     handleImageUpload(itemIndex) {
       const input = event.target;
       if (input.files && input.files.length > 0) {
@@ -188,7 +250,6 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  
 }
 
 .page-container {
@@ -196,7 +257,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Set a minimum height to cover the entire viewport */
+  min-height: 100vh;
   background-image: url("@/Assets/chessFocus.jpg");
   background-size: cover;
   background-position: center;

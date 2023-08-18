@@ -21,19 +21,17 @@
             <div class="auction-items">
               <ul>
                 <li v-for="item in auction.items" :key="item.itemId">
+                  <div
+                    class="image-display"
+                    v-for="(imageUrl, imageIndex) in loadedImages[
+                      auction.auctionId
+                    ][item.itemId]"
+                    :key="imageIndex"
+                  >
+                    <img :src="imageUrl" alt="Image of the item" />
+                  </div>
+
                   <p id="item-name">{{ item.itemName }}</p>
-                  <p>
-                    <img
-                      src="@/Assets/itemTemp.png"
-                      alt="Auction Icon"
-                      class="header-icon"
-                    />
-                    <img
-                      src="@/Assets/itemTemp.png"
-                      alt="Auction Icon"
-                      class="header-icon"
-                    />
-                  </p>
 
                   <p id="item-price">
                     Current Bid: ${{ item.currentPrice + 100 }}
@@ -58,19 +56,22 @@
 <script>
 export default {
   props: {
-    auctions: Array,
+    auctions: Array
   },
   computed: {
-    publicAuctions() {
-      return this.auctions.filter(auction => auction.isPrivate === false);
+    loadedImages() {
+      return this.$store.state.loadedImages;
     },
+    publicAuctions() {
+      return this.auctions.filter((auction) => auction.isPrivate === false);
+    },
+
     mostRecentAuctions() {
       return this.auctions.slice(0);
     },
     ongoingAuctions() {
       return this.auctions.slice(4);
     },
-    
   },
   methods: {
     formatDateTime(timestamp) {
@@ -90,9 +91,9 @@ export default {
       const auctionEndTime = new Date(endTime);
       const timeDifference = auctionEndTime - currentDate;
 
-      const millisecondsPerMinute = 60 * 1000; 
-      const millisecondsPerHour = 60 * millisecondsPerMinute; 
-      const millisecondsPerDay = 24 * millisecondsPerHour; 
+      const millisecondsPerMinute = 60 * 1000;
+      const millisecondsPerHour = 60 * millisecondsPerMinute;
+      const millisecondsPerDay = 24 * millisecondsPerHour;
 
       if (timeDifference < millisecondsPerDay) {
         const hours = Math.floor(timeDifference / millisecondsPerHour);
@@ -108,7 +109,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .centered-container {
   display: grid;
@@ -138,8 +138,17 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the values as needed */
   transition: transform 0.3s, box-shadow 0.75s;
   height: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  overflow: hidden;
 }
 
+.image-display img {
+  max-width: 200px;
+  max-height: 200px;
+  display: block; /* to remove any unwanted spacing around the image */
+  margin: 0 auto; /* to center the image if it's smaller than the container */
+}
 
 .auction-container:hover {
   transform: translateY(-8px);

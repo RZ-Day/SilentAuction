@@ -11,4 +11,5 @@ public interface UserService {
     void updateUserBillingAddress(String username, String billingAddress);
     void updateUserShippingAddress(String username, String shippingAddress);
     void updateUserEmail(String username, String email);
+
 }

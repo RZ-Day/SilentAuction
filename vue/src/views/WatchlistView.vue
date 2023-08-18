@@ -21,7 +21,6 @@ export default {
     };
   },
 
-
     created() {
         WatchListService.getUsersWatchList(this.$store.state.user.id).then((response) => {
             if (response.status === 200) {
@@ -38,4 +37,6 @@ export default {
 </script>
 
 <style>
+
+
 </style>
