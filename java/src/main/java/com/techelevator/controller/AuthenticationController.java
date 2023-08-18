@@ -47,6 +47,7 @@ public class AuthenticationController {
         try {
             user = userDao.getUserByUsername(loginDto.getUsername());
         } catch (DaoException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password is incorrect.");
         }
 
@@ -60,11 +61,13 @@ public class AuthenticationController {
     public void register(@Valid @RequestBody RegisterUserDto newUser) {
         System.out.println("Start");
         try {
+            System.out.println("hitting userDao.createUser()");
             User user = userDao.createUser(newUser);
             if (user == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User registration failed.");
             }
         } catch (DaoException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
         }
     }

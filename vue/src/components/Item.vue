@@ -23,10 +23,13 @@ export default {
   name: "ItemPage",
   props: {
     item: Object,
+    itemId: Number
   },
   methods: {
     addToWatchList() {
-      watchListService.add(this.$store.state.user.id, this.$store.state.activeItemId).then(() => {
+      console.log(this.itemId);
+      console.log(this.$store.state.user.id);
+      watchListService.add(this.$store.state.user.id, this.itemId).then(() => {
         alert("item added");
       })
     },

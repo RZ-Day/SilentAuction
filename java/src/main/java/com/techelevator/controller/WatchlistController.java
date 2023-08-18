@@ -27,7 +27,14 @@ public class WatchlistController {
 
     @CrossOrigin
     @PostMapping("/profile/watchlist/add/{userId}/{itemId}")
-    public int addToWatchlist(@PathVariable int userId, int itemId) {
+    public int addToWatchlist(@PathVariable int userId, @PathVariable int itemId) {
         return watchlistDao.addToWatchlist(userId, itemId);
     }
+
+    @CrossOrigin
+    @DeleteMapping("/profile/watchlist/delete/{userId}/{itemId}")
+    public int deleteFromWatchlist(@PathVariable int userId, @PathVariable int itemId) {
+        return watchlistDao.removeFromWatchlist(userId, itemId);
+    }
+
 }

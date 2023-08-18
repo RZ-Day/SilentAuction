@@ -95,6 +95,7 @@ export default {
   display: flex;
   height: 100%;
   margin-right: 15px;
+  font-family: Ariel, sans-serif;
 }
 
 #imgLogo {

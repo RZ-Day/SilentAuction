@@ -88,6 +88,7 @@ export default {
         height: 91vh; /*TODO: find a better way to scale the page according to available viewport space*/
         overflow: auto;
         background-color: black;
+        font-family: Ariel, sans-serif;
     }
     .side-bar {
         grid-area: side-bar;

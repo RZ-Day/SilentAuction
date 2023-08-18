@@ -1,7 +1,7 @@
 <template>
   <div id="item-page">
     <div id="item-details">
-      <Item :item="item" />
+      <Item :item="item" :itemId="itemId" />
       <button @click="startConversation">Message Vendor</button>
     </div>
     <div class="bids-section">
@@ -25,6 +25,7 @@ export default {
     return {
       auction: null,
       item: null,
+      itemId: parseInt(this.$route.params.currentItemID)
     };
   },
   created() {

@@ -30,7 +30,7 @@ export default {
         height: 100%;
         flex-direction: column;
         justify-content: flex-start;
-        background-color: rgb(53, 53, 68);
+        background-color: rgb(255, 255, 255);
 
     }
 

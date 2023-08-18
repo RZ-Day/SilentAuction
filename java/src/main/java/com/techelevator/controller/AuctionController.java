@@ -37,4 +37,10 @@ public class AuctionController {
         return auctionDao.getAuctionByPrivateKey(privateKey);
     }
 
+    @CrossOrigin
+    @DeleteMapping("/auctions/{auctionId}")
+    public int deleteAuction(@PathVariable int auctionId) {
+        return auctionDao.deleteAuctionById(auctionId);
+    }
+
 }

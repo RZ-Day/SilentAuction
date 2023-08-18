@@ -1,16 +1,17 @@
 <template>
   <div class="auction-page">
     
-    <p>Auction Begins: {{ formatDateTime(auction.startTime) }}</p>
-    <p>Auction Ends: {{ formatDateTime(auction.endTime) }}</p>
+    <p>From: {{ formatDateTime(auction.startTime) }}</p>
+    <p>To: {{ formatDateTime(auction.endTime) }}</p>
 
-    <h2>Items in this Auction:</h2>
+    <h2>Up For Auction:</h2>
     <ul class="item-list">
       <li v-for="item in auction.items" :key="item.itemId">
         <router-link :to="{ name: 'ItemIndex', params: { currentItemID: item.itemId } }" class="item-link">
           <div class="item-container">
             <h3>{{ item.itemName }}</h3>
-            <img src="@/Assets/itemTemp.png" alt="Auction Icon" class="item-image" />
+            <p class="price">${{item.currentPrice}}.00</p>
+            <!-- <img src="@/Assets/itemTemp.png" alt="Auction Icon" class="item-image" /> -->
             <p class="item-description">{{ item.description }}</p>
           </div>
         </router-link>
@@ -32,9 +33,9 @@ export default {
         month: "long",
         day: "numeric",
         hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        timeZoneName: "short",
+        // minute: "numeric",
+        // second: "numeric",
+        // timeZoneName: "short",
       };
       return new Date(timestamp).toLocaleString(undefined, options);
     },
@@ -57,13 +58,37 @@ export default {
 }
 
 .item-container {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
-  padding: 20px;
-  margin: 20px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0px 0;
   background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  height:200px;
+  transition: 0.5s ease;
+}
+
+.item-description {
+  position: absolute;
+  padding-top: 200px;
+  color: transparent;
+  transition: .5s ease;
+}
+
+.item-container:hover {
+  transform: scale(1.2);
+  box-shadow: 0 60px 30px rgba(0, 0, 0, 0.212);
+}
+
+.item-container:hover .item-description {
+  color: white;
+}
+
+.price {
+  margin-top: 0;
+  color: rgb(0, 241, 32);
 }
 
 .item-image {
@@ -79,6 +104,8 @@ export default {
 .item-list {
   list-style: none; /* Remove bullet points */
   padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 </style>
 

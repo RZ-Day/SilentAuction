@@ -11,7 +11,13 @@ export default {
 
     getPrivateAuction(auctionPassword) {
         return axios.post(`/auctions/search/private/${auctionPassword}`);
-      }
+    },
+
+    //ADDED ===============================================
+    deleteAuction(auctionId) {
+        return axios.delete(`auctions/${auctionId}`);
+    },
+    // ====================================================
 
     
 }

@@ -103,6 +103,7 @@ export default {
             description: "",
             initialPrice: 0,
             currentPrice: 0,
+            userId: this.$store.state.user.id,
             images: [],
           },
         ],
@@ -122,6 +123,7 @@ export default {
         description: "",
         initialPrice: 0,
         currentPrice: 0,
+        userId: this.$store.state.user.id,
         images: [],
       });
     },

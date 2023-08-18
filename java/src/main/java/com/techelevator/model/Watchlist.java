@@ -5,7 +5,7 @@ public class Watchlist {
     private int userId;
     private int itemId;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 

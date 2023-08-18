@@ -18,10 +18,16 @@
           <label for="phone">Phone Number</label>
           <input type="text" id="phone" v-model="user.phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-555-5555" required />
         </div>
+
         <div class="form-input-group">
-          <label for="address">Address</label>
-          <input type="text" id="address" v-model="user.address" required />
+          <label for="billingAddress">Billing Address</label>
+          <input type="text" id="billingAddress" v-model="user.billingAddress" required />
         </div>
+        <div class="form-input-group">
+          <label for="shippingAddress"> Shipping Address</label>
+          <input type="text" id="shippingAddress" v-model="user.shippingAddress" required />
+        </div>
+
         <div class="form-input-group">
           <label for="username">Username</label>
           <input type="text" id="username" v-model="user.username" required/>
@@ -52,7 +58,8 @@ export default {
         name: '',
         email: '',
         phone: '',
-        address: '',
+        shippingAddress: '',
+        billingAddress: '',
         username: '',
         password: '',
         confirmPassword: '',
