@@ -31,7 +31,7 @@
           <label for="privateAuction">Private Auction:</label>
           <input
             type="checkbox"
-            v-model="newAuction.privateAuction"
+            v-model="newAuction.isPrivate"
             @change="togglePrivatePassword"
           />
         </div>
@@ -41,7 +41,7 @@
           <input
             type="text"
             placeHolder="Length 1-32"
-            v-model="newAuction.privatePassword"
+            v-model="newAuction.privateKey"
           />
         </div>
 
@@ -101,8 +101,8 @@ export default {
         auctionName: "",
         startTime: "",
         endTime: "",
-        privateAuction: false,
-        privatePassword: "",
+        isPrivate: false,
+        privateKey: "",
         items: [
           {
             itemName: "",
@@ -210,12 +210,15 @@ export default {
       this.newAuction.auctionName = "";
       this.newAuction.startTime = "";
       this.newAuction.endTime = "";
+      this.auction.isPrivate = false;
+      this.auction.privateKey = '';
       this.newAuction.items = [
         {
           itemName: "",
           description: "",
           initialPrice: 0,
           currentPrice: 0,
+          numOfImages: 0,
           images: [],
         },
       ];
