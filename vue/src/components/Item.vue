@@ -27,7 +27,7 @@
 
 
 <script>
-import watchListService from "@/services/WatchlistService.js";
+
 
 export default {
   name: "ItemPage",
@@ -90,15 +90,7 @@ export default {
   props: {
     item: Object,
   },
-  methods: {
-    addToWatchlist() {
-      watchListService
-        .add(this.$store.state.user.id, this.$store.state.activeItemId)
-        .then(() => {
-          alert("item added");
-        });
-    },
-  },
+  
 };
 </script>
 
