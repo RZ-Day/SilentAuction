@@ -94,7 +94,7 @@ export default {
         grid-area: side-bar;
         width: 100%;
         height: 100%;
-        background-color: rgb(202, 202, 202);
+        background-color: rgb(209, 209, 209);
         overflow-y: scroll;
     }
     .current-convo {

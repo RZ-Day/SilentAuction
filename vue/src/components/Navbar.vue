@@ -16,6 +16,11 @@
             </router-link>
           </li>
           <li>
+            <router-link class="link" v-bind:to="{name: 'UsersWatchListView'}">
+              Watchlist
+            </router-link>
+          </li>
+          <li>
             <router-link class="link" v-bind:to="{ name: 'home' }"
               >Home</router-link
             >

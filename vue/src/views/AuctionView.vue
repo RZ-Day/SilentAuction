@@ -90,7 +90,7 @@ export default {
 <style>
 .auction-page {
   display: flex;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
   border-radius: 5px;
   font-family: Ariel, sans-serif;
   
@@ -101,6 +101,10 @@ export default {
   margin: 0 5ch 5ch  5ch;
   border-radius: 5px;
   
+}
+
+.auction-details-header {
+  margin-right: 20px;
 }
 
 
@@ -115,7 +119,7 @@ export default {
 .auction-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .delete-button {

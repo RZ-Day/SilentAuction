@@ -41,7 +41,8 @@ export default {
 <style>
 
 .users-watch-list {
-  border: 1px solid black; /* Add a black border around the component */
+  font-family: Ariel, sans-serif;
+  border: 1px solid rgb(155, 155, 155); /* Add a black border around the component */
   padding: 20px; /* Add some padding to create space around the component */
 }
 

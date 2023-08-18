@@ -6,7 +6,8 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import DisplayAuctionListView from "@/views/DisplayAuctionListView.vue";
-import UserProfile from "@/views/UserProfile.vue";
+// import UserProfile from "@/views/UserProfile.vue";
+import ProfileView from "@/views/ProfileView.vue";
 import AuctionView from "@/views/AuctionView.vue";
 import ItemView from "@/views/ItemView.vue";
 import AddAuctionView from "@/views/AddAuctionView.vue";
@@ -73,7 +74,7 @@ const router = new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: UserProfile,
+      component: ProfileView,
     },
     {
       path: "/auctions/:currentAuctionID",

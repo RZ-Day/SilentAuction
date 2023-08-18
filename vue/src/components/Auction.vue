@@ -1,9 +1,10 @@
 <template>
   <div class="auction-page">
-    <p>From: {{ formatDateTime(auction.startTime) }}</p>
-    <p>To: {{ formatDateTime(auction.endTime) }}</p>
-
-    <h2>Up For Auction:</h2>
+    <!-- <p>{{ formatDateTime(auction.startTime) }}</p>
+    <p>{{ formatDateTime(auction.endTime) }}</p> -->
+    <div class="spacer" >
+      <h2>Up For Auction:</h2>
+    </div>
     <ul class="item-list">
       <li v-for="item in auction.items" :key="item.itemId">
         <router-link
@@ -11,7 +12,7 @@
           class="item-link"
         >
           <div class="item-container">
-            <h3>{{ item.itemName }}</h3>
+            <h3 class="item-name">{{ item.itemName }}</h3>
             <p class="price">${{ item.currentPrice }}.00</p>
             <!-- <img src="@/Assets/itemTemp.png" alt="Auction Icon" class="item-image" /> -->
 
@@ -106,7 +107,6 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f3f5f7;
   padding: 20px;
 }
 
@@ -115,10 +115,18 @@ export default {
   color: inherit;
 }
 
+.spacer {
+  border-width: 1px;
+  border-bottom-style: solid;
+  border-top-style: solid;
+  margin-bottom: 20px;
+  border-color: rgb(199, 199, 199);
+}
+
 .item-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding-left: 20px;
   padding-right: 20px;
   margin: 0px 0;
@@ -139,15 +147,38 @@ export default {
 .item-container:hover {
   transform: scale(1.2);
   box-shadow: 0 60px 30px rgba(0, 0, 0, 0.212);
+  z-index: 100;
 }
 
 .item-container:hover .item-description {
   color: white;
 }
 
+
+
 .price {
+  display: flex;
   margin-top: 0;
   color: rgb(0, 241, 32);
+  font-weight: bold;
+  -webkit-text-stroke: 1px rgb(31, 175, 31);
+  z-index: 2;
+}
+
+.item-name:hover .price {
+  z-index: 101;
+}
+
+.item-name {
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px rgb(0, 0, 0);
+  z-index: 2;
+}
+
+.item-container:hover .item-name {
+  z-index: 101;
 }
 
 .item-image {
