@@ -271,11 +271,8 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setDescription(rowSet.getString("description"));
         item.setInitialPrice(rowSet.getDouble("initial_price"));
         item.setCurrentPrice(rowSet.getDouble("current_price"));
-<<<<<<< HEAD
         item.setUserId(rowSet.getInt("item_user_id"));
-=======
         item.setNumOfImages(rowSet.getInt("num_of_images"));
->>>>>>> 3b9c164b7be50c8802115d394cea80d94aef6dd3
         return item;
     }
 
