@@ -15,7 +15,9 @@ public class RegisterUserDto {
     private String email;
     private String phone;
     @NotEmpty
-    private String address;
+    private String billingAddress;
+    @NotEmpty
+    private String shippingAddress;
     @NotEmpty
     private String username;
     @NotEmpty
@@ -49,12 +51,20 @@ public class RegisterUserDto {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public String getUsername() {

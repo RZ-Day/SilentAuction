@@ -28,6 +28,7 @@ export default {
         margin-top: 5px;
         margin-bottom: 5px;
         align-items: center;
+        cursor: pointer;
     }
 
     .received {
@@ -45,5 +46,6 @@ export default {
         margin-top: 5px;
         margin-bottom: 5px;
         align-items: center;
+        cursor: pointer;
     }
 </style>

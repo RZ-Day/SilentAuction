@@ -118,7 +118,7 @@ export default {
 
 .auction-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-content: center; /* Center the grid items horizontally */
 }

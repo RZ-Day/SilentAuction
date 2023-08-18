@@ -29,7 +29,7 @@ public class JdbcMessageDao implements MessageDao{
 
     @Override
     public List<Message> getMessagesByUserId(int userId) {
-        List<Message> messages = new ArrayList<Message>();
+        List<Message> messages = new ArrayList<>();
 
         String sql = "SELECT * FROM messages WHERE from_id = ? OR to_id = ? ORDER BY message_id";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId, userId);

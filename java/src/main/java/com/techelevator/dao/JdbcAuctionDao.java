@@ -100,8 +100,8 @@ public class JdbcAuctionDao implements AuctionDao {
             if (newAuctionId != null) {
                 // insert  items
                 for (Item item : auction.getItems()) {
-                    String itemSql = "INSERT INTO item (auction_id, item_name, description, initial_price, current_price, num_of_images) " +
-                            "VALUES (?, ?, ?, ?, ?, ?);";
+                    String itemSql = "INSERT INTO item (auction_id, item_name, description, initial_price, current_price, user_id, num_of_images) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?);";
                     jdbcTemplate.update(
                             itemSql,
                             newAuctionId,
@@ -109,6 +109,7 @@ public class JdbcAuctionDao implements AuctionDao {
                             item.getDescription(),
                             item.getInitialPrice(),
                             item.getCurrentPrice(),
+                            item.getUserId(),
                             item.getNumOfImages()
                     );
                 }
@@ -219,6 +220,38 @@ public class JdbcAuctionDao implements AuctionDao {
 
     }
 
+    @Override
+    public int deleteAuctionById(int auctionId) {
+        String deleteBids = "DELETE FROM bid WHERE item_id IN (\n" +
+                "    SELECT i.item_id\n" +
+                "    FROM item i\n" +
+                "    WHERE i.auction_id = ?\n" +
+                ");";
+        String deleteMessages = "DELETE FROM messages WHERE conversation_id IN (\n" +
+                "SELECT c.conversation_id\n" +
+                "FROM conversations c\n" +
+                "JOIN item i ON c.item_id = i.item_id\n" +
+                "WHERE i.auction_id = ?\n" +
+                ");";
+        String deleteConversations = "DELETE FROM conversations WHERE item_id IN (\n" +
+                "SELECT i.item_id\n" +
+                "FROM item i\n" +
+                "WHERE i.auction_id = ?\n" +
+                ");";
+        String deleteWatchList = "DELETE FROM watchlist WHERE item_id IN (\n" +
+                "SELECT item_id from item WHERE auction_id = ?\n" +
+                ");";
+        String deleteItems = "DELETE FROM item WHERE auction_id = ?;";
+        String deleteAuction = "DELETE FROM auction WHERE auction_id = ?;";
+
+        jdbcTemplate.update(deleteBids, auctionId);
+        jdbcTemplate.update(deleteMessages, auctionId);
+        jdbcTemplate.update(deleteConversations, auctionId);
+        jdbcTemplate.update(deleteWatchList, auctionId);
+        jdbcTemplate.update(deleteItems, auctionId);
+        return jdbcTemplate.update(deleteAuction, auctionId);
+    }
+
 
     private Auction mapRowToAuction(SqlRowSet rowSet) {
         Auction auction = new Auction();
@@ -238,6 +271,7 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setDescription(rowSet.getString("description"));
         item.setInitialPrice(rowSet.getDouble("initial_price"));
         item.setCurrentPrice(rowSet.getDouble("current_price"));
+        item.setUserId(rowSet.getInt("item_user_id"));
         item.setNumOfImages(rowSet.getInt("num_of_images"));
         return item;
     }

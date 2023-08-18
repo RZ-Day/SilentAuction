@@ -11,6 +11,6 @@ public interface WatchlistDao {
 
     int addToWatchlist(int userId, int itemId);
 
-    Watchlist removeFromWatchlist();
+    int removeFromWatchlist(int userId, int item_id);
 
 }

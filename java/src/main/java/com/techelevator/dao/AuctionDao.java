@@ -14,4 +14,5 @@ public interface AuctionDao {
 
     Auction getAuctionByPrivateKey(String privateKey);
 
+    int deleteAuctionById(int auctionId);
 }

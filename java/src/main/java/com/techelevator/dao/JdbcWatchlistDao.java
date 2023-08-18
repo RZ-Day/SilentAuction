@@ -63,15 +63,16 @@ public class JdbcWatchlistDao implements WatchlistDao {
 
     @Override
     public int addToWatchlist(int userId, int itemId) {
-        String sql = "INSERT INTO watchlist (user_id, item_id) VALUES (?, ?);";
+        String sql = "INSERT INTO watchlist (user_id, item_id) VALUES (?, ?) RETURNING watchlist_id;";
 
-        return jdbcTemplate.queryForObject(sql, Integer.class, userId, itemId);
+        return jdbcTemplate.queryForObject(sql, int.class, userId, itemId);
 
     }
 
     @Override
-    public Watchlist removeFromWatchlist() {
-        return null;
+    public int removeFromWatchlist(int userId, int itemId) {
+        String sql = "DELETE FROM watchlist WHERE user_id = ? AND item_id = ?";
+        return jdbcTemplate.update(sql, userId, itemId);
     }
 
 

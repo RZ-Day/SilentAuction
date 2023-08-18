@@ -72,7 +72,7 @@ const router = new Router({
     },
     {
       path: '/profile',
-      name: 'UserProfile',
+      name: 'profile',
       component: UserProfile,
     },
     {
@@ -125,6 +125,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  console.log("Made it to router");
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
 

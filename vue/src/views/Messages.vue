@@ -21,7 +21,7 @@ export default {
         }
     },
     created() {
-
+        console.log("About to hit first service method");
         //Find all messages for active conversation
         messageService.getMessagesByUserId(this.$store.state.user.id).then((response) => {
 
@@ -88,6 +88,7 @@ export default {
         height: 91vh; /*TODO: find a better way to scale the page according to available viewport space*/
         overflow: auto;
         background-color: black;
+        font-family: Ariel, sans-serif;
     }
     .side-bar {
         grid-area: side-bar;
@@ -112,8 +113,5 @@ export default {
         align-items: center;
         background-color: rgb(0, 0, 0);
         padding-left: 10px;
-        border-top: solid;
-        border-width: 1px;
-        border-color: white;
     }
 </style>

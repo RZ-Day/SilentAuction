@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.techelevator.model.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Component
 public class JdbcUserDao implements UserDao {
@@ -27,7 +28,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, full_name, email, phone, address, username, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, full_name, email, phone, address_billing, address_shipping, username, password_hash, role FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -109,8 +110,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User createUser(RegisterUserDto user) {
         User newUser = null;
-        String insertUserSql = "INSERT INTO users (full_name, email, phone, address, username, password_hash, role)" +
-                                " values (?, ?, ?, ?, ?, ?, ?) RETURNING user_id";
+        String insertUserSql = "INSERT INTO users (full_name, email, phone, address_billing, address_shipping, username, password_hash, role)" +
+                                " values (?, ?, ?, ?, ?, ?, ?, ?) RETURNING user_id";
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
         try {
@@ -119,10 +120,12 @@ public class JdbcUserDao implements UserDao {
                                                         user.getName(),
                                                         user.getEmail(),
                                                         user.getPhone(),
-                                                        user.getAddress(),
+                                                        user.getBillingAddress(),
+                                                        user.getShippingAddress(),
                                                         user.getUsername(),
                                                         password_hash,
                                                         ssRole);
+            System.out.println("Done with sql query");
             newUser = getUserById(newUserId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

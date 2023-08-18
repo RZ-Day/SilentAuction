@@ -1,7 +1,7 @@
 <template>
   <div id="item-page">
     <div id="item-details">
-      <Item :item="item" />
+      <Item :item="item" :itemId="itemId" />
       <button @click="startConversation">Message Vendor</button>
     </div>
     <div class="bids-section">
@@ -25,6 +25,7 @@ export default {
     return {
       auction: null,
       item: null,
+      itemId: parseInt(this.$route.params.currentItemID)
     };
   },
   created() {
@@ -42,6 +43,7 @@ export default {
           this.item = this.auction.items.find(
             (item) => item.itemId === activeItemID
           );
+          console.log(this.item);
         }
       }
     });
@@ -50,6 +52,7 @@ export default {
     startConversation() {
       //CREATE NEW CONVERSATION IN BACK-END
       console.log(this.item);
+      console.log(this.item.userId);
 
       messageService.startConversation({
         sellerId: this.item.userId,
@@ -60,7 +63,10 @@ export default {
         if (response.status == 200) {
           //SET ACTIVE CONVERSATION ID TO NEWLY CREATED CONVERSATION, OR TO EXISTING CONVERSATION ID
           const newConvoId = response.data.conversationId;
+          console.log("New convo id: " + newConvoId);
+
           this.$store.commit("SET_ACTIVE_CONVERSATION", newConvoId);
+          console.log("Active ID committed");
 
           //REDIRECT TO ACTIVE CONVERSATION IN INBOX
           this.$router.push({name:"Messages", params:{currentUserId: this.$store.state.user.id}});
@@ -72,7 +78,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .item-page {
   display: flex;
 }
