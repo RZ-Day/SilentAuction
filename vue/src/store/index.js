@@ -23,7 +23,9 @@ export default new Vuex.Store({
     storeMessages: [],
     activeAuctionID: 0,
     activeItemID: 0,
-    activeConversationID: 0
+    activeConversationID: 0,
+    loadedImages: {},
+    auctions: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -56,6 +58,12 @@ export default new Vuex.Store({
     },
     ADD_MESSAGE(state, message) {
       state.storeMessages.push(message);
+    },
+    SET_LOADED_IMAGES(state, loadedImagesIn){
+      state.loadedImages = loadedImagesIn;
+    },
+    SET_AUCTIONS_ARRAY(state, payload) {
+      state.auctions = payload;
     }
   },
   actions: {

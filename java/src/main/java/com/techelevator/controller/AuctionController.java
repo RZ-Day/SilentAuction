@@ -36,5 +36,7 @@ public class AuctionController {
     public Auction getAuctionByPrivateKey(@PathVariable String privateKey) {
         return auctionDao.getAuctionByPrivateKey(privateKey);
     }
-
 }
+
+
+

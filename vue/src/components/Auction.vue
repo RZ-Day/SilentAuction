@@ -10,7 +10,15 @@
         <router-link :to="{ name: 'ItemIndex', params: { currentItemID: item.itemId } }" class="item-link">
           <div class="item-container">
             <h3>{{ item.itemName }}</h3>
-            <img src="@/Assets/itemTemp.png" alt="Auction Icon" class="item-image" />
+            
+            <!-- Images for each item -->
+            <div class="item-images" v-if="loadedImages[auction.auctionId] && loadedImages[auction.auctionId][item.itemId]">
+              <img v-for="(imageUrl, idx) in loadedImages[auction.auctionId][item.itemId]" 
+                   :key="idx" 
+                   :src="imageUrl" 
+                   alt="Image of the item" />
+            </div>
+            
             <p class="item-description">{{ item.description }}</p>
           </div>
         </router-link>
@@ -24,6 +32,11 @@ export default {
   name: "AuctionPage",
   props: {
     auction: Object,
+  },
+  computed: {
+    loadedImages() {
+      return this.$store.state.loadedImages;
+    },
   },
   methods: {
     formatDateTime(timestamp) {
@@ -41,6 +54,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .auction-page {

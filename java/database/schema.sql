@@ -31,8 +31,8 @@ CREATE TABLE auction (
     auction_name VARCHAR(255) NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
-    isPrivate BOOLEAN NOT NULL,
-    privateKey varchar(32) default 'noPrivateKeySet'
+    is_Private BOOLEAN NOT NULL,
+    private_Key varchar(32) default 'noPrivateKeySet'
 );
 
 
@@ -45,6 +45,7 @@ CREATE TABLE item (
     description TEXT,
     initial_price DECIMAL(10, 2) NOT NULL,
     current_price DECIMAL(10, 2) NOT NULL,
+    num_of_images INT NOT NULL,
     FOREIGN KEY (auction_id) REFERENCES auction(auction_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -82,7 +83,6 @@ CREATE TABLE messages (
     to_id INT,
     conversation_id INT,
     message_body varchar(300),
-
     FOREIGN KEY (from_id) REFERENCES users(user_id),
     FOREIGN KEY (to_id) REFERENCES users(user_id),
     FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id)
@@ -96,5 +96,6 @@ CREATE TABLE watchlist (
     FOREIGN KEY (item_id) REFERENCES item(item_id)
 );
 
-
 COMMIT TRANSACTION;
+
+

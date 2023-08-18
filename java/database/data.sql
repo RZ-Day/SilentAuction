@@ -8,55 +8,55 @@ INSERT INTO users (full_name, email, phone, address_billing, address_shipping, u
 
 -- Insert fake auctions
 
-INSERT INTO auction (auction_name, start_time, end_time, isPrivate, privateKey)
-VALUES
-    ('Summer Auction', '2023-08-15 09:00:00', '2023-08-20 18:00:00',false,'noPrivateKeySet'),
-    ('Vintage Collectibles', '2023-09-10 12:00:00', '2023-09-15 22:00:00',false,'noPrivateKeySet'),
-    ('Art Gala', '2023-09-25 10:00:00', '2023-09-30 20:00:00',false,'noPrivateKeySet'),
-    ('Tech Showcase', '2023-10-05 09:30:00', '2023-10-10 17:30:00',false,'noPrivateKeySet'),
-    ('Jewelry Auction', '2023-10-20 11:00:00', '2023-10-25 21:00:00',false,'noPrivateKeySet'),
-    ('Book Lovers', '2023-11-01 08:00:00', '2023-11-05 16:00:00',false,'noPrivateKeySet'),
-    ('Sports Memorabilia', '2023-11-15 14:00:00', '2023-11-20 23:00:00',false,'noPrivateKeySet'),
-    ('Holiday Gifts', '2023-12-01 10:00:00', '2023-12-10 19:00:00',false,'noPrivateKeySet'),
-    ('Fashion Extravaganza', '2023-12-15 12:00:00', '2023-12-20 22:00:00',false,'noPrivateKeySet'),
-    ('Home Decor', '2023-12-25 09:00:00', '2023-12-31 18:00:00',false,'noPrivateKeySet'),
-    ('Luxury Watches', '2023-08-11 09:00:00', '2023-08-14 12:00:00', true, 'privateWatches ' );
-
--- Insert fake items
-INSERT INTO item (auction_id, user_id, item_name, description, initial_price, current_price)
-VALUES
-    (1, 2, 'Beach Sunset Painting', 'A beautiful painting of a beach sunset.', 100.00, 150.00),
-    (1, 2, 'Antique Pocket Watch', 'A vintage pocket watch in excellent condition.', 50.00, 75.00),
-    (2, 2, 'Vintage Vinyl Records', 'Collection of classic rock vinyl records.', 75.00, 100.00),
-    (2, 2, 'Antique Typewriter', 'A fully functional antique typewriter.', 80.00, 110.00),
-    (3, 2, 'Abstract Artwork', 'An abstract artwork with vibrant colors and unique shapes.', 200.00, 250.00),
-    (4, 2, 'Virtual Reality Headset', 'Experience the future with this advanced VR headset.', 300.00, 350.00),
-    (5, 2, 'Diamond Necklace', 'Elegant diamond necklace that radiates luxury.', 500.00, 600.00),
-    (6, 2, 'Classic Literature Set', 'Collection of classic novels from various authors.', 50.00, 70.00),
-    (7, 2, 'Signed Sports Jersey', 'Authentic jersey signed by a legendary athlete.', 150.00, 180.00),
-    (7, 2, 'Sports Memorabilia Collection', 'A collection of sports memorabilia including cards, posters, and more.', 200.00, 240.00),
-    (8, 2, 'Handcrafted Jewelry', 'Unique handcrafted jewelry pieces perfect for the holidays.', 80.00, 100.00),
-    (9, 2, 'Fashion Designer Dress', 'Elegant dress designed by a renowned fashion designer.', 300.00, 350.00),
-    (9, 2, 'Designer Handbag', 'Luxurious handbag from a top fashion brand.', 150.00, 180.00),
-    (10, 2, 'Home Decor Bundle', 'Bundle of home decor items to beautify your living space.', 100.00, 120.00),
-    (10, 2, 'Artificial Christmas Tree', 'High-quality artificial Christmas tree for the holiday season.', 80.00, 100.00);
-
-
-
--- Insert fake bids
-INSERT INTO bid (item_id, user_id, bid_amount, bid_time)
-VALUES
-    (1, 2, 160.00, '2023-08-18 15:30:00'),
-    (1, 3, 165.00, '2023-08-18 15:35:00'),
-    (1, 1, 175.00, '2023-08-19 10:45:00'),
-    (2, 1, 85.00, '2023-08-16 14:20:00'),
-    (3, 2, 110.00, '2023-09-12 16:10:00');
-
-
--- Insert fake watchlist
-INSERT INTO watchlist (user_id, item_id)
-VALUES
-    (1,3),
-    (1,5);
+--INSERT INTO auction (auction_name, start_time, end_time, is_Private, private_Key)
+--VALUES
+--    ('Summer Auction', '2023-08-15 09:00:00', '2023-08-20 18:00:00',false,'noPrivateKeySet'),
+--    ('Vintage Collectibles', '2023-09-10 12:00:00', '2023-09-15 22:00:00',false,'noPrivateKeySet'),
+--    ('Art Gala', '2023-09-25 10:00:00', '2023-09-30 20:00:00',false,'noPrivateKeySet'),
+--    ('Tech Showcase', '2023-10-05 09:30:00', '2023-10-10 17:30:00',false,'noPrivateKeySet'),
+--    ('Jewelry Auction', '2023-10-20 11:00:00', '2023-10-25 21:00:00',false,'noPrivateKeySet'),
+--    ('Book Lovers', '2023-11-01 08:00:00', '2023-11-05 16:00:00',false,'noPrivateKeySet'),
+--    ('Sports Memorabilia', '2023-11-15 14:00:00', '2023-11-20 23:00:00',false,'noPrivateKeySet'),
+--    ('Holiday Gifts', '2023-12-01 10:00:00', '2023-12-10 19:00:00',false,'noPrivateKeySet'),
+--    ('Fashion Extravaganza', '2023-12-15 12:00:00', '2023-12-20 22:00:00',false,'noPrivateKeySet'),
+--    ('Home Decor', '2023-12-25 09:00:00', '2023-12-31 18:00:00',false,'noPrivateKeySet'),
+--    ('Luxury Watches', '2023-08-11 09:00:00', '2023-08-14 12:00:00', true, 'privateWatches ');
+--
+---- Insert fake items
+--INSERT INTO item (auction_id, user_id, item_name, description, initial_price, current_price, num_of_images)
+--VALUES
+--    (1, 2, 'Beach Sunset Painting', 'A beautiful painting of a beach sunset.', 100.00, 150.00, 0),
+--    (1, 2, 'Antique Pocket Watch', 'A vintage pocket watch in excellent condition.', 50.00, 75.00, 0),
+--    (2, 2, 'Vintage Vinyl Records', 'Collection of classic rock vinyl records.', 75.00, 100.00, 0),
+--    (2, 2, 'Antique Typewriter', 'A fully functional antique typewriter.', 80.00, 110.00, 0),
+--    (3, 2, 'Abstract Artwork', 'An abstract artwork with vibrant colors and unique shapes.', 200.00, 250.00, 0),
+--    (4, 2, 'Virtual Reality Headset', 'Experience the future with this advanced VR headset.', 300.00, 350.00, 0),
+--    (5, 2, 'Diamond Necklace', 'Elegant diamond necklace that radiates luxury.', 500.00, 600.00, 0),
+--    (6, 2, 'Classic Literature Set', 'Collection of classic novels from various authors.', 50.00, 70.00, 0),
+--    (7, 2, 'Signed Sports Jersey', 'Authentic jersey signed by a legendary athlete.', 150.00, 180.00, 0),
+--    (7, 2, 'Sports Memorabilia Collection', 'A collection of sports memorabilia including cards, posters, and more.', 200.00, 240.00, 0),
+--    (8, 2, 'Handcrafted Jewelry', 'Unique handcrafted jewelry pieces perfect for the holidays.', 80.00, 100.00, 0),
+--    (9, 2, 'Fashion Designer Dress', 'Elegant dress designed by a renowned fashion designer.', 300.00, 350.00, 0),
+--    (9, 2, 'Designer Handbag', 'Luxurious handbag from a top fashion brand.', 150.00, 180.00, 0),
+--    (10, 2, 'Home Decor Bundle', 'Bundle of home decor items to beautify your living space.', 100.00, 120.00, 0),
+--    (10, 2, 'Artificial Christmas Tree', 'High-quality artificial Christmas tree for the holiday season.', 80.00, 100.00, 0);
+--
+--
+--
+---- Insert fake bids
+--INSERT INTO bid (item_id, user_id, bid_amount, bid_time)
+--VALUES
+--    (1, 2, 160.00, '2023-08-18 15:30:00'),
+--    (1, 3, 165.00, '2023-08-18 15:35:00'),
+--    (1, 1, 175.00, '2023-08-19 10:45:00'),
+--    (2, 1, 85.00, '2023-08-16 14:20:00'),
+--    (3, 2, 110.00, '2023-09-12 16:10:00');
+--
+--
+---- Insert fake watchlist
+--INSERT INTO watchlist (user_id, item_id)
+--VALUES
+--    (1,3),
+--    (1,5);
 
 COMMIT TRANSACTION;

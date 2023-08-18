@@ -13,10 +13,20 @@ public class Item {
     private double currentPrice;
     private List<Bid> bids;
     private List<Image> images;
+    private int numOfImages;
     private int userId;
 
     public List<Bid> getBids() {
         return bids;
+    }
+
+
+    public int getNumOfImages() {
+        return numOfImages;
+    }
+
+    public void setNumOfImages(int numOfImages) {
+        this.numOfImages = numOfImages;
     }
 
     public void setBids(List<Bid> bids) {

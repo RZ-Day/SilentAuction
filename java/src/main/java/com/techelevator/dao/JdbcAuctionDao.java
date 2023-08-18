@@ -35,8 +35,8 @@ public class JdbcAuctionDao implements AuctionDao {
                 "    a.auction_name,\n" +
                 "    a.start_time,\n" +
                 "    a.end_time,\n" +
-                "    a.isPrivate,\n" +
-                "    a.privateKey,\n" +
+                "    a.is_Private,\n" +
+                "    a.private_Key,\n" +
                 "    i.item_id,\n" +
                 "    i.auction_id AS item_auction_id,\n" +
                 "    i.user_id AS item_user_id,\n" +
@@ -44,6 +44,7 @@ public class JdbcAuctionDao implements AuctionDao {
                 "    i.description,\n" +
                 "    i.initial_price,\n" +
                 "    i.current_price,\n" +
+                "    i.num_of_images,\n" +
                 "    b.bid_id,\n" +
                 "    b.user_id AS bid_user_id,\n" +
                 "    b.bid_amount,\n" +
@@ -83,7 +84,7 @@ public class JdbcAuctionDao implements AuctionDao {
 
     @Override
     public Auction createAuction(Auction auction) {
-        String auctionSql = "INSERT INTO auction (auction_name, start_time, end_time, isPrivate, privateKey) " +
+        String auctionSql = "INSERT INTO auction (auction_name, start_time, end_time, is_Private, private_Key) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING auction_id;";
 
         try {
@@ -95,22 +96,23 @@ public class JdbcAuctionDao implements AuctionDao {
                     auction.getEndTime(),
                     auction.isPrivate(),
                     auction.getPrivateKey()
-
             );
             if (newAuctionId != null) {
                 // insert  items
                 for (Item item : auction.getItems()) {
-                    String itemSql = "INSERT INTO item (auction_id, item_name, description, initial_price, current_price) " +
-                            "VALUES (?, ?, ?, ?, ?);";
+                    String itemSql = "INSERT INTO item (auction_id, item_name, description, initial_price, current_price, num_of_images) " +
+                            "VALUES (?, ?, ?, ?, ?, ?);";
                     jdbcTemplate.update(
                             itemSql,
                             newAuctionId,
                             item.getItemName(),
                             item.getDescription(),
                             item.getInitialPrice(),
-                            item.getCurrentPrice()
+                            item.getCurrentPrice(),
+                            item.getNumOfImages()
                     );
                 }
+
             } else {
                 System.out.println("Incoming auction was null! Failed to create auction");
                 return null;
@@ -128,10 +130,6 @@ public class JdbcAuctionDao implements AuctionDao {
 
         }
     }
-
-
-
-
 
     @Override
     public Auction getAuctionById(int auctionId) {
@@ -161,7 +159,7 @@ public class JdbcAuctionDao implements AuctionDao {
                         item.setDescription(rs.getString("description"));
                         item.setInitialPrice(rs.getDouble("initial_price"));
                         item.setCurrentPrice(rs.getDouble("current_price"));
-
+                        item.setNumOfImages(rs.getInt("num_of_images"));
                         return item;
                     },
                     auctionId
@@ -180,7 +178,7 @@ public class JdbcAuctionDao implements AuctionDao {
 
     @Override
     public Auction getAuctionByPrivateKey(String privateKey) {
-        String sql = "SELECT * FROM auction WHERE privatekey LIKE ?";
+        String sql = "SELECT * FROM auction WHERE private_key LIKE ?";
         String searchTerm = "%" + privateKey + "%";
 
         Auction auction = jdbcTemplate.queryForObject(
@@ -191,14 +189,15 @@ public class JdbcAuctionDao implements AuctionDao {
                     a.setAuctionName(rs.getString("auction_name"));
                     a.setStartTime(rs.getTimestamp("start_time"));
                     a.setEndTime(rs.getTimestamp("end_time"));
-                    a.setPrivate(rs.getBoolean("isprivate"));
-                    a.setPrivateKey(rs.getString("privatekey"));
+                    a.setPrivate(rs.getBoolean("is_private"));
+                    a.setPrivateKey(rs.getString("private_key"));
                     return a;
                 },
                 searchTerm
         );
 
         String itemsSql = "SELECT * FROM item WHERE auction_id = ?;";
+        assert auction != null;
         List<Item> items = jdbcTemplate.query(
                 itemsSql,
                 (rs, rowNum) -> {
@@ -208,13 +207,12 @@ public class JdbcAuctionDao implements AuctionDao {
                     item.setDescription(rs.getString("description"));
                     item.setInitialPrice(rs.getDouble("initial_price"));
                     item.setCurrentPrice(rs.getDouble("current_price"));
-
+                    item.setNumOfImages(rs.getInt("num_of_images"));
                     return item;
                 },
                 auction.getAuctionId()
         );
 
-        assert auction != null;
         auction.setItems(items);
 
         return auction;
@@ -228,8 +226,8 @@ public class JdbcAuctionDao implements AuctionDao {
         auction.setAuctionName(rowSet.getString("auction_name"));
         auction.setStartTime(rowSet.getTimestamp("start_time"));
         auction.setEndTime(rowSet.getTimestamp("end_time"));
-        auction.setPrivate(rowSet.getBoolean("isprivate"));
-        auction.setPrivateKey(rowSet.getString("privatekey"));
+        auction.setPrivate(rowSet.getBoolean("is_private"));
+        auction.setPrivateKey(rowSet.getString("private_key"));
         return auction;
     }
 
@@ -240,6 +238,7 @@ public class JdbcAuctionDao implements AuctionDao {
         item.setDescription(rowSet.getString("description"));
         item.setInitialPrice(rowSet.getDouble("initial_price"));
         item.setCurrentPrice(rowSet.getDouble("current_price"));
+        item.setNumOfImages(rowSet.getInt("num_of_images"));
         return item;
     }
 

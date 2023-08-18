@@ -15,7 +15,6 @@ public class Auction {
 
 
 
-
     public int getAuctionId() {
         return auctionId;
     }
