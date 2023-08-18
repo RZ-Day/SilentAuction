@@ -25,15 +25,15 @@
     </div>
     <p v-show="this.bids.length == 0">No bids have been made on this item yet. Maybe you can be the first?</p>
     
-    <button @click="showBidForm">Place Bid</button>
+    <button @click="toggleBidForm">{{ this.bidButtonText }}</button>
     
     <form v-if="showForm" @submit.prevent="submitBid">
       
       <br>
       <button @click="bidButton" id="increaseBid1" type="submit">Bid $1 More</button>&nbsp;
       <button @click="bidButton" id="increaseBid5" type="submit">Bid $5 More</button>&nbsp;
-      <button @click="bidButton" id="increaseBid10" type="submit">Bid +$10 More</button>&nbsp;
-      <button @click="bidButton" id="increaseBid20" type="submit">Bid +$20 More</button>
+      <button @click="bidButton" id="increaseBid10" type="submit">Bid $10 More</button>&nbsp;
+      <button @click="bidButton" id="increaseBid20" type="submit">Bid $20 More</button>
       <br>
       <br>
       <label for="bidAmount">Custom Bid Amount:</label>
@@ -61,6 +61,7 @@ export default {
         bidderName: '',
         amount: null
       },
+      bidButtonText: 'Place Bid',
       timer: '',
       lastBidId: 1,
     };
@@ -94,8 +95,14 @@ export default {
     cancelInterval() {
       clearInterval(this.timer);
     },
-    showBidForm() {
-      this.showForm = true;
+    toggleBidForm() {
+      if (this.showForm == false) {
+        this.showForm = true;
+        this.bidButtonText = 'Cancel';
+      } else {
+        this.showForm = false;
+        this.bidButtonText = 'Place Bid';
+      }
     },
     bidButton(event) {
       console.log("bidButton() called");
@@ -143,7 +150,7 @@ export default {
 
         this.newBid.bidderName = '';
         this.newBid.amount = null;
-        this.showForm = false;
+        this.toggleBidForm();
         this.fetchBids();
       } else {
           alert('Your bid must be greater than the current highest bid!');

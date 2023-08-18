@@ -8,6 +8,7 @@ import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,6 +212,12 @@ public class JdbcBidDao implements BidDao {
         Bid bid = null;
         String sql = "INSERT INTO bid (item_id, user_id, bid_amount, bid_time) " +
                      "VALUES (?, ?, ?, now()) RETURNING bid_id;";
+
+        // First check item's highest price
+        int compareToResult = bidAmount.compareTo(getHighestBidOfItem(itemId).getBidAmount());
+        if (compareToResult <= 0) {
+            throw new DaoException("Cannot submit bid with same or lower amount");
+        }
         try {
             int resultId = jdbcTemplate.queryForObject(sql, int.class, itemId, userId, bidAmount);
             bid = getBidById(resultId);
@@ -231,8 +238,13 @@ public class JdbcBidDao implements BidDao {
         bid.setBidTime(rowSet.getDate("bid_time"));
         bid.setBidAmount(rowSet.getBigDecimal("bid_amount"));
         bid.setUserId(rowSet.getInt("user_id"));
-        if (rowSet.getString("username") != null && !rowSet.getString("username").trim().isEmpty()) {
-            bid.setUsername(rowSet.getString("username"));
+        try {
+            if (rowSet.getString("username") != null && !rowSet.getString("username").trim().isEmpty()) {
+                bid.setUsername(rowSet.getString("username"));
+            }
+        }
+        catch (InvalidResultSetAccessException e) {
+            System.out.println(e.getMessage()); // Probably will fire if username doesn't exist
         }
 
         return bid;
