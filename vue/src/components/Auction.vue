@@ -17,22 +17,14 @@
 
             <!-- Images for each item -->
             <div
-              class="item-images"
-              v-if="
-                loadedImages[auction.auctionId] &&
-                loadedImages[auction.auctionId][item.itemId]
-              "
-            >
-              <img
-                v-for="(imageUrl, idx) in loadedImages[auction.auctionId][
-                  item.itemId
-                ]"
-                :key="idx"
-                :src="imageUrl"
-                alt="Image of the item"
-                :class="{ active: currentImageIndices[item.itemId] === idx }"
-              />
-            </div>
+              v-for="(imageUrl, idx) in loadedImages[auction.auctionId][
+                item.itemId
+              ]"
+              :key="idx"
+              :style="{ 'background-image': `url(${imageUrl})` }"
+              :class="{ active: currentImageIndices[item.itemId] === idx }"
+              class="item-background"
+            ></div>
 
             <p class="item-description">{{ item.description }}</p>
           </div>
@@ -131,6 +123,7 @@ export default {
   padding-right: 20px;
   margin: 0px 0;
   background-color: #fff;
+  position: relative;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   height: 200px;
   transition: 0.5s ease;
@@ -174,23 +167,21 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.item-images {
-  position: relative; 
-  
-}
-
-.item-images img {
+.item-background {
   transition: opacity 1s ease-in-out;
-  opacity: 0;  
-  position: absolute;  
+  opacity: 0;
+  position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;  
-  height: auto; 
+  background-size: cover; /* Will scale the image to cover the entire element. */
+  background-position: center; /* Centers the image within the element. */
+  background-repeat: no-repeat; /* Ensures the image doesn't repeat. */
 }
 
-.item-images img.active {
-  opacity: 1; 
+.item-background.active {
+  opacity: 1;
 }
 </style>
 
