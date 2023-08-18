@@ -179,7 +179,7 @@ public class JdbcAuctionDao implements AuctionDao {
 
     @Override
     public Auction getAuctionByPrivateKey(String privateKey) {
-        String sql = "SELECT * FROM auction WHERE private_key LIKE ?";
+        String sql = "SELECT * FROM auction WHERE private_key LIKE ?;";
         String searchTerm = "%" + privateKey + "%";
 
         Auction auction = jdbcTemplate.queryForObject(
