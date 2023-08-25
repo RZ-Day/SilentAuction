@@ -20,7 +20,7 @@ import Navbar from './components/Navbar.vue';
   }
 </script>
 
-<style scope>
+<style scoped>
   .topNav {
     width: 100%;
     margin: 0;
@@ -33,9 +33,9 @@ import Navbar from './components/Navbar.vue';
   z-index: 1; /* Adjust as needed to ensure content is above the background */
 }
 
-  .spacing {
-    min-height: 50px;
-  }
+.spacing {
+  min-height: 50px;
+}
 
 
 

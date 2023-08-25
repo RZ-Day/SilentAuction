@@ -1,50 +1,32 @@
 <template>
-<div class="background-image">
-  <div id="register" class="text-center">
-    <form @submit.prevent="register">
-      <h1>Create Account</h1>
+<div class="page">
+  <div class="main-container">
+    <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <div class="inputs">
-        <div class="form-input-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" v-model="user.name" required autofocus />
-        </div>
-        <div class="form-input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="user.email" required />
-        </div>
-        <div class="form-input-group">
-          <label for="phone">Phone Number</label>
-          <input type="text" id="phone" v-model="user.phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-555-5555" required />
-        </div>
-        <div class="form-input-group">
-          <label for="address">Address</label>
-          <input type="text" id="address" v-model="user.address" required />
-        </div>
-        <div class="form-input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" v-model="user.username" required/>
-        </div>
-        <div class="form-input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="user.password" required />
-        </div>
-        <div class="form-input-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-        </div>
-      </div>
-      <button type="submit">Create Account</button>
-      <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-    </form>
+    <CardVertical>
+      <form @submit.prevent="register">
+        <text-input title="Name" inputType="text" isRequired="true" v-model="user.name" />
+        <text-input title="Email" inputType="email" isRequired="true" v-model="user.email" />
+        <text-input title="Phone" inputType="text" isRequired="true" v-model="user.phone" />
+        <text-input title="Address" inputType="text" isRequired="true" v-model="user.address" />
+        <text-input title="Username" inputType="text" isRequired="true" v-model="user.username" />
+        <text-input title="Password" inputType="password" isRequired="true" v-model="user.password" />
+        <text-input title="Confirm Password" inputType="password" isRequired="true" v-model="user.confirmPassword" />
+        <Button buttonLabel="Register" buttonType="submit" />
+      </form>
+    </CardVertical>
+    <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
   </div>
 </div>
 </template>
 
 <script>
 import authService from '../services/AuthService';
+import TextInput from '../components/building_blocks/TextInput.vue';
+import CardVertical from '../components/building_blocks/CardVertical.vue';
+import Button from '../components/building_blocks/Button.vue'
 
 export default {
   name: 'register',
@@ -63,6 +45,11 @@ export default {
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
+  },
+  components: {
+    TextInput,
+    CardVertical,
+    Button
   },
   methods: {
     register() {
@@ -98,118 +85,26 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
-}
-label {
-  margin-right: 0.5rem;
-}
+  .page {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-#register {
-  max-width: 400px;
-}
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+  }
 
-.inputs {
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  margin-bottom: 30px;
-  border-radius: 30px;
-  background-color: rgb(216, 216, 216);
-  box-shadow: 0 4px 6px rgb(60, 60, 60), inset 0 0 20px rgba(0, 0, 0, 0.5);
-}
+  h1 {
+    font-family: Ariel, sans-serif;
+  }
 
-.form-input-group {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  height: 20px;
-  border-radius: 5px;
-}
-
-.background-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(rgb(0, 0, 0), rgb(255, 255, 255));
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-}
-
-#register h1 {
-  text-align: center;
-  font-weight: bold;
-}
-
-#name {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#email {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#phone {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#address {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#username {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#password {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-#confirmPassword {
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 5px;
-  height: 100%;  
-}
-
-button{
-  width: 55%;
-  outline: none;
-  border-radius: 5px;
-  height: 30px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 80px;
-  background: transparent;
-  border: 2px solid black;
-  border-radius: 10px;
-
-}
-
-p{
-  text-align: center;
-  font-size: 18px;
-  text-decoration: none;
-  color: black;
-}
+  div {
+    font-family: sans-serif;
+  }
 </style>
