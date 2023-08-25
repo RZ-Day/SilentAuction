@@ -1,13 +1,10 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS conversations;
-DROP TABLE IF EXISTS messages;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS user_contacts;
-DROP TABLE IF EXISTS auction;
-DROP TABLE IF EXISTS item;
-DROP TABLE IF EXISTS bid;
-DROP TABLE IF EXISTS watchlist;
+DROP TABLE IF EXISTS
+conversations, messages, users,
+user_contacts, auction, item,
+bid, watchlist
+CASCADE;
 
 
 

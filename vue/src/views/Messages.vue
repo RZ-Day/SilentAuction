@@ -21,31 +21,36 @@ export default {
         }
     },
     created() {
-        console.log("About to hit first service method");
-        //Find all messages for active conversation
-        messageService.getMessagesByUserId(this.$store.state.user.id).then((response) => {
+        this.loadMessages();
+    },
+    methods: {
+        loadMessages(){
+                console.log("About to hit first service method");
+            //Find all messages for active conversation
+            messageService.getMessagesByUserId(this.$store.state.user.id).then((response) => {
 
-            if (response.status == 200) {
-                this.$store.commit("SET_STORE_MESSAGES", response.data);
-                console.log("successfully retrieved msgs");
-            } else {
-                console.log("Unable to retrieve message data");
-            }
-        }).catch((error) => {
-            console.log("An error occurred: ", error);
-        });
+                if (response.status == 200) {
+                    this.$store.commit("SET_STORE_MESSAGES", response.data);
+                    console.log("successfully retrieved msgs");
+                } else {
+                    console.log("Unable to retrieve message data");
+                }
+            }).catch((error) => {
+                console.log("An error occurred: ", error);
+            });
 
-        //Find all active conversations relating to user
-        messageService.getConversationsByUserId(this.$store.state.user.id).then((response) => {
-            if(response.status == 200) {
-                this.conversationList = response.data;
-                console.log("Successfully retrieved conversations");
-            } else {
-                console.log("Unable to retrieve message data");
-            }
-        }).catch((error) => {
-            console.log("Error occurred: ", error)
-        });
+            //Find all active conversations relating to user
+            messageService.getConversationsByUserId(this.$store.state.user.id).then((response) => {
+                if(response.status == 200) {
+                    this.conversationList = response.data;
+                    console.log("Successfully retrieved conversations");
+                } else {
+                    console.log("Unable to retrieve message data");
+                }
+            }).catch((error) => {
+                console.log("Error occurred: ", error)
+            });
+        }
     },
     components: {
         ConversationList,
@@ -73,6 +78,11 @@ export default {
         },
         currentMessages() {
             return this.$store.state.storeMessages;
+        },
+        watch:{
+            $route(){
+                this.loadMessages();
+            }
         }
     }
 }
