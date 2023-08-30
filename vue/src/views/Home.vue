@@ -9,6 +9,7 @@
     </div>
 </template>
 
+
 <script>
 import Slideshow from '@/components/Home/HomeSlideshow.vue';
 import CoolButtons from '@/components/Home/HomeButtonContainer.vue';
@@ -17,6 +18,7 @@ export default {
     components: {Slideshow, CoolButtons},
 };
 </script>
+
 
 <style scoped>
 .home {
@@ -39,7 +41,6 @@ export default {
     /* View Height/View Width */
     width: 100vw;
     height: 100vh; 
-  
   }
 @keyframes fadeIn {
     from {

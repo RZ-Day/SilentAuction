@@ -1,0 +1,11 @@
+:root{
+    --l-prime: rgb(255, 169, 57);
+    --l-prime-hl:rgb(255, 203, 134);
+    --d-prime: rgb(173, 98, 0);
+    --d-prime-hl: rgb(173, 132, 0)
+}
+button{
+    border:0;
+    border-radius: 15px;
+    cursor: pointer;
+}
