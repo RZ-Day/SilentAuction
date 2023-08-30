@@ -4,18 +4,40 @@
         to="/auction/create"
         class="auctions-button"
         id="button-left">
-        Host An Auction</router-link>
+        <v-button class="btn">
+            Host An Auction
+        </v-button>
+    </router-link>
     
-    <router-link to="/auctions" class="auctions-button" id="button-mid">
-        Bid On Live Auctions</router-link>
-    
+    <router-link 
+        to="/auctions" 
+        class="auctions-button" 
+        id="button-center">
+        <v-button class="btn">
+            Bid On Live Auctions
+        </v-button>
+    </router-link>
+
     <router-link
         to="/auctions/search/private"
         class="auctions-button"
         id="button-right">
-        Join Private Auction</router-link>
+        <v-button class="btn">
+            Join Private Auction
+        </v-button>
+    </router-link>
   </div>
 </template>
+
+
+<script>
+import VButton from "../Utils/VButton.vue"
+export default{
+    name: 'home-button-container',
+    components: {VButton}
+}
+</script>
+
 
 <style scoped>
 .button-container {
@@ -26,32 +48,29 @@
     min-height:10rem;
     max-width: 100%;
 }
-
-.auctions-button {
+.auctions-button{
     display: flex;
-    text-align:center;
-    align-items:center;
-    padding: 10px 20px;
-    background-color: #141b2c;
-    color: #ffffff;
-    border-radius: 15px;
     text-decoration: none;
-    width: 20%;
-    height: 30%;
-    cursor: pointer;
+    width: 15rem;
+    height: 4rem;
+    margin: 0 1rem;
+}
+.btn {
+    font-size:larger;
     transition: 
-        transform 0.3s ease-in-out,
-        background-color 0.3s linear;
-
+        transform 0.12s ease-in-out,
+        opacity 0.2s linear;
 }
-
-.auctions-button:hover {
-    background-color: #253b6e;
+/* This opacity transition could be used to 'transition' the color using a second element hidding under the button -JD 8/29/23*/
+.btn:hover{
     transform: scale(1.1);
+    opacity: 0.9;
 }
+
 
 /* These animations play once then never again... -JD 8/24/23 */
-#button-left {
+/* Ditched. Should be implemented in Vue if we want them. - JD 8/29/23
+/* #button-left {
     animation: bounceAndEnlarge 1s ease-in-out 3s, shake 2.5s ease-in-out 16s;
 }
 
@@ -61,16 +80,16 @@
 
 #button-right {
      animation: bounceAndEnlarge 1s ease-in-out 4s, shake 2.5s ease-in-out 32s;
-}
+} */
 
-@keyframes bounceAndEnlarge {
-    0%,
-    100% {
-        transform: scale(1);
-    }
+/* @keyframes bounceAndEnlarge {
     50% {
         transform: scale(1.1);
     }
+    100% {
+        transform: scale(1);
+    }
+    
 }
 
 @keyframes shake {
@@ -84,5 +103,5 @@
         transform: translateX(0);
     }
     
-}
+} */
 </style>
