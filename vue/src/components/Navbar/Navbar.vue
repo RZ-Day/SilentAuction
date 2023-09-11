@@ -3,7 +3,7 @@
     <div>
       <a class="logo-link" href="/">
         <!-- Replace '/' with your desired link -->
-        <img id="imgLogo" src="../Assets/logo.png" />
+        <img id="imgLogo" src="../../Assets/logo.png" />
       </a>
     </div>
 
@@ -20,22 +20,10 @@
               >Home</router-link
             >
           </li>
-          <li v-if="currentRoute != 'AuctionList'">
+          <li>
             <router-link class="link" :to="{ name: 'AuctionList' }"
               >Auctions</router-link
             >
-          </li>
-          <li>
-            <a
-              class="link"
-              v-if="
-                accountOptions[0].link !== '#' &&
-                accountOptions[0].link !== 'login'
-              "
-              :href="accountOptions[0].link"
-            >
-              {{ accountOptions[0].label }}
-            </a>
           </li>
           <dropdown title="Account" :items="accountOptions" />
         </ul>
@@ -45,7 +33,7 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
+import Dropdown from "../building_blocks/Dropdown.vue";
 
 export default {
   name: "navbar",
@@ -103,6 +91,11 @@ export default {
   border-color: rgb(200, 200, 200);
 }
 
+.container {
+  display: flex;
+  height: 100%;
+}
+
 #imgLogo {
   width: 15em;
   transform: translateX(5%);
@@ -117,6 +110,7 @@ nav ul {
   display: flex;
   justify-content: flex-end;
   list-style-type: none;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -132,20 +126,20 @@ li {
 
 li.active,
 li:hover {
-  background-color: rgb(231, 231, 231);
+  background-color: rgb(201, 201, 201);
   transition: 0.2s ease;
-  color: rgb(201, 69, 69);
 }
 
 li:hover .link {
   transition: 0.2s ease;
-  color: rgb(73, 201, 69);
+  color: rgb(255, 255, 255);
 }
 
 .link {
   display: flex;
+  height: 100%;
   align-items: center;
   text-decoration: none;
-  color: black;
+  color: rgb(0, 0, 0);
 }
 </style>

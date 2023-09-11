@@ -7,13 +7,13 @@
       </div>
     <CardVertical>
       <form @submit.prevent="register">
-        <text-input title="Name" inputType="text" isRequired="true" v-model="user.name" />
-        <text-input title="Email" inputType="email" isRequired="true" v-model="user.email" />
-        <text-input title="Phone" inputType="text" isRequired="true" v-model="user.phone" />
-        <text-input title="Address" inputType="text" isRequired="true" v-model="user.address" />
-        <text-input title="Username" inputType="text" isRequired="true" v-model="user.username" />
-        <text-input title="Password" inputType="password" isRequired="true" v-model="user.password" />
-        <text-input title="Confirm Password" inputType="password" isRequired="true" v-model="user.confirmPassword" />
+        <text-input title="Name" inputType="text" :isRequired=this.isRequired v-model="user.name" />
+        <text-input title="Email" inputType="email" :isRequired=this.isRequired v-model="user.email" />
+        <text-input title="Phone" inputType="text" :isRequired=this.isRequired v-model="user.phone" />
+        <text-input title="Address" inputType="text" :isRequired=this.isRequired v-model="user.address" />
+        <text-input title="Username" inputType="text" :isRequired=this.isRequired v-model="user.username" />
+        <text-input title="Password" inputType="password" :isRequired=this.isRequired v-model="user.password" />
+        <text-input title="Confirm Password" inputType="password" :isRequired=this.isRequired v-model="user.confirmPassword" />
         <Button buttonLabel="Register" buttonType="submit" />
       </form>
     </CardVertical>
@@ -44,6 +44,7 @@ export default {
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
+      isRequired: true
     };
   },
   components: {

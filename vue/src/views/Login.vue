@@ -10,8 +10,8 @@
     </div>
     <CardVertical>
       <form @submit.prevent="login">
-        <TextInput inputType="text" isRequired="true" title="Username" v-model="user.username"/>
-        <TextInput inputType="password" isRequired="true" title="Password" v-model="user.password"/>
+        <TextInput inputType="text" :isRequired=true title="Username" v-model="user.username"/>
+        <TextInput inputType="password" :isRequired=true title="Password" v-model="user.password"/>
         <Button buttonType="submit" buttonLabel="Login" />
       </form>
     </CardVertical>
@@ -42,7 +42,8 @@ export default {
         username: "",
         password: ""
       },
-      invalidCredentials: false
+      invalidCredentials: false,
+      isRequired: true
     };
   },
   methods: {

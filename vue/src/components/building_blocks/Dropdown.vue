@@ -3,7 +3,7 @@
       <a class="title" @click="toggle" href="#">
           {{ title }}
       </a>
-      <div v-if="this.selected" class="sub-menu">
+      <div v-show="this.selected" class="sub-menu">
         <div v-for="item in items" class="sub-item" v-bind:key="item.label">
             <router-link :to="item.link" class="sub-link"> {{ item.label }} </router-link>
         </div>
@@ -22,6 +22,9 @@ export default {
     methods: {
       toggle() {
         this.selected = !this.selected;
+      },
+      deselect() {
+        this.selected = false;
       }
     },
     props: ['title', 'items']
@@ -45,7 +48,7 @@ export default {
   .title.active,
   .title:hover,
   .sub-item:hover {
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(201, 201, 201);
     transition: .2s ease;
     color:rgb(255, 255, 255) ;
   }
