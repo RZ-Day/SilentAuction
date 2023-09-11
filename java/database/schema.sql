@@ -97,7 +97,7 @@ CREATE TABLE watchlist (
 CREATE TABLE item_image (
     image_id SERIAL PRIMARY KEY,
     item_id INT,
-    image_data VARBINARY(MAX),
+    image_data BYTEA,
     FOREIGN KEY (item_id) REFERENCES item(item_id)
 );
 
