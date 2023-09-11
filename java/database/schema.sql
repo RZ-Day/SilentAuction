@@ -93,5 +93,13 @@ CREATE TABLE watchlist (
     FOREIGN KEY (item_id) REFERENCES item(item_id)
 );
 
+--item images
+CREATE TABLE item_image (
+    image_id SERIAL PRIMARY KEY,
+    item_id INT,
+    image_data VARBINARY(MAX),
+    FOREIGN KEY (item_id) REFERENCES item(item_id)
+);
+
 
 COMMIT TRANSACTION;
